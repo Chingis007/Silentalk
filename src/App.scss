@@ -1,0 +1,348 @@
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+//Login
+#loginPage {
+  width: 1920px;
+  height: 500px;
+  background-color: blue;
+  color: black;
+  #loginWindow {
+    background-color: green;
+    width: 20%;
+    height: 20%;
+    position: relative;
+    top: 40%;
+    left: 40%;
+    display: grid;
+    #phoneNumber {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 1;
+    }
+    #password {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 2;
+    }
+    #Login {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      grid-column-start: 1;
+      grid-column-end: 1;
+      grid-row-start: 3;
+      grid-row-end: 3;
+    }
+    #SignUp {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      grid-column-start: 2;
+      grid-column-end: 2;
+      grid-row-start: 3;
+      grid-row-end: 3;
+    }
+    #SignUpGoogle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 4;
+      grid-row-end: 4;
+    }
+  }
+}
+//UserInterface
+#userInterfaceBorder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1920px;
+  height: 100%;
+  #userInterfaceMain {
+    display: flex;
+    // justify-content: center;
+    justify-content: start;
+    // align-items: center;
+    align-items: start;
+    width: 1650px;
+    height: 100%;
+    border: gray 1px solid;
+    #userInterfaceChatsColumn {
+      display: flex;
+      //   justify-content: center;
+      justify-content: start;
+      align-items: center;
+      flex-direction: column;
+      width: 425px;
+      height: 100%;
+      #userInterfaceChatsColumnHead {
+        display: flex;
+        // justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        width: 100%;
+        height: 50px;
+        #userInterfaceChatsColumnHeadSettings {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+          height: 50px;
+          #userInterfaceChatsColumnHeadSearch {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 450px;
+          }
+        }
+      }
+      #userInterfaceChatsColumnOneChat {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        width: 100%;
+        height: 50px;
+        border-radius: 5px;
+        #userInterfaceChatsColumnOneChatImg {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+          height: 50px;
+        }
+        #userInterfaceChatsColumnOneChatNotImg {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          width: 325px;
+          height: 50px;
+          #userInterfaceChatsColumnOneChatNotImgTopLine {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            height: 25px;
+            #userInterfaceChatsColumnOneChatNotImgName {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 375px;
+              height: 25px;
+            }
+            #userInterfaceChatsColumnOneChatNotImgDate {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 75px;
+              height: 25px;
+            }
+          }
+          #userInterfaceChatsColumnOneChatNotImgBotLine {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            height: 25px;
+            #userInterfaceChatsColumnOneChatNotImgLastMsg {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 425px;
+              height: 25px;
+            }
+            #userInterfaceChatsColumnOneChatNotImgPindOrMsgCount {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 25px;
+              height: 25px;
+            }
+          }
+        }
+      }
+    }
+    #userInterfaceChat {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      #userInterfaceChatHead {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        width: 100%;
+        height: 50px;
+        #userInterfaceChatHeadImg {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+          height: 50px;
+        }
+        #userInterfaceChatHeadNameColumn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          width: 100%;
+          height: 50px;
+          #userInterfaceChatHeadNameColumnName {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 25px;
+          }
+          #userInterfaceChatHeadNameColumnLastSeen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 25px;
+          }
+        }
+        #userInterfaceChatHeadCall {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+          height: 50px;
+        }
+        #userInterfaceChatHeadNotifications {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+          height: 50px;
+        }
+        #userInterfaceChatHeadHidePinned {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+          height: 50px;
+        }
+        #userInterfaceChatHeadOnePinned {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100px;
+          height: 50px;
+        }
+        #userInterfaceChatHeadAllPinned {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+          height: 50px;
+        }
+        #userInterfaceChatHeadVideoChat {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+          height: 50px;
+        }
+        #userInterfaceChatHeadSearch {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+          height: 50px;
+        }
+        #userInterfaceChatHeadSettings {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+          height: 50px;
+        }
+      }
+      #userInterfaceChatMainBackground {
+        display: flex;
+        justify-content: center;
+        // align-items: center;
+        flex-direction: row;
+        align-items: end;
+        width: 100%;
+        height: 100%;
+        background-image: url("../public/tgbackground.jpg");
+        #userInterfaceChatMainMsgesColumn {
+          display: flex;
+          //   justify-content: center;
+          justify-content: end;
+          align-items: center;
+          flex-direction: column;
+          width: 600px;
+          height: calc(100vh - 50px);
+          #msg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: min-content;
+            height: min-content;
+          }
+
+          #userInterfaceChatMainInputBar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            height: 50px;
+            #userInterfaceChatMainInputSmile {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 25px;
+              height: 25px;
+            }
+            #userInterfaceChatMainInputText {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              height: 25px;
+            }
+            #userInterfaceChatMainInputFile {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 25px;
+              height: 25px;
+            }
+          }
+        }
+        #userInterfaceChatMainInputVoice {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+          height: 50px;
+          bottom: 0;
+        }
+      }
+    }
+  }
+}
