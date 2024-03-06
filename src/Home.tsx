@@ -342,7 +342,7 @@ export function Home() {
                 Sign Up
               </div>
               <div id="SignUpGoogle">
-                <GoogleOAuthProvider clientId="YOUR CLIENT ID">
+                <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
                   <GoogleLogin
                     onSuccess={(CredentialResponse: any) => {
                       // console.log(CredentialResponse)
