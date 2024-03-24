@@ -179,7 +179,7 @@ export function Home() {
       username: "bebrys",
     }
 
-    fetch(`${process.env.VITE_REACT_APP_SERVER_ENDPOINT}/users/mypost`, {
+    fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/users/mypost`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
