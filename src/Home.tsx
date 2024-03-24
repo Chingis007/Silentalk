@@ -207,7 +207,7 @@ export function Home() {
       botsList: [],
     }
     // fetch(`http://localhost:4000/users`, {
-    fetch(`${process.env.VITE_REACT_APP_SERVER_ENDPOINT}/users`, {
+    fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
