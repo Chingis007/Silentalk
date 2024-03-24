@@ -174,6 +174,24 @@ export function Home() {
   }
   // тут має бути перевірка чи залогінено і
   // тоді навігація на сторінку юзер інтерфейсу
+  const ahhh = async () => {
+    const data = {
+      username: "bebrys",
+    }
+
+    fetch(`${process.env.VITE_REACT_APP_SERVER_ENDPOINT}/users/mypost`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        withCredentials: "true",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(data),
+    }).then(async (response) => {
+      const resText = await response.json()
+      console.log(resText)
+    })
+  }
   const register = async () => {
     if (!enableCreation()) {
       alert("Wrong registration values")
@@ -341,6 +359,7 @@ export function Home() {
               <div id="SignUp" onClick={(e) => setPressedRegister(true)}>
                 Sign Up
               </div>
+              <button onClick={(e) => ahhh()}>Press my Sexy boi</button>
               <div id="SignUpGoogle">
                 <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
                   <GoogleLogin
