@@ -93,12 +93,16 @@ export function Home() {
   }, [phoneNumber])
 
   let navigate = useNavigate()
-  const serverGoogleAuthentification = async (credential: string) => {
+  const serverGoogleAuthentification = async (
+    credential: string,
+    phoneNumber: string
+  ) => {
     const requestHeaders = new Headers([
       ["Content-Type", "application/json"],
       ["withCredentials", "true"],
       ["Access-Control-Allow-Origin", "*"],
       ["myAuthProp", credential],
+      ["myPhoneNumber", phoneNumber],
     ])
 
     // let url = new URL(`http://localhost:4000/google/temporfetch`)
@@ -175,23 +179,6 @@ export function Home() {
   }
   // тут має бути перевірка чи залогінено і
   // тоді навігація на сторінку юзер інтерфейсу
-  const ahhh = async () => {
-    const data = {
-      username: "bebrys",
-    }
-
-    fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/users/mypost`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        withCredentials: "true",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(data),
-    }).then(async (response) => {
-      console.log(response)
-    })
-  }
   const register = async () => {
     if (!enableCreation()) {
       alert("Wrong registration values")
@@ -396,8 +383,10 @@ export function Home() {
                           ? decodeJwt(strCredential)
                           : undefined
                         if (payload) {
-                          console.log(strCredential)
-                          serverGoogleAuthentification(strCredential)
+                          serverGoogleAuthentification(
+                            strCredential,
+                            phoneNumber
+                          )
                         }
                       }}
                       onError={() => {
@@ -434,7 +423,10 @@ export function Home() {
                           ? decodeJwt(strCredential)
                           : undefined
                         if (payload) {
-                          serverGoogleAuthentification(strCredential)
+                          serverGoogleAuthentification(
+                            strCredential,
+                            "no number needed"
+                          )
                         }
                       }}
                       onError={() => {
