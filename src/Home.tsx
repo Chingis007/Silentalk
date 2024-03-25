@@ -188,8 +188,7 @@ export function Home() {
       },
       body: JSON.stringify(data),
     }).then(async (response) => {
-      const resText = await response.json()
-      console.log(resText)
+      console.log(response)
     })
   }
   const register = async () => {
