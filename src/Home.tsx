@@ -15,6 +15,7 @@ export function Home() {
   const [phoneNumberValidationText, setPhoneNumberValidationText] = useState("")
   const [pressedLogin, setPressedLogin] = useState(false)
   const [pressedRegister, setPressedRegister] = useState(false)
+  const [pressedGoogle, setPressedGoogle] = useState(false)
   let strongPassword = new RegExp(
     "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})"
   )
@@ -253,7 +254,7 @@ export function Home() {
           {pressedLogin ? (
             <div id="LoginWindowLogin">
               <div id="backToChoose" onClick={(e) => setPressedLogin(false)}>
-                Or Sign Up
+                Go Back
               </div>
               <div id="phoneNumber">
                 {/* <p>Phone number</p>
@@ -297,7 +298,7 @@ export function Home() {
           ) : pressedRegister ? (
             <div id="LoginWindowRegister">
               <div id="backToChoose" onClick={(e) => setPressedRegister(false)}>
-                Or Login
+                Go Back
               </div>
               <div id="phoneNumber">
                 {/* <p>Phone number</p>
@@ -350,6 +351,64 @@ export function Home() {
                 Sign Up
               </div>
             </div>
+          ) : pressedGoogle ? (
+            <div id="LoginWindowGoogle">
+              <div id="backToChoose" onClick={(e) => setPressedGoogle(false)}>
+                Go Back
+              </div>
+              <div id="phoneNumber">
+                {/* <p>Phone number</p>
+            <input
+              type="text"
+              // placeholder="Your Email or phone number"
+              onChange={(event) => {
+                setPhoneNumber(event.target.value)
+              }}
+              value={phoneNumber}
+            /> */}
+                <PhoneInput
+                  defaultCountry="UA"
+                  placeholder="Enter phone number"
+                  value={phoneNumber}
+                  onChange={(event: any) => {
+                    try {
+                      setPhoneNumber(event)
+                    } catch {}
+                  }}
+                />
+                <p>
+                  {phoneNumber} {phoneNumberValidationText}
+                </p>
+              </div>
+              <div id="SignUpGoogle">
+                <div
+                  style={{
+                    pointerEvents:
+                      phoneNumberValidationText === "✔" ? "auto" : "none",
+                  }}
+                >
+                  <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
+                    <GoogleLogin
+                      onSuccess={(CredentialResponse: any) => {
+                        const { credential } = CredentialResponse
+                        const strCredential = String(credential)
+                        const payload = strCredential
+                          ? decodeJwt(strCredential)
+                          : undefined
+                        if (payload) {
+                          console.log(strCredential)
+                          serverGoogleAuthentification(strCredential)
+                        }
+                      }}
+                      onError={() => {
+                        console.log("Error Ocured on Google_Login")
+                      }}
+                      // useOneTap
+                    />
+                  </GoogleOAuthProvider>
+                </div>
+              </div>
+            </div>
           ) : (
             <div id="LoginWindowChoose">
               <div id="Login" onClick={(e) => setPressedLogin(true)}>
@@ -358,30 +417,36 @@ export function Home() {
               <div id="SignUp" onClick={(e) => setPressedRegister(true)}>
                 Sign Up
               </div>
-              <button onClick={(e) => ahhh()}>Press my Sexy boi</button>
-              <div id="SignUpGoogle">
-                <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
-                  <GoogleLogin
-                    onSuccess={(CredentialResponse: any) => {
-                      // console.log(CredentialResponse)
-                      const { credential } = CredentialResponse
-                      const strCredential = String(credential)
-                      const payload = strCredential
-                        ? decodeJwt(strCredential)
-                        : undefined
-                      if (payload) {
-                        serverGoogleAuthentification(strCredential)
-                      }
-                    }}
-                    onError={() => {
-                      console.log("Error Ocured on Google_Login")
-                    }}
-                    // useOneTap
-                  />
-                </GoogleOAuthProvider>
+              <div
+                id="SignUpGoogle"
+                onClick={(e) => {
+                  setPressedGoogle(true)
+                }}
+              >
+                <div style={{ pointerEvents: "none" }}>
+                  <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
+                    <GoogleLogin
+                      onSuccess={(CredentialResponse: any) => {
+                        // console.log(CredentialResponse)
+                        const { credential } = CredentialResponse
+                        const strCredential = String(credential)
+                        const payload = strCredential
+                          ? decodeJwt(strCredential)
+                          : undefined
+                        if (payload) {
+                          serverGoogleAuthentification(strCredential)
+                        }
+                      }}
+                      onError={() => {
+                        console.log("Error Ocured on Google_Login")
+                      }}
+                      // useOneTap
+                    />
+                  </GoogleOAuthProvider>
+                </div>
                 {/* <button>
-            <a href={getGoogleUrl(from)}>Sign in with google</a>
-          </button> */}
+          <a href={getGoogleUrl(from)}>Sign in with google</a>
+        </button> */}
               </div>
             </div>
           )}
