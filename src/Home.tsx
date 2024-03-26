@@ -117,21 +117,23 @@ export function Home() {
     })
       .then(async (response: any) => {
         const resText = await response.json()
-        if (resText[0] === "Email Exists") {
+        if (resText[0] === "Email Exists and Logged Successfully") {
           document.cookie = `auth_token=${resText[1].auth_token}; expires=Session; path=/;`
           document.cookie = `email=${resText[1].email}; expires=Session; path=/;`
           document.cookie = `emailImgUrl=${resText[1].emailImgUrl}; expires=Session; path=/;`
-          if (
-            resText[1].cartItemsArray !== undefined &&
-            resText[1].cartItemsArray !== false
-          ) {
-            document.cookie = `cartItemsArray=${JSON.stringify(
-              resText[1].cartItemsArray
-            )}; expires=Session; path=/;`
-          } else {
-            document.cookie = `cartItemsArray=${[]}; expires=Session; path=/;`
-          }
-          navigate("/")
+          document.cookie = `username=${resText[1].username}; expires=Session; path=/;`
+          const username = resText[1].username
+          // if (
+          //   resText[1].cartItemsArray !== undefined &&
+          //   resText[1].cartItemsArray !== false
+          // ) {
+          //   document.cookie = `cartItemsArray=${JSON.stringify(
+          //     resText[1].cartItemsArray
+          //   )}; expires=Session; path=/;`
+          // } else {
+          //   document.cookie = `cartItemsArray=${[]}; expires=Session; path=/;`
+          // }
+          navigate(`/:${username}`)
         }
         if (
           resText[0] ===
@@ -145,17 +147,22 @@ export function Home() {
           document.cookie = `auth_token=${resText[1].auth_token}; expires=Session; path=/;`
           document.cookie = `email=${resText[1].email}; expires=Session; path=/;`
           document.cookie = `emailImgUrl=${resText[1].emailImgUrl}; expires=Session; path=/;`
-          if (
-            resText[1].cartItemsArray !== undefined &&
-            resText[1].cartItemsArray !== false
-          ) {
-            document.cookie = `cartItemsArray=${JSON.stringify(
-              resText[1].cartItemsArray
-            )}; expires=Session; path=/;`
-          } else {
-            document.cookie = `cartItemsArray=${[]}; expires=Session; path=/;`
-          }
-          navigate("/")
+          document.cookie = `username=${resText[1].username}; expires=Session; path=/;`
+          const username = resText[1].username
+          // if (
+          //   resText[1].cartItemsArray !== undefined &&
+          //   resText[1].cartItemsArray !== false
+          // ) {
+          //   document.cookie = `cartItemsArray=${JSON.stringify(
+          //     resText[1].cartItemsArray
+          //   )}; expires=Session; path=/;`
+          // } else {
+          //   document.cookie = `cartItemsArray=${[]}; expires=Session; path=/;`
+          // }
+          navigate(`/:${username}`)
+        }
+        if (resText[0] === "Creation Failed") {
+          alert("Something went wrong. Please try again.")
         }
         //     if (response.status === 200) {
         //       const resText = await response.text()

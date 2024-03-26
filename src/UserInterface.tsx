@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 export function UserInterface() {
   const [chatsList, setChatsList] = useState(["", "", ""])
   const [msgsList, setMsgsList] = useState(["", "", "", "", "", ""])
+  const [searchParams, setSearchParams] = useSearchParams()
   return (
     <>
+      <p>{searchParams}</p>
       <div id="userInterfaceBorder">
         <div id="userInterfaceMain">
           <div id="userInterfaceChatsColumn">
