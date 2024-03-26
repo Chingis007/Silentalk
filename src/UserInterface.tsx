@@ -7,7 +7,7 @@ export function UserInterface() {
   const username = searchParams.get("username")
   return (
     <>
-      <p>{searchParams}</p>
+      <p>{username}</p>
       <div id="userInterfaceBorder">
         <div id="userInterfaceMain">
           <div id="userInterfaceChatsColumn">
