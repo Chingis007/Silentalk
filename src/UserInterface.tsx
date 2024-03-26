@@ -4,6 +4,7 @@ export function UserInterface() {
   const [chatsList, setChatsList] = useState(["", "", ""])
   const [msgsList, setMsgsList] = useState(["", "", "", "", "", ""])
   const [searchParams, setSearchParams] = useSearchParams()
+  const username = searchParams.get("username")
   return (
     <>
       <p>{searchParams}</p>
