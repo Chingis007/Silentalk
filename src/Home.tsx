@@ -133,7 +133,7 @@ export function Home() {
           // } else {
           //   document.cookie = `cartItemsArray=${[]}; expires=Session; path=/;`
           // }
-          navigate(`/:${username}`)
+          navigate(`/${username}`)
         }
         if (
           resText[0] ===
@@ -159,7 +159,7 @@ export function Home() {
           // } else {
           //   document.cookie = `cartItemsArray=${[]}; expires=Session; path=/;`
           // }
-          navigate(`/:${username}`)
+          navigate(`/${username}`)
         }
         if (resText[0] === "Creation Failed") {
           alert("Something went wrong. Please try again.")

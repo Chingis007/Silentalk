@@ -6,6 +6,10 @@ export function UserInterface() {
   // const [searchParams, setSearchParams] = useSearchParams()
   // const [username, setUsername] = useState("")
   let { username } = useParams()
+  let auth_token = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("auth_token="))
+    ?.split("=")[1]
   // useEffect(() => {
   //   const urlSearchString = window.location.search
   //   console.log(urlSearchString)
@@ -17,6 +21,59 @@ export function UserInterface() {
   //     setUsername(username)
   //   }
   // }, [])
+  useEffect(() => {
+    if (username && auth_token) {
+      findUserChats(username, auth_token)
+    } else {
+      alert("Baba ne chye, sprobyite piznishe")
+    }
+  }, [])
+
+  const findUserChats = async (username: string, auth_token: string) => {
+    fetch(
+      `${process.env.REACT_APP_SERVER_ENDPOINT}/users/verifyTokenAndSend/${auth_token}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          withCredentials: "true",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    ).then(async (response) => {
+      try {
+        const resText = await response.json()
+        if (resText[0] === "Back is good") {
+          // alert("Succesfull request but bad responce")
+          console.log(resText)
+          console.log(resText[0])
+          console.log(resText[1])
+          let userObj = resText[1]
+          // document.cookie = `auth_token=${userObj[1].auth_token}; expires=Session; path=/;`
+          // document.cookie = `email=${userObj[1].user}; expires=Session; path=/;`
+          // document.cookie = `emailImgUrl=${userObj[1].emailImgUrl}; expires=Session; path=/;`
+        }
+      } catch (error) {
+        console.log(error)
+      }
+
+      // else {
+      //   if (
+      //     resText[0] ===
+      //     "Email is already registered, but wrong password was entered"
+      //   ) {
+      //     alert("Email is already registered, but wrong password was entered")
+      //   }
+      //   if (resText[0] === "Created Successfully") {
+      //     let user = resText[1].user
+      //     document.cookie = `auth_token=${resText[1].auth_token}; expires=Session; path=/;`
+      //     document.cookie = `email=${resText[1].email}; expires=Session; path=/;`
+      //     document.cookie = `emailImgUrl=${resText[1].emailImgUrl}; expires=Session; path=/;`
+      //     alert("Created Successfully")
+      //   }
+      // }
+    })
+  }
   return (
     <>
       <p>{username}</p>
