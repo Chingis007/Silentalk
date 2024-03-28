@@ -31,7 +31,7 @@ export function UserInterface() {
 
   const findUserChats = async (username: string, auth_token: string) => {
     fetch(
-      `${process.env.REACT_APP_SERVER_ENDPOINT}/users/verifyTokenAndSend/${auth_token}`,
+      `${process.env.REACT_APP_SERVER_ENDPOINT}/users/CheckIfTokenValidAndSendUserData/${auth_token}`,
       {
         method: "GET",
         headers: {
