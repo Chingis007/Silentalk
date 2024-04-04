@@ -47,8 +47,11 @@ export function UserInterface() {
       const fetchData = async (notrealauthtoken: any) => {
         const fetchData = async (notrealauthtoken: any) => {
           setAuth_token(notrealauthtoken)
+          console.log(auth_token)
         }
         await fetchData(notrealauthtoken)
+        console.log("1")
+        console.log("1", auth_token)
         findUserChats(auth_token)
       }
       fetchData(notrealauthtoken)
