@@ -131,10 +131,28 @@
   color: var(--PhoneInputCountrySelectArrow-color--focus);
 }
 
+.toleft {
+  transition: 0.5s;
+  transform: translate(-420px, 0);
+}
+
+.back {
+  transition: 0.5s;
+  transform: translate(0, 0);
+}
+
 body {
   margin: 0;
   height: 100%;
   overflow: hidden;
+}
+
+.hide {
+  display: none;
+}
+
+#hide {
+  display: none;
 }
 
 #loginPage {
@@ -283,40 +301,65 @@ body {
   display: flex;
   justify-content: start;
   align-items: start;
-  width: 1650px;
+  width: 1670px;
   height: 100%;
   border: gray 1px solid;
 }
 #userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn {
   display: flex;
   justify-content: start;
-  align-items: center;
+  align-items: start;
   flex-direction: column;
-  width: 425px;
+  width: 420px;
   height: 100%;
+  overflow-x: hidden;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnHead {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn {
+  width: 840px;
+  display: flex;
+  flex-direction: row;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn {
+  display: flex;
+  flex-direction: column;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn #userInterfaceChatsColumnHead {
   display: flex;
   align-items: center;
   flex-direction: row;
-  width: 100%;
+  width: 420px;
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSettings {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSettings {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 50px;
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSettings #userInterfaceChatsColumnHeadSearch {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSettings img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSettings #userInterfaceChatsColumnHeadSearch {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 450px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnOneChat {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn .userInterfaceChatsColumnChats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 420px;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -325,22 +368,22 @@ body {
   height: 50px;
   border-radius: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnOneChat #userInterfaceChatsColumnOneChatImg {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatImg {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 50px;
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnOneChat #userInterfaceChatsColumnOneChatNotImg {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 325px;
+  width: 250px;
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnOneChat #userInterfaceChatsColumnOneChatNotImg #userInterfaceChatsColumnOneChatNotImgTopLine {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgTopLine {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -348,21 +391,21 @@ body {
   width: 100%;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnOneChat #userInterfaceChatsColumnOneChatNotImg #userInterfaceChatsColumnOneChatNotImgTopLine #userInterfaceChatsColumnOneChatNotImgName {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgTopLine .userInterfaceChatsColumnOneChatNotImgName {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 375px;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnOneChat #userInterfaceChatsColumnOneChatNotImg #userInterfaceChatsColumnOneChatNotImgTopLine #userInterfaceChatsColumnOneChatNotImgDate {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgTopLine .userInterfaceChatsColumnOneChatNotImgDate {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 75px;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnOneChat #userInterfaceChatsColumnOneChatNotImg #userInterfaceChatsColumnOneChatNotImgBotLine {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -370,26 +413,230 @@ body {
   width: 100%;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnOneChat #userInterfaceChatsColumnOneChatNotImg #userInterfaceChatsColumnOneChatNotImgBotLine #userInterfaceChatsColumnOneChatNotImgLastMsg {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgLastMsg {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 425px;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #userInterfaceChatsColumnOneChat #userInterfaceChatsColumnOneChatNotImg #userInterfaceChatsColumnOneChatNotImgBotLine #userInterfaceChatsColumnOneChatNotImgPindOrMsgCount {
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgPindOrMsgCount {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 25px;
   height: 25px;
 }
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  height: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  font-family: Roboto, -apple-system, "apple color emoji", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(112, 117, 121);
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellHead {
+  height: 56px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  padding-left: 12px;
+  align-items: center;
+  font-family: Roboto, -apple-system, "apple color emoji", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellHead p {
+  all: unset;
+  padding-left: 40px;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  color: black;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellHead #createNewChanellHeadArrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellHead #createNewChanellHeadArrow img {
+  width: 25px;
+  height: 30px;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellImgDiv {
+  height: 120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellImgDiv input {
+  display: none;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellImgDiv img {
+  position: relative;
+  height: 120px;
+  width: 120px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellNameInput {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 15px;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellNameInput input {
+  width: 384px;
+  height: 54px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: var(--font-regular);
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom-color: rgb(223, 225, 229);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-image-outset: 0;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: rgb(223, 225, 229);
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: rgb(223, 225, 229);
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: rgb(223, 225, 229);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  justify-content: start;
+  align-items: center;
+  width: 333px;
+  padding-left: 15px;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellNameInput input:hover {
+  border-color: #3390ec;
+  color: #3390ec;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellNameInput input:hover::-moz-placeholder {
+  color: #3390ec;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellNameInput input:hover::placeholder {
+  color: #3390ec;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellDiscriptionsInput {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 15px;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellDiscriptionsInput input {
+  width: 384px;
+  height: 54px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: var(--font-regular);
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom-color: rgb(223, 225, 229);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-image-outset: 0;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: rgb(223, 225, 229);
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: rgb(223, 225, 229);
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: rgb(223, 225, 229);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  justify-content: start;
+  align-items: center;
+  width: 333px;
+  padding-left: 15px;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellDiscriptionsInput input:hover {
+  border-color: #3390ec;
+  color: #3390ec;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellDiscriptionsInput input:hover::-moz-placeholder {
+  color: #3390ec;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell #createNewChanellDiscriptionsInput input:hover::placeholder {
+  color: #3390ec;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #columnForOther .createNewChanell p {
+  padding: 0;
+  margin: 0;
+  padding-left: 20px;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #createButton {
+  position: fixed;
+  bottom: 50px;
+  left: 430px;
+  width: 75px;
+  height: 75px;
+  background-color: rgb(63, 63, 218);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #createButton img {
+  width: 50px;
+  height: 50px;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .createOptions {
+  position: fixed;
+  flex-direction: column;
+  bottom: 150px;
+  left: 350px;
+  padding: 5px;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  background-color: white;
+  border-radius: 10%;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .createOptions .option img {
+  width: 18px;
+  height: 18px;
+}
 #userInterfaceBorder #userInterfaceMain #userInterfaceChat {
+  position: relative;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100%;
+  width: 1250px;
   height: 100%;
 }
 #userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatHead {
