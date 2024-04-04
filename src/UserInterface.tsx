@@ -44,8 +44,14 @@ export function UserInterface() {
   // }, [])
   useEffect(() => {
     if (notrealauthtoken) {
-      setAuth_token(notrealauthtoken)
-      findUserChats(auth_token)
+      const fetchData = async (notrealauthtoken: any) => {
+        const fetchData = async (notrealauthtoken: any) => {
+          setAuth_token(notrealauthtoken)
+        }
+        await fetchData(notrealauthtoken)
+        findUserChats(auth_token)
+      }
+      fetchData(notrealauthtoken)
     } else {
       // alert("Baba ne chye, sprobyite piznishe")
     }
