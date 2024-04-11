@@ -225,10 +225,7 @@ export function UserInterface(this: any) {
     if (notrealauthtoken) {
       ;(async function doUseEffectFunc(notrealauthtoken: any) {
         setAuth_token(notrealauthtoken)
-        await findUserChats(notrealauthtoken).then(async (result) => {
-          console.log(result)
-          setAllChatsList(result)
-        })
+        await findUserChats(notrealauthtoken)
       })(notrealauthtoken)
     } else {
       // alert("Baba ne chye, sprobyite piznishe")
@@ -369,6 +366,7 @@ export function UserInterface(this: any) {
           setGroupsList(userObj.groupsList)
           setServicesList(userObj.servicesList)
           setChanellsList(userObj.chanellsList)
+          setAllChatsList(resText[2])
           return resText
           // [
           //   { botList: userObj.botsList },
