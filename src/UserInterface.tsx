@@ -225,9 +225,10 @@ export function UserInterface(this: any) {
     if (notrealauthtoken) {
       ;(async function doUseEffectFunc(notrealauthtoken: any) {
         setAuth_token(notrealauthtoken)
-        const list: any = await findUserChats(notrealauthtoken)
-        console.log(list)
-        setAllChatsList(list)
+        let list: any = await findUserChats(notrealauthtoken).then(() => {
+          console.log(list)
+          setAllChatsList(list)
+        })
       })(notrealauthtoken)
     } else {
       // alert("Baba ne chye, sprobyite piznishe")
@@ -368,7 +369,6 @@ export function UserInterface(this: any) {
           setGroupsList(userObj.groupsList)
           setServicesList(userObj.servicesList)
           setChanellsList(userObj.chanellsList)
-          console.log(resText[2])
           return resText[2]
           // [
           //   { botList: userObj.botsList },
