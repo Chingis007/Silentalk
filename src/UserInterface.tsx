@@ -226,7 +226,7 @@ export function UserInterface(this: any) {
       ;(async function doUseEffectFunc(notrealauthtoken: any) {
         setAuth_token(notrealauthtoken)
         const list: any = await findUserChats(notrealauthtoken)
-        // setAllChatsList(list)
+        setAllChatsList(list)
       })(notrealauthtoken)
     } else {
       // alert("Baba ne chye, sprobyite piznishe")
@@ -280,8 +280,9 @@ export function UserInterface(this: any) {
     }).then(async (response) => {
       const resText = await response.json()
       if (resText[0] == "chanell created successfully") {
-        let kjkjkjk = chanellsList
-        kjkjkjk.push(resText[1])
+        let oldAllChatList = [...allChatsList]
+        oldAllChatList.unshift(resText[1])
+        setAllChatsList(oldAllChatList)
         // setChanellsList(kjkjkjk)
         // arrange chats here
         // arrange chats here
