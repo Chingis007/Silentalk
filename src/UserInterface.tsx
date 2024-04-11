@@ -240,9 +240,9 @@ export function UserInterface(this: any) {
       formData.append("file", chanellImg)
       formData.append("upload_preset", "vbght5om")
       let url = new URL(
-        `https://api.cloudinary.com/v1_1/${process.env.VITE_REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`
+        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`
       )
-      fetch(url, {
+      await fetch(url, {
         method: "POST",
         body: formData,
       })
