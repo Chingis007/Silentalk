@@ -225,9 +225,9 @@ export function UserInterface(this: any) {
     if (notrealauthtoken) {
       ;(async function doUseEffectFunc(notrealauthtoken: any) {
         setAuth_token(notrealauthtoken)
-        let list: any = await findUserChats(notrealauthtoken).then(() => {
-          console.log(list)
-          setAllChatsList(list)
+        await findUserChats(notrealauthtoken).then((result) => {
+          console.log(result)
+          setAllChatsList(result)
         })
       })(notrealauthtoken)
     } else {
