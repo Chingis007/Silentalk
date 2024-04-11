@@ -199,14 +199,15 @@ body {
   justify-content: center;
   align-items: center;
   width: 1920px;
-  height: 100%;
+  height: 100vh;
   #userInterfaceMain {
     display: flex;
     justify-content: start;
     align-items: start;
     width: 1670px;
     height: 100%;
-    border: gray 1px solid;
+    border: 2px solid rgb(223, 225, 229);
+    // border: 1px solid;
     #userInterfaceChatsColumn {
       display: flex;
       justify-content: start;
@@ -237,68 +238,101 @@ body {
             width: 50px;
             height: 50px;
             img {
-              width: 30px;
-              height: 30px;
+              width: 27px;
+              height: 23px;
               cursor: pointer;
             }
-            #userInterfaceChatsColumnHeadSearch {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              width: 100%;
-              height: 450px;
+          }
+          #userInterfaceChatsColumnHeadSearch {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            margin-right: 20px;
+            border: 2px solid rgb(223, 225, 229);
+            border-radius: 20px;
+            width: 100%;
+            height: 55%;
+            padding: 5px;
+            padding-left: 15px;
+            gap: 10px;
+            transition: 0.2s;
+            img {
+              width: 20px;
+              height: 20px;
+            }
+
+            input {
+              all: unset;
+              border: none;
+            }
+          }
+          #userInterfaceChatsColumnHeadSearch:has(input:focus) {
+            border: 2px solid rgb(51, 144, 236);
+            img {
+              content: url("/public/icons8-search-50.png");
             }
           }
         }
 
         .userInterfaceChatsColumnChats {
           display: flex;
-          justify-content: center;
+          justify-content: start;
           align-items: center;
           flex-direction: column;
           height: 100%;
-          width: 420px;
+          width: 410px;
           white-space: nowrap;
           overflow-x: hidden;
+          padding: 5px;
           .userInterfaceChatsColumnOneChat {
             display: flex;
-            justify-content: center;
+            justify-content: start;
             align-items: center;
             flex-direction: row;
-            width: 100%;
-            height: 50px;
-            border-radius: 5px;
+            width: calc(100% - 10px);
+            height: 68px;
+            border-radius: 10px;
+            padding: 5px;
+            gap: 20px;
             .userInterfaceChatsColumnOneChatImg {
               display: flex;
               justify-content: center;
               align-items: center;
-              width: 50px;
-              height: 50px;
+              width: 60px;
+              height: 60px;
+
+              img {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+              }
             }
             .userInterfaceChatsColumnOneChatNotImg {
               display: flex;
               justify-content: center;
               align-items: center;
               flex-direction: column;
-              width: 250px;
+              width: 315px;
               height: 50px;
               .userInterfaceChatsColumnOneChatNotImgTopLine {
                 display: flex;
-                justify-content: center;
+                justify-content: start;
                 align-items: center;
                 flex-direction: row;
                 width: 100%;
                 height: 25px;
                 .userInterfaceChatsColumnOneChatNotImgName {
                   display: flex;
-                  justify-content: center;
+                  justify-content: start;
                   align-items: center;
                   width: 375px;
                   height: 25px;
                 }
                 .userInterfaceChatsColumnOneChatNotImgDate {
                   display: flex;
-                  justify-content: center;
+                  justify-content: end;
                   align-items: center;
                   width: 75px;
                   height: 25px;
@@ -313,14 +347,20 @@ body {
                 height: 25px;
                 .userInterfaceChatsColumnOneChatNotImgLastMsg {
                   display: flex;
-                  justify-content: center;
+                  justify-content: start;
                   align-items: center;
                   width: 425px;
                   height: 25px;
+                  img {
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 10px;
+                    border-radius: 20%;
+                  }
                 }
                 .userInterfaceChatsColumnOneChatNotImgPindOrMsgCount {
                   display: flex;
-                  justify-content: center;
+                  justify-content: end;
                   align-items: center;
                   width: 25px;
                   height: 25px;
@@ -328,6 +368,19 @@ body {
               }
             }
           }
+        }
+        .userInterfaceChatsColumnChats::-webkit-scrollbar {
+          width: 5px;
+          background: transparent;
+        }
+        .userInterfaceChatsColumnChats::-webkit-scrollbar-track {
+          width: 12px;
+          background: transparent;
+        }
+        .userInterfaceChatsColumnChats::-webkit-scrollbar-thumb {
+          width: 8px;
+          background-color: rgba(0, 0, 0, 0.8);
+          border-radius: 10px;
         }
       }
       #columnForOther {
@@ -507,7 +560,7 @@ body {
         left: 430px;
         width: 75px;
         height: 75px;
-        background-color: rgb(63, 63, 218);
+        background-color: #3390ec;
         border-radius: 50%;
         display: flex;
         justify-content: center;
@@ -548,18 +601,26 @@ body {
       width: 1250px;
       height: 100%;
       #userInterfaceChatHead {
+        top: 0;
+        position: absolute;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: row;
         width: 100%;
         height: 50px;
+        background-color: white;
         #userInterfaceChatHeadImg {
           display: flex;
           justify-content: center;
           align-items: center;
           width: 50px;
           height: 50px;
+          img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+          }
         }
         #userInterfaceChatHeadNameColumn {
           display: flex;
@@ -570,14 +631,14 @@ body {
           height: 50px;
           #userInterfaceChatHeadNameColumnName {
             display: flex;
-            justify-content: center;
+            justify-content: start;
             align-items: center;
             width: 100%;
             height: 25px;
           }
           #userInterfaceChatHeadNameColumnLastSeen {
             display: flex;
-            justify-content: center;
+            justify-content: start;
             align-items: center;
             width: 100%;
             height: 25px;
@@ -631,6 +692,11 @@ body {
           align-items: center;
           width: 50px;
           height: 50px;
+          img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+          }
         }
         #userInterfaceChatHeadSettings {
           display: flex;
@@ -638,6 +704,11 @@ body {
           align-items: center;
           width: 50px;
           height: 50px;
+          img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+          }
         }
       }
       #userInterfaceChatMainBackground {
@@ -648,21 +719,51 @@ body {
         align-items: end;
         width: 100%;
         height: 100%;
-        background-image: url("../public/tgbackground.jpg");
         #userInterfaceChatMainMsgesColumn {
           display: flex;
           //   justify-content: center;
-          justify-content: end;
+          justify-content: start;
           align-items: center;
           flex-direction: column;
-          width: 600px;
-          height: calc(100vh - 50px);
+          width: 100%;
+          height: fit-content;
+          gap: 10px;
+          overflow: scroll;
+          overflow-x: hidden;
           #msg {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            max-width: 450px;
             width: min-content;
             height: min-content;
+            background-color: white;
+            padding: 1px;
+            border-top-left-radius: 5%;
+            border-top-right-radius: 5%;
+            img {
+              max-width: 420px;
+              max-height: 336px;
+              cursor: pointer;
+              border-top-left-radius: 5%;
+              border-top-right-radius: 5%;
+            }
+            #comentary {
+              display: flex;
+              flex-direction: row;
+              width: max-content;
+              max-width: 440px;
+            }
+            #emotions {
+              display: flex;
+              flex-direction: row;
+              img {
+                width: 20px;
+                height: 20px;
+                border: 0px;
+              }
+            }
           }
 
           #userInterfaceChatMainInputBar {
@@ -695,13 +796,32 @@ body {
             }
           }
         }
+        #userInterfaceChatMainMsgesColumn::-webkit-scrollbar {
+          width: 5px;
+          background: transparent;
+        }
+        #userInterfaceChatMainMsgesColumn::-webkit-scrollbar-track {
+          width: 12px;
+          background: transparent;
+        }
+        #userInterfaceChatMainMsgesColumn::-webkit-scrollbar-thumb {
+          width: 8px;
+          background-color: rgba(0, 0, 0, 0.8);
+          border-radius: 10px;
+        }
         #userInterfaceChatMainInputVoice {
+          position: absolute;
+          bottom: 0;
+          right: 30%;
           display: flex;
           justify-content: center;
           align-items: center;
           width: 50px;
           height: 50px;
           bottom: 0;
+          border-radius: 50%;
+          background-color: blue;
+          cursor: pointer;
         }
       }
     }
