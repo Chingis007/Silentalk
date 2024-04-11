@@ -503,41 +503,43 @@ export function UserInterface(this: any) {
                                   //     : { color: "green" }
                                   // }
                                 >
-                                  {oneChat.messages[
-                                    oneChat.messages.length - 1
-                                  ] ? (
+                                  {oneChat.messages ? (
                                     oneChat.messages[
                                       oneChat.messages.length - 1
-                                    ].img ? (
-                                      <>
-                                        <img
-                                          src={
+                                    ] ? (
+                                      oneChat.messages[
+                                        oneChat.messages.length - 1
+                                      ].img ? (
+                                        <>
+                                          <img
+                                            src={
+                                              oneChat.messages[
+                                                oneChat.messages.length - 1
+                                              ].img
+                                                ? oneChat.messages[
+                                                    oneChat.messages.length - 1
+                                                  ].img
+                                                : "./blank_photo.png"
+                                            }
+                                          />
+
+                                          {
                                             oneChat.messages[
                                               oneChat.messages.length - 1
-                                            ].img
-                                              ? oneChat.messages[
-                                                  oneChat.messages.length - 1
-                                                ].img
-                                              : "./blank_photo.png"
+                                            ].comentary
                                           }
-                                        />
-
-                                        {
+                                        </>
+                                      ) : (
+                                        `${
                                           oneChat.messages[
                                             oneChat.messages.length - 1
                                           ].comentary
-                                        }
-                                      </>
+                                        }`
+                                      )
                                     ) : (
-                                      `${
-                                        oneChat.messages[
-                                          oneChat.messages.length - 1
-                                        ].comentary
-                                      }`
+                                      "Created Succesfully"
                                     )
-                                  ) : (
-                                    "Created Succesfully"
-                                  )}
+                                  ) : undefined}
                                 </div>
                                 <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
                                   PindOrMsgCount
