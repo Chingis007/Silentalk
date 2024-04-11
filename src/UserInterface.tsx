@@ -226,6 +226,7 @@ export function UserInterface(this: any) {
       ;(async function doUseEffectFunc(notrealauthtoken: any) {
         setAuth_token(notrealauthtoken)
         const list: any = await findUserChats(notrealauthtoken)
+        console.log(list)
         setAllChatsList(list)
       })(notrealauthtoken)
     } else {
@@ -367,6 +368,7 @@ export function UserInterface(this: any) {
           setGroupsList(userObj.groupsList)
           setServicesList(userObj.servicesList)
           setChanellsList(userObj.chanellsList)
+          console.log(resText[2])
           return resText[2]
           // [
           //   { botList: userObj.botsList },
