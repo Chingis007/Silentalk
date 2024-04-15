@@ -13,6 +13,13 @@ import {
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 export type msgType = { img: string; comentary: string; emotions: emotions[] }
 export type emotions = { name: string; count: number }
+export type userList = {
+  botList: []
+  chatsList: []
+  groupsList: []
+  servicesList: []
+  chanellsList: []
+}
 export function UserInterface(this: any) {
   let navigate = useNavigate()
   const refValue = useRef()
@@ -101,7 +108,7 @@ export function UserInterface(this: any) {
       username: "morozio",
       findname: "morozio",
       chanellDiscription: "morozioDiscription",
-      partisipants: ["+380953035989"],
+      partisipants: [{ admin: "YES", findname: "150496178" }],
       publicUniqueCode: "publicUniqueCode",
       link: "link",
       lastUpdated: "1712674021963",
@@ -130,12 +137,16 @@ export function UserInterface(this: any) {
         "https://res.cloudinary.com/dy9emuyvs/image/upload/v1691776582/uddsi7lqdr2dw6xc23cv.png",
     },
   ])
+
+  const [chanellStatus, setChanellStatus] = useState("user")
+  const [allChatsListInUser, setAllChatsListInUser] = useState<userList>()
   const [openedChat, setOpenedChat] = useState({ type: "", findname: "" })
   const [pageJustLoaded, setPageJustLoaded] = useState(true)
   const [showcreateoptions, setShowCreateOptions] = useState(false)
   const [createNewChanell, setCreateNewChanell] = useState(false)
   const [createNewGroup, setCreateNewGroup] = useState(false)
   const [createNewPrivateChat, setCreateNewPrivateChat] = useState(false)
+  const [userFindName, setUserFindName] = useState("")
   const [username, setUsername] = useState("")
   const [botsList, setBotsList] = useState([""])
   const [chatsList, setChatsList] = useState([""])
@@ -147,6 +158,7 @@ export function UserInterface(this: any) {
   const [chanellDiscription, setChanellDiscription] = useState("")
   const [chanellImgUrl, setChanellImgUrl] = useState("")
   const [chanellImg, setChanellImg] = useState<File | null>(null)
+  const [currentChatFindname, setCurrentChatFindname] = useState("")
   const [currentChatImgSrc, setCurrentChatImgSrc] = useState("")
   const [currentChatName, setCurrentChatName] = useState("")
   const [currentChatSubs, setCurrentChatSubs] = useState("")
@@ -179,6 +191,7 @@ export function UserInterface(this: any) {
     newAllList.sort((a: any, b: any) => {
       return b.lastUpdated - a.lastUpdated
     })
+
     // allList =
     // [
     //   {
@@ -218,6 +231,38 @@ export function UserInterface(this: any) {
     //       },
     //     ]
     // setAllChatsList()
+  }
+
+  async function submitCurrentChatInput(
+    currentChatFindname: string,
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) {
+    let target = event.target as HTMLInputElement
+    if (event.key == "Enter") {
+      if (!target.value) {
+        return
+      }
+      // let currentValue = target.value
+      let data = {
+        auth_token: auth_token,
+        findname: currentChatFindname,
+        newMessage: { img: "", comentary: target.value, emotions: [] },
+      }
+      fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/users/createNewChanell`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          withCredentials: "true",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(data),
+      }).then(async (response) => {
+        const resText = await response.json()
+        if (resText[0] == "chanell messages updated successfully") {
+          setCurrentChatMsgsList(resText[1].messages)
+        }
+      })
+    }
   }
 
   useEffect(() => {
@@ -300,6 +345,19 @@ export function UserInterface(this: any) {
           if (allChatsList[i].findname != findname) {
             continue
           } else {
+            for (let l = 0; l < allChatsList.length; l++) {
+              if (allChatsList[i].partisipants[l].findname == userFindName) {
+                if (allChatsList[i].partisipants[l].admin == "yes") {
+                  setChanellStatus("admin")
+                  return
+                } else {
+                  setChanellStatus("user")
+                  return
+                }
+              }
+            }
+
+            setCurrentChatFindname(allChatsList[i].findname)
             setCurrentChatImgSrc(allChatsList[i].photoLink)
             setCurrentChatName(allChatsList[i].username)
             setCurrentChatSubs(allChatsList[i].partisipants.length)
@@ -361,12 +419,16 @@ export function UserInterface(this: any) {
           document.cookie = `groupsList=${userObj.groupsList}; expires=Session; path=/;`
           document.cookie = `servicesList=${userObj.servicesList}; expires=Session; path=/;`
           document.cookie = `chanellsList=${userObj.chanellsList}; expires=Session; path=/;`
+          setUserFindName(userObj.findname)
           setBotsList(userObj.botsList)
           setChatsList(userObj.chatsList)
           setGroupsList(userObj.groupsList)
           setServicesList(userObj.servicesList)
           setChanellsList(userObj.chanellsList)
+          setAllChatsListInUser(resText[1])
           setAllChatsList(resText[2])
+          console.log(resText[1])
+          console.log(resText[2])
           return resText
           // [
           //   { botList: userObj.botsList },
@@ -437,116 +499,152 @@ export function UserInterface(this: any) {
                   {allChatsList != undefined
                     ? allChatsList.map((oneChat: any) => {
                         return oneChat.group == "service" ? (
-                          <div
-                            key={key++}
-                            className="userInterfaceChatsColumnOneChat"
-                            style={
-                              openedChat.findname == oneChat.findname
-                                ? {
-                                    backgroundColor: "#3390EC",
-                                    color: "white",
-                                  }
-                                : {
-                                    backgroundColor: "transparent",
-                                    color: "black",
-                                  }
-                            }
-                            onClick={() => {
-                              setOpenedChat({
-                                type: "service",
-                                findname: oneChat.findname,
-                              })
-                              setMainPageInput("service", oneChat.findname)
-                            }}
-                          >
-                            <div className="userInterfaceChatsColumnOneChatImg">
-                              <img src={oneChat.photoLink} alt="" />
-                            </div>
-                            <div className="userInterfaceChatsColumnOneChatNotImg">
-                              <div className="userInterfaceChatsColumnOneChatNotImgTopLine">
-                                <div className="userInterfaceChatsColumnOneChatNotImgName">
-                                  {oneChat.username}
-                                </div>
-                                <div className="userInterfaceChatsColumnOneChatNotImgDate">
-                                  {Math.abs(
-                                    Number(oneChat.lastUpdated) -
-                                      Number(new Date().getTime())
-                                  ) <= 86400000
-                                    ? `${new Date(
-                                        Number(oneChat.lastUpdated)
-                                      ).toLocaleTimeString()}`
-                                    : Math.abs(
-                                        Number(oneChat.lastUpdated) -
-                                          Number(new Date().getTime())
-                                      ) <= 172800000
-                                    ? `${new Date(Number(oneChat.lastUpdated))
-                                        .toUTCString()
-                                        .slice(0, 3)}`
-                                    : new Date().getFullYear() !=
-                                      new Date(
-                                        Number(oneChat.lastUpdated)
-                                      ).getFullYear()
-                                    ? `${new Date(
-                                        Number(oneChat.lastUpdated)
-                                      ).toLocaleDateString("en-GB")}`
-                                    : `${new Date(Number(oneChat.lastUpdated))
-                                        .toString()
-                                        .slice(4, 10)}`}
-                                </div>
-                              </div>
-                              <div className="userInterfaceChatsColumnOneChatNotImgBotLine">
-                                <div
-                                  className="userInterfaceChatsColumnOneChatNotImgLastMsg"
-                                  // style={
-                                  //   oneChat.messages[-1]
-                                  //     ? { color: "black" }
-                                  //     : { color: "green" }
-                                  // }
-                                >
-                                  {oneChat.messages ? (
-                                    oneChat.messages[
-                                      oneChat.messages.length - 1
-                                    ] ? (
-                                      oneChat.messages[
-                                        oneChat.messages.length - 1
-                                      ].img ? (
-                                        <>
-                                          <img
-                                            src={
-                                              oneChat.messages[
-                                                oneChat.messages.length - 1
-                                              ].img
-                                                ? oneChat.messages[
+                          <>
+                            {allChatsListInUser
+                              ? allChatsListInUser.servicesList.map(
+                                  (oneService: any) => {
+                                    return oneChat.findname ==
+                                      oneService.findname ? (
+                                      <div
+                                        key={key++}
+                                        className="userInterfaceChatsColumnOneChat"
+                                        style={
+                                          openedChat.findname ==
+                                          oneChat.findname
+                                            ? {
+                                                backgroundColor: "#3390EC",
+                                                color: "white",
+                                              }
+                                            : {
+                                                backgroundColor: "transparent",
+                                                color: "black",
+                                              }
+                                        }
+                                        onClick={() => {
+                                          setOpenedChat({
+                                            type: "service",
+                                            findname: oneChat.findname,
+                                          })
+                                          setMainPageInput(
+                                            "service",
+                                            oneChat.findname
+                                          )
+                                        }}
+                                      >
+                                        <div className="userInterfaceChatsColumnOneChatImg">
+                                          <img src={oneChat.photoLink} alt="" />
+                                        </div>
+                                        <div className="userInterfaceChatsColumnOneChatNotImg">
+                                          <div className="userInterfaceChatsColumnOneChatNotImgTopLine">
+                                            <div className="userInterfaceChatsColumnOneChatNotImgName">
+                                              {oneChat.username}
+                                            </div>
+                                            <div className="userInterfaceChatsColumnOneChatNotImgDate">
+                                              {Math.abs(
+                                                Number(oneChat.lastUpdated) -
+                                                  Number(new Date().getTime())
+                                              ) <= 86400000
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).toLocaleTimeString()}`
+                                                : Math.abs(
+                                                    Number(
+                                                      oneChat.lastUpdated
+                                                    ) -
+                                                      Number(
+                                                        new Date().getTime()
+                                                      )
+                                                  ) <= 172800000
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  )
+                                                    .toUTCString()
+                                                    .slice(0, 3)}`
+                                                : new Date().getFullYear() !=
+                                                  new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).getFullYear()
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).toLocaleDateString(
+                                                    "en-GB"
+                                                  )}`
+                                                : `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  )
+                                                    .toString()
+                                                    .slice(4, 10)}`}
+                                            </div>
+                                          </div>
+                                          <div className="userInterfaceChatsColumnOneChatNotImgBotLine">
+                                            <div
+                                              className="userInterfaceChatsColumnOneChatNotImgLastMsg"
+                                              // style={
+                                              //   oneChat.messages[-1]
+                                              //     ? { color: "black" }
+                                              //     : { color: "green" }
+                                              // }
+                                            >
+                                              {oneChat.messages ? (
+                                                oneChat.messages[
+                                                  oneChat.messages.length - 1
+                                                ] ? (
+                                                  oneChat.messages[
                                                     oneChat.messages.length - 1
-                                                  ].img
-                                                : "./blank_photo.png"
-                                            }
-                                          />
+                                                  ].img ? (
+                                                    <>
+                                                      <img
+                                                        src={
+                                                          oneChat.messages[
+                                                            oneChat.messages
+                                                              .length - 1
+                                                          ].img
+                                                            ? oneChat.messages[
+                                                                oneChat.messages
+                                                                  .length - 1
+                                                              ].img
+                                                            : "./blank_photo.png"
+                                                        }
+                                                      />
 
-                                          {
-                                            oneChat.messages[
-                                              oneChat.messages.length - 1
-                                            ].comentary
-                                          }
-                                        </>
-                                      ) : (
-                                        `${
-                                          oneChat.messages[
-                                            oneChat.messages.length - 1
-                                          ].comentary
-                                        }`
-                                      )
-                                    ) : (
-                                      "Created Succesfully"
-                                    )
-                                  ) : undefined}
-                                </div>
-                                <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
-                                  PindOrMsgCount
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                                                      {
+                                                        oneChat.messages[
+                                                          oneChat.messages
+                                                            .length - 1
+                                                        ].comentary
+                                                      }
+                                                    </>
+                                                  ) : (
+                                                    `${
+                                                      oneChat.messages[
+                                                        oneChat.messages
+                                                          .length - 1
+                                                      ].comentary
+                                                    }`
+                                                  )
+                                                ) : (
+                                                  "Created Succesfully"
+                                                )
+                                              ) : undefined}
+                                            </div>
+                                            <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
+                                              {true ? (
+                                                <div>{6}</div>
+                                              ) : oneService.pinned ? (
+                                                <img
+                                                  src={"./pinned.png"}
+                                                  alt=""
+                                                />
+                                              ) : undefined}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ) : undefined
+                                  }
+                                )
+                              : undefined}
+                          </>
                         ) : oneChat.group == "chanell" ? (
                           <div
                             key={key++}
@@ -828,10 +926,15 @@ export function UserInterface(this: any) {
             </div>
             <div
               id="userInterfaceChatMainBackground"
-              style={{
-                backgroundImage: "url(./backgroundlightgradient.png)",
-                // backgroundImage: "url(./tgbackground.jpg)",
-              }}
+              style={
+                {
+                  // backgroundImage:
+                  // "linear-gradient(to bottom right, yellow, green, yellow), url(./backgroundlight.png)",
+                  // "linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(117, 19, 93, 0.73)),url(./tgbackground.jpg)",
+                  // backgroundRepeat: "no-repeat",
+                  // backgroundImage: "url(./backgroundlight.png)",
+                }
+              }
             >
               <div
                 id="userInterfaceChatMainMsgesColumn"
@@ -868,36 +971,52 @@ export function UserInterface(this: any) {
                       )
                     })
                   : undefined}
-
-                {/* 
-[
-        { name: "laughface", count: "1" },
-        { name: "angryface", count: "3" },
-      ], */}
-                {/* <div id="userInterfaceChatMainInputBar">
-                  <div id="userInterfaceChatMainInputSmile">Smile</div>
-                  <div id="userInterfaceChatMainInputText">Text</div>
-                  <div id="userInterfaceChatMainInputFile">File</div>
-                </div> */}
               </div>
-              {/* <div id="userInterfaceChatMainInputVoice">Voice</div> */}
               <div
-                id="userInterfaceChatMainInputVoice"
-                onClick={() => {
-                  setCurrentChatMsgsList((prevItems) => [
-                    ...prevItems,
-                    {
-                      img: "https://res.cloudinary.com/dy9emuyvs/image/upload/v1691776582/uddsi7lqdr2dw6xc23cv.png",
-                      comentary: "fat",
-                      emotions: [
-                        { name: "laughface", count: 1 },
-                        { name: "angryface", count: 3 },
-                      ],
-                    },
-                  ])
-                }}
+                id="userInterfaceChatMainInputBar"
+                style={
+                  chanellStatus == "admin"
+                    ? { display: "flex" }
+                    : { display: "none" }
+                }
               >
-                add more morozes
+                <div id="userInterfaceChatMainInputLine">
+                  <div id="userInterfaceChatMainInputSmile">
+                    {" "}
+                    <img src={`./inputSmile.png`} />
+                  </div>
+                  <div id="userInterfaceChatMainInputText">
+                    <input
+                      type="text"
+                      onKeyDown={(event) => {
+                        submitCurrentChatInput(currentChatFindname, event)
+                      }}
+                      placeholder="Message"
+                    />
+                  </div>
+                  <div id="userInterfaceChatMainInputFile">
+                    <img src={`./fileInput.png`} />
+                  </div>
+                </div>
+                {/* <div id="userInterfaceChatMainInputVoice">Voice</div> */}
+                <div
+                  id="userInterfaceChatMainInputVoice"
+                  // onClick={() => {
+                  //   setCurrentChatMsgsList((prevItems) => [
+                  //     ...prevItems,
+                  //     {
+                  //       img: "https://res.cloudinary.com/dy9emuyvs/image/upload/v1691776582/uddsi7lqdr2dw6xc23cv.png",
+                  //       comentary: "fat",
+                  //       emotions: [
+                  //         { name: "laughface", count: 1 },
+                  //         { name: "angryface", count: 3 },
+                  //       ],
+                  //     },
+                  //   ])
+                  // }}
+                >
+                  <img src={`./microphone.png`} />
+                </div>
               </div>
             </div>
           </div>

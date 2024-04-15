@@ -16,6 +16,7 @@
     "@types/node": "^16.18.86",
     "@types/react": "^18.2.60",
     "@types/react-dom": "^18.2.19",
+    "argon2": "^0.40.1",
     "jose": "^5.2.2",
     "libphonenumber-js": "^1.10.57",
     "react": "^18.2.0",
