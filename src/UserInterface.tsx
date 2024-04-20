@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react"
-
+// import WebSocket from "ws"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 export type msgType = { img: string; comentary: string; emotions: emotions[] }
 export type emotions = { name: string; count: number }
@@ -25,7 +25,9 @@ export function UserInterface(this: any) {
   const refValue = useRef()
   const myRef = useRef<HTMLDivElement>(null)
   let key = 0
-  const [currentChatMsgsList, setCurrentChatMsgsList] = useState<msgType[]>([
+  const [currentChatMsgsList, setCurrentChatMsgsList] = useState<
+    msgType[] | undefined
+  >([
     // {
     //   img: "https://res.cloudinary.com/dy9emuyvs/image/upload/v1691776582/uddsi7lqdr2dw6xc23cv.png",
     //   comentary: "fat",
@@ -137,7 +139,11 @@ export function UserInterface(this: any) {
         "https://res.cloudinary.com/dy9emuyvs/image/upload/v1691776582/uddsi7lqdr2dw6xc23cv.png",
     },
   ])
-
+  const [newWebSocketMsg, setNewWebSocketMsg] = useState<{
+    type: string
+    findname: string
+    newMessage: msgType
+  }>()
   const [chanellStatus, setChanellStatus] = useState("user")
   const [allChatsListInUser, setAllChatsListInUser] = useState<userList>()
   const [openedChat, setOpenedChat] = useState({ type: "", findname: "" })
@@ -183,58 +189,101 @@ export function UserInterface(this: any) {
   //   }
   // }, [])
 
-  const arrangeChats = async (allList: any) => {
-    if (!allList) {
-      return
-    }
-    let newAllList = [...allList]
-    newAllList.sort((a: any, b: any) => {
-      return b.lastUpdated - a.lastUpdated
-    })
+  // function clickedWsConnect() {
+  //   closeConnection()
 
-    // allList =
-    // [
-    //   {
-    //       group: chanell.group,
-    //       username: chanell.username,
-    //       findname: chanell.findname,
-    //       chanellDiscription: chanell.chanellDiscription,
-    //       publicUniqueCode: chanell.publicUniqueCode,
-    //       link: chanell.link,
-    //       partisipants: chanell.partisipants,
-    //       lastUpdated: "1712674021963",
-    //       messages: chanell.messages,
-    //       pinned: chanell.pinned,
-    //       photoLink: chanell.photoLink,
-    //     },{
-    //       username: chanell.username,
-    //       findname: chanell.findname,
-    //       chanellDiscription: chanell.chanellDiscription,
-    //       publicUniqueCode: chanell.publicUniqueCode,
-    //       link: chanell.link,
-    //       partisipants: chanell.partisipants,
-    //       lastUpdated: "1712674021969",
-    //       messages: chanell.messages,
-    //       pinned: chanell.pinned,
-    //       photoLink: chanell.photoLink,
-    //     },
-    //       {
-    //         group: chanell.group,
-    //         username: "silentalk",
-    //         serviceUniqueCode: "100000001",
-    //         undernameDiscription: "service notification",
-    //         findname: "silentalk",
-    //         photoLink:
-    //           "https://res.cloudinary.com/dy9emuyvs/image/upload/v1691776582/uddsi7lqdr2dw6xc23cv.png",
-    //         lastUpdated: "1712674021963",
-    //         messages: [],
-    //       },
-    //     ]
-    // setAllChatsList()
-  }
+  //   ws = new WebSocket("wss://silentalk-back.onrender.com/:10000")
+
+  //   ws.addEventListener("error", () => {
+  //     console.log("WebSocket error")
+  //   })
+
+  //   ws.addEventListener("open", () => {
+  //     console.log("WebSocket connection established")
+  //   })
+
+  //   ws.addEventListener("close", () => {
+  //     console.log("WebSocket connection closed")
+  //   })
+  //   ws.addEventListener("message", (msg) => {
+  //     console.log(`Received message: ${msg.data}`)
+  //   })
+  // }
+  // const wsInput = document.getElementById("wsInput") as HTMLInputElement
+
+  // function clickedWsSend() {
+  //   const val = wsInput?.value
+
+  //   if (!val) {
+  //     return
+  //   } else if (!ws) {
+  //     console.log("No WebSocket connection")
+  //     return
+  //   }
+
+  //   ws.send(val)
+  //   console.log(`Sent "${val}"`)
+  //   wsInput.value = ""
+  // }
+
+  // allList =
+  // [
+  //   {
+  //       group: chanell.group,
+  //       username: chanell.username,
+  //       findname: chanell.findname,
+  //       chanellDiscription: chanell.chanellDiscription,
+  //       publicUniqueCode: chanell.publicUniqueCode,
+  //       link: chanell.link,
+  //       partisipants: chanell.partisipants,
+  //       lastUpdated: "1712674021963",
+  //       messages: chanell.messages,
+  //       pinned: chanell.pinned,
+  //       photoLink: chanell.photoLink,
+  //     },{
+  //       username: chanell.username,
+  //       findname: chanell.findname,
+  //       chanellDiscription: chanell.chanellDiscription,
+  //       publicUniqueCode: chanell.publicUniqueCode,
+  //       link: chanell.link,
+  //       partisipants: chanell.partisipants,
+  //       lastUpdated: "1712674021969",
+  //       messages: chanell.messages,
+  //       pinned: chanell.pinned,
+  //       photoLink: chanell.photoLink,
+  //     },
+  //       {
+  //         group: chanell.group,
+  //         username: "silentalk",
+  //         serviceUniqueCode: "100000001",
+  //         undernameDiscription: "service notification",
+  //         findname: "silentalk",
+  //         photoLink:
+  //           "https://res.cloudinary.com/dy9emuyvs/image/upload/v1691776582/uddsi7lqdr2dw6xc23cv.png",
+  //         lastUpdated: "1712674021963",
+  //         messages: [],
+  //       },
+  //     ]
+
+  // onClick={() => {
+  //   let msg = {
+  //     type: "addMsgToChanell",
+  //     findname: "875186317",
+  //     newMessage: {
+  //       img: "",
+  //       comentary: "newComByWebsocket",
+  //       emotions: [],
+  //     },
+  //   }
+  //   ws?.send(JSON.stringify(msg))
+  // }}
+  // onKeyDown={(event) => {
+  //   submitCurrentChatInput(currentChatFindname,currentChatType, event)
+  // }}
 
   async function submitCurrentChatInput(
     currentChatFindname: string,
+    currentChatType: string,
     event: React.KeyboardEvent<HTMLInputElement>
   ) {
     let target = event.target as HTMLInputElement
@@ -242,38 +291,132 @@ export function UserInterface(this: any) {
       if (!target.value) {
         return
       }
-      // let currentValue = target.value
-      let data = {
-        auth_token: auth_token,
+      let msg = {
+        type: currentChatType,
         findname: currentChatFindname,
-        newMessage: { img: "", comentary: target.value, emotions: [] },
-      }
-      fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/users/createNewChanell`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          withCredentials: "true",
-          "Access-Control-Allow-Origin": "*",
+        newMessage: {
+          img: "",
+          comentary: target.value,
+          emotions: [],
         },
-        body: JSON.stringify(data),
-      }).then(async (response) => {
-        const resText = await response.json()
-        if (resText[0] == "chanell messages updated successfully") {
-          setCurrentChatMsgsList(resText[1].messages)
-        }
-      })
+      }
+      ws?.send(JSON.stringify(msg))
+      target.value = ""
     }
   }
 
+  // async function submitCurrentChatInput(
+  //   currentChatFindname: string,
+  //   currentChatType: string,
+  //   event: React.KeyboardEvent<HTMLInputElement>
+  // ) {
+  //   let target = event.target as HTMLInputElement
+  //   if (event.key == "Enter") {
+  //     if (!target.value) {
+  //       return
+  //     }
+  //     // let currentValue = target.value
+  //     // WRONG data FORMAT
+  //     let data = {
+  //       auth_token: auth_token,
+  //       findname: currentChatFindname,
+  //       newMessage: { img: "", comentary: target.value, emotions: [] },
+  //     }
+
+  //     fetch(
+  //       `${process.env.REACT_APP_SERVER_ENDPOINT}/users/updateChanellChat`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           withCredentials: "true",
+  //           "Access-Control-Allow-Origin": "*",
+  //         },
+  //         body: JSON.stringify(data),
+  //       }
+  //     ).then(async (response) => {
+  //       const resText = await response.json()
+  //       if (resText[0] == "chanell messages updated successfully") {
+  //         setCurrentChatMsgsList(resText[1].messages)
+  //         let oldAllChatList = [...allChatsList]
+  //         for (let i = 0; i < allChatsList.length; i++) {
+  //           if (allChatsList[i].findname == currentChatFindname) {
+  //             oldAllChatList[i].messages = resText[1].messages
+  //             setAllChatsList(oldAllChatList)
+  //           }
+  //         }
+  //       } else {
+  //         alert("Some Error during updating a chanell")
+  //       }
+  //       target.value = ""
+  //     })
+  //   }
+  // }
+
+  // function showMessage(message: string) {
+  //   if (!messagesDiv) {
+  //     return
+  //   }
+  //   messagesDiv.textContent += `\n${message}`
+  //   messagesDiv.scrollTop = messagesDiv?.scrollHeight
+  // }
+  const [ws, setWs] = useState<WebSocket>()
+  function closeConnection() {
+    if (!!ws) {
+      ws.close()
+    }
+  }
+  async function doConnect() {
+    closeConnection()
+    let ws = new WebSocket(`${process.env.REACT_APP_WEB_SOCKET_URL}`)
+    setWs(ws)
+    ws.addEventListener("error", () => {
+      console.log("WebSocket error")
+    })
+    ws.addEventListener("open", () => {
+      console.log("WebSocket connection established")
+    })
+    ws.addEventListener("close", () => {
+      console.log("WebSocket connection closed")
+      console.log("WebSocket trying to reconect in 5 sec")
+      setTimeout(function () {
+        doConnect()
+      }, 5000)
+    })
+    ws.addEventListener("message", (msg) => {
+      let msgObj = JSON.parse(msg.data)
+      setNewWebSocketMsg(msgObj)
+    })
+  }
   useEffect(() => {
-    // arrangeChats(allChatsList)
+    if (newWebSocketMsg) {
+      let msgObj = newWebSocketMsg
+      if (msgObj.type == "chanell") {
+        if (currentChatFindname == msgObj.findname && currentChatMsgsList) {
+          let oldCurrentChatMsgsList = [...currentChatMsgsList]
+          oldCurrentChatMsgsList.push(msgObj.newMessage)
+          setCurrentChatMsgsList(oldCurrentChatMsgsList)
+        }
+        let oldAllChatList = [...allChatsList]
+        for (let i = 0; i < allChatsList.length; i++) {
+          if (allChatsList[i].findname == msgObj.findname) {
+            oldAllChatList[i].messages.push(msgObj.newMessage)
+            setAllChatsList(oldAllChatList)
+          }
+        }
+      }
+      setNewWebSocketMsg(undefined)
+    }
+  }, [newWebSocketMsg])
+  useEffect(() => {
     if (notrealauthtoken) {
       ;(async function doUseEffectFunc(notrealauthtoken: any) {
         setAuth_token(notrealauthtoken)
         await findUserChats(notrealauthtoken)
+        await doConnect()
       })(notrealauthtoken)
     } else {
-      // alert("Baba ne chye, sprobyite piznishe")
+      alert("Baba ne chye, sprobyite piznishe")
     }
   }, [])
 
@@ -345,18 +488,15 @@ export function UserInterface(this: any) {
           if (allChatsList[i].findname != findname) {
             continue
           } else {
-            for (let l = 0; l < allChatsList.length; l++) {
+            for (let l = 0; l < allChatsList[i].partisipants.length; l++) {
               if (allChatsList[i].partisipants[l].findname == userFindName) {
                 if (allChatsList[i].partisipants[l].admin == "yes") {
                   setChanellStatus("admin")
-                  return
                 } else {
                   setChanellStatus("user")
-                  return
                 }
               }
             }
-
             setCurrentChatFindname(allChatsList[i].findname)
             setCurrentChatImgSrc(allChatsList[i].photoLink)
             setCurrentChatName(allChatsList[i].username)
@@ -414,11 +554,21 @@ export function UserInterface(this: any) {
         if (resText[0] === "Back is good") {
           // alert("Succesfull request but bad responce")
           let userObj = resText[1]
-          document.cookie = `botsList=${userObj.botsList}; expires=Session; path=/;`
-          document.cookie = `chatsList=${userObj.chatsList}; expires=Session; path=/;`
-          document.cookie = `groupsList=${userObj.groupsList}; expires=Session; path=/;`
-          document.cookie = `servicesList=${userObj.servicesList}; expires=Session; path=/;`
-          document.cookie = `chanellsList=${userObj.chanellsList}; expires=Session; path=/;`
+          document.cookie = `botsList=${JSON.stringify(
+            userObj.botsList
+          )}; expires=Session; path=/;`
+          document.cookie = `chatsList=${JSON.stringify(
+            userObj.chatsList
+          )}; expires=Session; path=/;`
+          document.cookie = `groupsList=${JSON.stringify(
+            userObj.groupsList
+          )}; expires=Session; path=/;`
+          document.cookie = `servicesList=${JSON.stringify(
+            userObj.servicesList
+          )}; expires=Session; path=/;`
+          document.cookie = `chanellsList=${JSON.stringify(
+            userObj.chanellsList
+          )}; expires=Session; path=/;`
           setUserFindName(userObj.findname)
           setBotsList(userObj.botsList)
           setChatsList(userObj.chatsList)
@@ -888,6 +1038,86 @@ export function UserInterface(this: any) {
                 <img src={"./icons8-man-50.png"} alt="" /> New Private Chat
               </div>
             </div>
+            <div style={{ border: "1px solid black" }}>
+              <a
+                href={`${process.env.REACT_APP_MAIN_DOMAIN}/addTo/670387019/chanell`}
+              >
+                Subscribe to chanell
+              </a>
+            </div>
+            <div
+              style={{ border: "1px solid black" }}
+              onClick={() => {
+                let data = {
+                  auth_token: auth_token,
+                  findname: "875186317",
+                  newMessage: {
+                    img: "",
+                    comentary: "someNewMessage",
+                    emotions: [],
+                  },
+                }
+                fetch(
+                  `${process.env.REACT_APP_SERVER_ENDPOINT}/users/updateChanellChat`,
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      withCredentials: "true",
+                      "Access-Control-Allow-Origin": "*",
+                    },
+                    body: JSON.stringify(data),
+                  }
+                ).then(async (response) => {
+                  const resText = await response.json()
+                  if (resText[0] == "chanell messages updated successfully") {
+                    let oldAllChatList = [...allChatsList]
+                    for (let i = 0; i < allChatsList.length; i++) {
+                      if (allChatsList[i].findname == currentChatFindname) {
+                        oldAllChatList[i].messages = resText[1].messages
+                        setAllChatsList(oldAllChatList)
+                      }
+                    }
+                  } else {
+                    alert("Some Error during updating a chanell")
+                  }
+                })
+
+                //  ADD MESSAGES TO BEBRYN CHANELL AND DISPLAY NOT READ COUNT
+              }}
+            >
+              Click me to add message in bebryn
+            </div>
+            <div style={{ border: "1px solid black" }} onClick={() => {}}>
+              Click me to open websocket
+            </div>
+            <div
+              style={{ border: "1px solid black" }}
+              onClick={() => {
+                closeConnection()
+              }}
+            >
+              Click me to close websocket
+            </div>
+            <input type="text" id="wsInput" />
+            <div
+              style={{ border: "1px solid black" }}
+              onClick={() => {
+                let msg = {
+                  type: "addMsgToChanell",
+                  findname: "875186317",
+                  newMessage: {
+                    img: "",
+                    comentary: "newComByWebsocket",
+                    emotions: [],
+                  },
+                }
+                ws?.send(JSON.stringify(msg))
+              }}
+            >
+              Click me to send message websocket
+            </div>
+            <div id="messagesDiv" style={{ border: "1px solid black" }}></div>
           </div>
           <div id="userInterfaceChat">
             <div
@@ -989,7 +1219,11 @@ export function UserInterface(this: any) {
                     <input
                       type="text"
                       onKeyDown={(event) => {
-                        submitCurrentChatInput(currentChatFindname, event)
+                        submitCurrentChatInput(
+                          currentChatFindname,
+                          currentChatType,
+                          event
+                        )
                       }}
                       placeholder="Message"
                     />

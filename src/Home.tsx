@@ -6,6 +6,18 @@ import { parsePhoneNumber } from "libphonenumber-js"
 import PhoneInput from "react-phone-number-input"
 
 export function Home() {
+  let chatLink: string | undefined
+  let chatType: string | undefined
+  try {
+    chatLink = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("chatLink="))
+      ?.split("=")[1]
+    chatType = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("chatType="))
+      ?.split("=")[1]
+  } catch {}
   const [password, setPassword] = useState("")
   const [passwordValidationText, setPasswordValidationText] = useState("")
   const [passwordRepeat, setPasswordRepeat] = useState("")
@@ -190,7 +202,7 @@ export function Home() {
       alert("Wrong registration values")
       return
     }
-    const data = {
+    let data: any = {
       username: "",
       password: password,
       phoneNumber: phoneNumber,
@@ -199,8 +211,21 @@ export function Home() {
       chatsList: [],
       botsList: [],
     }
+    if (chatLink && chatType) {
+      data = {
+        username: "",
+        password: password,
+        phoneNumber: phoneNumber,
+        groupsList: [],
+        publicsList: [],
+        chatsList: [],
+        botsList: [],
+        chatLink: chatLink,
+        chatType: chatType,
+      }
+    }
     // fetch(`http://localhost:4000/users`, {
-    fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/users`, {
+    fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/users/createNewUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -214,34 +239,47 @@ export function Home() {
         alert(
           "User existed, password matched existing user, you were logged in"
         )
-        let user = resText[1].user
+        let findname = resText[1].findname
         document.cookie = `auth_token=${resText[1].auth_token}; expires=Session; path=/;`
-        document.cookie = `email=${resText[1].user}; expires=Session; path=/;`
-        document.cookie = `emailImgUrl=${resText[1].emailImgUrl}; expires=Session; path=/;`
-        navigate(`/${user}`)
+        navigate(`/${findname}`)
       } else {
         if (
           resText[0] ===
-          "Email is already registered, but wrong password was entered"
+          "User is already registered, but wrong password was entered"
         ) {
-          alert("Email is already registered, but wrong password was entered")
+          alert("User is already registered, but wrong password was entered")
           setPassword("")
         }
         if (resText[0] === "Created Successfully") {
-          let user = resText[1].user
+          let findname = resText[1].findname
           document.cookie = `auth_token=${resText[1].auth_token}; expires=Session; path=/;`
-          document.cookie = `email=${resText[1].email}; expires=Session; path=/;`
-          document.cookie = `emailImgUrl=${resText[1].emailImgUrl}; expires=Session; path=/;`
-          alert("Created Successfully")
-          navigate(`/${user}`)
+          navigate(`/${findname}`)
+        }
+        if (resText[0] === "User Updated") {
+          const findname = resText[1]
+          document.cookie = `auth_token=${resText[2]}; expires=Session; path=/;`
+          navigate(`/${findname}`)
+        }
+        if (resText[0] === "User is already subscribed") {
+          const findname = resText[1]
+          document.cookie = `auth_token=${resText[2]}; expires=Session; path=/;`
+          navigate(`/${findname}`)
         }
       }
     })
   }
   const logIn = async () => {
-    let data = {
+    let data: any = {
       phoneNumber: phoneNumber,
       password: password,
+    }
+    if (chatLink && chatType) {
+      data = {
+        phoneNumber: phoneNumber,
+        password: password,
+        chatLink: chatLink,
+        chatType: chatType,
+      }
     }
     fetch(
       `${process.env.REACT_APP_SERVER_ENDPOINT}/users/findUserByNumberAndPasswordAndLoginIt`,
@@ -266,6 +304,16 @@ export function Home() {
       }
       if (resText[0] === "Wrong Number") {
         alert("Something went wrong on login verification. Please try again.")
+      }
+      if (resText[0] === "User Updated") {
+        document.cookie = `auth_token=${resText[2]}; expires=Session; path=/;`
+        const findname = resText[1]
+        navigate(`/${findname}`)
+      }
+      if (resText[0] === "User is already subscribed") {
+        document.cookie = `auth_token=${resText[2]}; expires=Session; path=/;`
+        const findname = resText[1]
+        navigate(`/${findname}`)
       }
     })
   }
@@ -348,7 +396,9 @@ export function Home() {
                 </p>
               </div>
               <div id="password">
-                <p>Password</p>
+                <p>
+                  Password <p>{passwordValidationText}</p>
+                </p>
                 <input
                   type="password"
                   // placeholder="Your Password"

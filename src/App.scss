@@ -600,7 +600,7 @@ body {
       align-items: center;
       flex-direction: column;
       width: 65.7%;
-      height: 100%;
+      height: 100vh;
       #userInterfaceChatHead {
         display: flex;
         justify-content: center;
@@ -724,7 +724,7 @@ body {
         flex-direction: column;
         align-items: center;
         width: 100%;
-        height: 100%;
+        height: calc(100% - 50px);
         padding-bottom: 1.5%;
         #userInterfaceChatMainMsgesColumn {
           display: flex;
@@ -865,5 +865,22 @@ body {
         }
       }
     }
+  }
+}
+//AddToChat
+#addToChatWholeDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  #addToChatWindowDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 60%;
+    background-color: #3390ec;
   }
 }
