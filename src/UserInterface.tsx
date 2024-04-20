@@ -177,9 +177,6 @@ export function UserInterface(this: any) {
     .split("; ")
     .find((row) => row.startsWith("auth_token="))
     ?.split("=")[1]
-  if (notrealauthtoken) {
-    setAuth_token(notrealauthtoken)
-  }
   // useEffect(() => {
   //   const urlSearchString = window.location.search
   //   console.log(urlSearchString)
@@ -372,7 +369,7 @@ export function UserInterface(this: any) {
   async function doConnect() {
     closeConnection()
     let ws = new WebSocket(
-      `${process.env.REACT_APP_WEB_SOCKET_URL}/${auth_token}`
+      `${process.env.REACT_APP_WEB_SOCKET_URL}/${notrealauthtoken}`
     )
     setWs(ws)
     ws.addEventListener("error", () => {
