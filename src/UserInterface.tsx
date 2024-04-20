@@ -368,7 +368,9 @@ export function UserInterface(this: any) {
   }
   async function doConnect() {
     closeConnection()
-    let ws = new WebSocket(`${process.env.REACT_APP_WEB_SOCKET_URL}`)
+    let ws = new WebSocket(
+      `${process.env.REACT_APP_WEB_SOCKET_URL}/${auth_token}`
+    )
     setWs(ws)
     ws.addEventListener("error", () => {
       console.log("WebSocket error")
