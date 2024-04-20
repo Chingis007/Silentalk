@@ -177,6 +177,7 @@ export function UserInterface(this: any) {
     .split("; ")
     .find((row) => row.startsWith("auth_token="))
     ?.split("=")[1]
+  notrealauthtoken ? setAuth_token(notrealauthtoken) : undefined
   // useEffect(() => {
   //   const urlSearchString = window.location.search
   //   console.log(urlSearchString)
