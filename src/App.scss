@@ -783,6 +783,20 @@ body {
             border-radius: 10px;
           }
         }
+
+        #columnForOther::-webkit-scrollbar {
+          width: 5px;
+          background: transparent;
+        }
+        #columnForOther::-webkit-scrollbar-track {
+          width: 12px;
+          background: transparent;
+        }
+        #columnForOther::-webkit-scrollbar-thumb {
+          width: 8px;
+          background-color: rgba(0, 0, 0, 0.8);
+          border-radius: 10px;
+        }
         #columnForOther {
           width: 50%;
           .userSettingsEdit {

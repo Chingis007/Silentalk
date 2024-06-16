@@ -901,6 +901,19 @@ body {
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
 }
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther::-webkit-scrollbar {
+  width: 5px;
+  background: transparent;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther::-webkit-scrollbar-track {
+  width: 12px;
+  background: transparent;
+}
+#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther::-webkit-scrollbar-thumb {
+  width: 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+}
 #userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther {
   width: 50%;
 }
