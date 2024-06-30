@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 
 export function AddToChat(this: any) {
-  let { chatLink } = useParams()
+  let { chatFindname } = useParams()
   let { chatType } = useParams()
   const [chatFindName, setChatFindName] = useState("")
   const [chatUserName, setChatUserName] = useState("")
@@ -36,7 +36,7 @@ export function AddToChat(this: any) {
 
           let data = {
             auth_token: notrealauthtoken,
-            chatLink: chatLink,
+            chatFindname: chatFindname,
             chatType: chatType,
           }
           fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/users/updateUser`, {
@@ -60,7 +60,7 @@ export function AddToChat(this: any) {
         }
       })
     } else {
-      document.cookie = `chatLink=${chatLink}; expires=Session; path=/;`
+      document.cookie = `chatFindname=${chatFindname}; expires=Session; path=/;`
       document.cookie = `chatType=${chatType}; expires=Session; path=/;`
       alert("Log in or Sign Up to proceed")
       navigate("/")
@@ -68,12 +68,12 @@ export function AddToChat(this: any) {
   }
   useEffect(() => {
     async function name() {
-      if (chatLink && chatType) {
+      if (chatFindname && chatType) {
         const requestHeaders = new Headers([
           ["Content-Type", "application/json"],
           ["withCredentials", "true"],
           ["Access-Control-Allow-Origin", "*"],
-          ["chatLink", chatLink],
+          ["chatFindname", chatFindname],
           ["chatType", chatType],
         ])
 

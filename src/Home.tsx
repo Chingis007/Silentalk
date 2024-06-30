@@ -35,6 +35,20 @@ export function Home() {
     "((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))"
   )
   const enableCreation = () => {
+    if (pressedLogin) {
+      if (
+        passwordValidationText === "✔" ||
+        passwordValidationText === "✔ Password is STRONG" ||
+        passwordValidationText === "✔ Password is MEDIUM" ||
+        passwordValidationText === "✔ Password is WEAK"
+      ) {
+        if (phoneNumberValidationText === "✔") {
+          return true
+        } else {
+          return false
+        }
+      }
+    }
     if (
       passwordValidationText === "✔" ||
       passwordValidationText === "✔ Password is STRONG" ||
@@ -269,6 +283,10 @@ export function Home() {
     })
   }
   const logIn = async () => {
+    if (!enableCreation()) {
+      alert("Wrong registration values")
+      return
+    }
     let data: any = {
       phoneNumber: phoneNumber,
       password: password,
@@ -322,37 +340,116 @@ export function Home() {
     <>
       <div id="loginPage">
         <div id="loginWindow">
-          {pressedLogin ? (
-            <div id="LoginWindowLogin">
-              <div id="backToChoose" onClick={(e) => setPressedLogin(false)}>
-                Go Back
-              </div>
-              <div id="phoneNumber">
-                {/* <p>Phone number</p>
-            <input
-              type="text"
-              // placeholder="Your Email or phone number"
-              onChange={(event) => {
-                setPhoneNumber(event.target.value)
-              }}
+          <img id="icon-img" src="./messanger-img.png" alt="" />
+          <h1>Log in to SilenTalk</h1>
+          <div id="phoneNumber" className="phoneNumber">
+            {/* <p>Phone number</p>
+                    <input
+                      type="text"
+                      // placeholder="Your Email or phone number"
+                      onChange={(event) => {
+                        setPhoneNumber(event.target.value)
+                      }}
+                      value={phoneNumber}
+                    /> */}
+            <PhoneInput
+              defaultCountry="UA"
+              placeholder="Enter phone number"
               value={phoneNumber}
-            /> */}
-                <PhoneInput
-                  defaultCountry="UA"
-                  placeholder="Enter phone number"
-                  value={phoneNumber}
-                  onChange={(event: any) => {
-                    try {
-                      setPhoneNumber(event)
-                    } catch {}
+              onChange={(event: any) => {
+                try {
+                  setPhoneNumber(event)
+                  if (pressedRegister || pressedLogin) {
+                    setPressedLogin(false)
+                    setPressedRegister(false)
+                  }
+                } catch {}
+              }}
+            />
+            <p id="p1">{phoneNumber}</p>
+            <p className="p2">{phoneNumberValidationText}</p>
+          </div>
+          <div
+            id="loginChoice"
+            style={
+              pressedRegister || pressedLogin
+                ? { opacity: "0", top: "680px", pointerEvents: "none" }
+                : {}
+            }
+          >
+            <div
+              id="choiceDiv"
+              onClick={() => {
+                if (phoneNumberValidationText === "Not possible phone number") {
+                  let pn = document.getElementById(
+                    "phoneNumber"
+                  ) as HTMLDivElement
+                  pn.classList.add("phoneNumberBlink")
+                  setTimeout(function () {
+                    pn.classList.remove("phoneNumberBlink")
+                  }, 1000)
+                  return
+                }
+                setPressedLogin(true)
+              }}
+            >
+              Login
+            </div>
+            Or
+            <div
+              id="choiceDiv"
+              onClick={() => {
+                if (phoneNumberValidationText === "Not possible phone number") {
+                  let pn = document.getElementById(
+                    "phoneNumber"
+                  ) as HTMLDivElement
+                  pn.classList.add("phoneNumberBlink")
+                  setTimeout(function () {
+                    pn.classList.remove("phoneNumberBlink")
+                  }, 1000)
+                  return
+                }
+                setPressedRegister(true)
+              }}
+            >
+              Sign Up
+            </div>
+            Or
+            <div id="choiceDiv" style={{ pointerEvents: "none" }}>
+              <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
+                <GoogleLogin
+                  onSuccess={(CredentialResponse: any) => {
+                    // console.log(CredentialResponse)
+                    const { credential } = CredentialResponse
+                    const strCredential = String(credential)
+                    const payload = strCredential
+                      ? decodeJwt(strCredential)
+                      : undefined
+                    if (payload) {
+                      serverGoogleAuthentification(
+                        strCredential,
+                        "no number needed"
+                      )
+                    }
                   }}
+                  onError={() => {
+                    console.log("Error Ocured on Google_Login")
+                  }}
+                  // useOneTap
                 />
-                <p>
-                  {phoneNumber} {phoneNumberValidationText}
-                </p>
-              </div>
+              </GoogleOAuthProvider>
+            </div>
+          </div>
+          <div
+            className="afterPressed"
+            style={
+              pressedLogin
+                ? { opacity: "1", top: "335px", pointerEvents: "all" }
+                : {}
+            }
+          >
+            <div id="mainDiv">
               <div id="password">
-                <p>Password</p>
                 <input
                   type="password"
                   // placeholder="Your Password"
@@ -360,45 +457,68 @@ export function Home() {
                     setPassword(event.target.value)
                   }}
                   value={password}
+                  placeholder="Password"
                 />
               </div>
-              <div id="toSingUpButton" onClick={logIn}>
-                Log In
+              <div id="signWrapper">
+                <div id="toSingUpButton" onClick={logIn}>
+                  Log In
+                </div>
+
+                <div id="SignUpGoogle">
+                  <div
+                    style={{
+                      pointerEvents:
+                        phoneNumberValidationText === "✔" ? "auto" : "none",
+                    }}
+                  >
+                    <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
+                      <GoogleLogin
+                        onSuccess={(CredentialResponse: any) => {
+                          const { credential } = CredentialResponse
+                          const strCredential = String(credential)
+                          const payload = strCredential
+                            ? decodeJwt(strCredential)
+                            : undefined
+                          if (payload) {
+                            serverGoogleAuthentification(
+                              strCredential,
+                              phoneNumber
+                            )
+                          }
+                        }}
+                        onError={() => {
+                          console.log("Error Ocured on Google_Login")
+                        }}
+                        // useOneTap
+                      />
+                    </GoogleOAuthProvider>
+                  </div>
+                </div>
+              </div>
+              <div
+                id="changeOption"
+                onClick={() => {
+                  setPressedRegister(true)
+                  setPressedLogin(false)
+                  setPassword("")
+                  setPasswordRepeat("")
+                }}
+              >
+                sign up instead
               </div>
             </div>
-          ) : pressedRegister ? (
-            <div id="LoginWindowRegister">
-              <div id="backToChoose" onClick={(e) => setPressedRegister(false)}>
-                Go Back
-              </div>
-              <div id="phoneNumber">
-                {/* <p>Phone number</p>
-            <input
-              type="text"
-              // placeholder="Your Email or phone number"
-              onChange={(event) => {
-                setPhoneNumber(event.target.value)
-              }}
-              value={phoneNumber}
-            /> */}
-                <PhoneInput
-                  defaultCountry="UA"
-                  placeholder="Enter phone number"
-                  value={phoneNumber}
-                  onChange={(event: any) => {
-                    try {
-                      setPhoneNumber(event)
-                    } catch {}
-                  }}
-                />
-                <p>
-                  {phoneNumber} {phoneNumberValidationText}
-                </p>
-              </div>
+          </div>
+          <div
+            className="afterPressed"
+            style={
+              pressedRegister
+                ? { opacity: "1", top: "335px", pointerEvents: "all" }
+                : {}
+            }
+          >
+            <div id="mainDiv">
               <div id="password">
-                <p>
-                  Password <p>{passwordValidationText}</p>
-                </p>
                 <input
                   type="password"
                   // placeholder="Your Password"
@@ -406,128 +526,75 @@ export function Home() {
                     setPassword(event.target.value)
                   }}
                   value={password}
+                  placeholder="Password"
                 />
+                <p>{passwordValidationText}</p>
               </div>
               <div id="repeatPassword">
-                <p>
-                  Repeat Password <p>{repeatPasswordValidationText}</p>
-                </p>
                 <input
                   type="password"
                   // placeholder="Repeat Password*"
                   onChange={(event) => {
                     setPasswordRepeat(event.target.value)
                   }}
+                  placeholder="Repeat Password"
                 />
+                <p>{repeatPasswordValidationText}</p>
               </div>
-              <div id="toSingUpButton" onClick={register}>
-                Sign Up
-              </div>
-            </div>
-          ) : pressedGoogle ? (
-            <div id="LoginWindowGoogle">
-              <div id="backToChoose" onClick={(e) => setPressedGoogle(false)}>
-                Go Back
-              </div>
-              <div id="phoneNumber">
-                {/* <p>Phone number</p>
-            <input
-              type="text"
-              // placeholder="Your Email or phone number"
-              onChange={(event) => {
-                setPhoneNumber(event.target.value)
-              }}
-              value={phoneNumber}
-            /> */}
-                <PhoneInput
-                  defaultCountry="UA"
-                  placeholder="Enter phone number"
-                  value={phoneNumber}
-                  onChange={(event: any) => {
-                    try {
-                      setPhoneNumber(event)
-                    } catch {}
-                  }}
-                />
-                <p>
-                  {phoneNumber} {phoneNumberValidationText}
-                </p>
-              </div>
-              <div id="SignUpGoogle">
-                <div
-                  style={{
-                    pointerEvents:
-                      phoneNumberValidationText === "✔" ? "auto" : "none",
-                  }}
-                >
-                  <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
-                    <GoogleLogin
-                      onSuccess={(CredentialResponse: any) => {
-                        const { credential } = CredentialResponse
-                        const strCredential = String(credential)
-                        const payload = strCredential
-                          ? decodeJwt(strCredential)
-                          : undefined
-                        if (payload) {
-                          serverGoogleAuthentification(
-                            strCredential,
-                            phoneNumber
-                          )
-                        }
-                      }}
-                      onError={() => {
-                        console.log("Error Ocured on Google_Login")
-                      }}
-                      // useOneTap
-                    />
-                  </GoogleOAuthProvider>
+              <div id="signWrapper">
+                <div id="toSingUpButton" onClick={register}>
+                  Sign Up
                 </div>
-              </div>
-            </div>
-          ) : (
-            <div id="LoginWindowChoose">
-              <div id="Login" onClick={(e) => setPressedLogin(true)}>
-                Log in
-              </div>
-              <div id="SignUp" onClick={(e) => setPressedRegister(true)}>
-                Sign Up
+
+                <div id="SignUpGoogle">
+                  <div
+                    style={{
+                      pointerEvents:
+                        phoneNumberValidationText === "✔" ? "auto" : "none",
+                    }}
+                  >
+                    <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
+                      <GoogleLogin
+                        onSuccess={(CredentialResponse: any) => {
+                          const { credential } = CredentialResponse
+                          const strCredential = String(credential)
+                          const payload = strCredential
+                            ? decodeJwt(strCredential)
+                            : undefined
+                          if (payload) {
+                            serverGoogleAuthentification(
+                              strCredential,
+                              phoneNumber
+                            )
+                          }
+                        }}
+                        onError={() => {
+                          console.log("Error Ocured on Google_Login")
+                        }}
+                        // useOneTap
+                      />
+                    </GoogleOAuthProvider>
+                  </div>
+                </div>
               </div>
               <div
-                id="SignUpGoogle"
-                onClick={(e) => {
-                  setPressedGoogle(true)
+                id="changeOption"
+                onClick={() => {
+                  setPressedRegister(false)
+                  setPressedLogin(true)
+                  setPasswordRepeat("")
+                  setPassword("")
                 }}
               >
-                <div style={{ pointerEvents: "none" }}>
-                  <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
-                    <GoogleLogin
-                      onSuccess={(CredentialResponse: any) => {
-                        // console.log(CredentialResponse)
-                        const { credential } = CredentialResponse
-                        const strCredential = String(credential)
-                        const payload = strCredential
-                          ? decodeJwt(strCredential)
-                          : undefined
-                        if (payload) {
-                          serverGoogleAuthentification(
-                            strCredential,
-                            "no number needed"
-                          )
-                        }
-                      }}
-                      onError={() => {
-                        console.log("Error Ocured on Google_Login")
-                      }}
-                      // useOneTap
-                    />
-                  </GoogleOAuthProvider>
-                </div>
-                {/* <button>
-          <a href={getGoogleUrl(from)}>Sign in with google</a>
-        </button> */}
+                log in instead
               </div>
             </div>
-          )}
+          </div>
+          <div className="screen"></div>
+
+          {/* <button>
+          <a href={getGoogleUrl(from)}>Sign in with google</a>
+          </button> */}
         </div>
       </div>
     </>

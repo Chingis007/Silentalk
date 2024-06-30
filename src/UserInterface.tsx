@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Console } from "console"
+import { Console, group } from "console"
 import { getEventListeners } from "events"
 import getBlobDuration from "get-blob-duration"
 import { send } from "process"
@@ -47,6 +47,7 @@ export type addMsgType = {
   emotions: emotion[]
   time: string
   pinned: boolean
+  author: string
 }
 export type changeMsgType = {
   type: "change"
@@ -66,6 +67,7 @@ export type blobMsgType = {
   blob: string
   blobTime: string
   blobWave: any[]
+  author: string
 }
 export type smileMsgType = {
   type: "changeSmile"
@@ -99,6 +101,9 @@ export type chatsList = {
   lastSeenMsg: string
   muted: string
   pinned: string
+  photoLink?: string
+  username?: string
+  userFindname?: string
 }
 export type allInOneSmileGroup = {
   name: string
@@ -128,8 +133,8 @@ export function UserInterface(this: any) {
   let valToEvalLastMsg = false
   let valToEvalNotSeen = false
   const [currentChatMsgsList, setCurrentChatMsgsList] = useState<
-    (addMsgType | changeMsgType | blobMsgType)[] | undefined
-  >()
+    (addMsgType | changeMsgType | blobMsgType)[]
+  >([])
 
   // {
   //   img: "https://res.cloudinary.com/dy9emuyvs/image/upload/v1691776582/uddsi7lqdr2dw6xc23cv.png",
@@ -196,6 +201,12 @@ export function UserInterface(this: any) {
   // const [username, setUsername] = useState("")
   //                                              <any>   <[{},{}]>
 
+  const [onlineList, setOnlineList] = useState<any>([
+    {
+      findname: "gytmjketyjkwtjwryjwrjwr",
+      online: "online",
+    },
+  ])
   const [allChatsList, setAllChatsList] = useState<any>([
     {
       group: "service",
@@ -412,7 +423,8 @@ export function UserInterface(this: any) {
     string | undefined
   >(undefined)
   const [savedAudio, setSavedAudio] = useState<any[]>()
-
+  const [currentChatPinnedList, setCurrentChatPinnedList] = useState<any[]>([])
+  const [currentPinnedMsgNumber, setCurrentPinnedMsgNumber] = useState(0)
   const [userMenu, setUserMenu] = useState(false)
   const [currentEditingState, setCurrentEditingState] = useState(false)
   const [pageJustLoaded, setPageJustLoaded] = useState(true)
@@ -426,6 +438,8 @@ export function UserInterface(this: any) {
   const [mediaPermissionNotification, setMediaPermissionNotification] =
     useState(false)
   // const [currentsomespace, setcurrentsomespace] = useState<any>([])
+  const [useScroll, setUseScroll] = useState(false)
+  const [currentChatUserName, setCurrentChatUserName] = useState("")
   const [pressedSelect, setPressedSelect] = useState("")
   const [createNewPrivateChat, setCreateNewPrivateChat] = useState(false)
   const [letBeLastSeenSync, setLetBeLastSeenSync] = useState(0)
@@ -433,6 +447,9 @@ export function UserInterface(this: any) {
   const [notificationInterval, setNotificationInterval] = useState("")
   const [mutedTableOpen, setMutedTableOpen] = useState(false)
   const [userFindName, setUserFindName] = useState("")
+  const [currentUserName, setCurrentUserName] = useState("")
+  const [currentUserLastName, setCurrentUserLastName] = useState("")
+  const [currentUserBio, setCurrentUserBio] = useState("")
   const [username, setUsername] = useState("")
   const [botsList, setBotsList] = useState([""])
   const [chatsList, setChatsList] = useState([""])
@@ -450,10 +467,15 @@ export function UserInterface(this: any) {
   const [inputImgUrl, setInputImgUrl] = useState("")
   const [inputImg, setInputImg] = useState<File | null>(null)
   const [showInputImg, setShowInputImg] = useState(false)
+  const [currentChatBio, setCurrentChatBio] = useState("")
+  const [currentChatKnownPhone, setCurrentChatKnownPhone] = useState("")
   const [currentChatFindname, setCurrentChatFindname] = useState("")
-  const [currentChatImgSrc, setCurrentChatImgSrc] = useState("")
-  const [currentChatName, setCurrentChatName] = useState("")
+  const [currentChatImgSrc, setCurrentChatImgSrc] = useState<
+    string | undefined
+  >("")
+  const [currentChatName, setCurrentChatName] = useState<string | undefined>("")
   const [currentChatSubs, setCurrentChatSubs] = useState("")
+  const [currentChatPhotoLink, setCurrentChatPhotoLink] = useState("")
   const [currentChatDiscription, setCurrentChatDiscription] = useState("")
   const [currentChatLink, setCurrentChatLink] = useState("")
   const [currentChatType, setCurrentChatType] = useState("")
@@ -517,9 +539,41 @@ export function UserInterface(this: any) {
         }
       }
     }
+    if (currentChatType == "chat") {
+      if (allChatsListInUser) {
+        if (allChatsListInUser.chanellsList) {
+          for (let i = 0; i < allChatsListInUser.chanellsList.length; i++) {
+            if (
+              allChatsListInUser.chanellsList[i].findname == currentChatFindname
+            ) {
+              let userlastseen = Number(
+                allChatsListInUser.chanellsList[i].lastSeenMsg
+              )
+
+              if (allChatsList) {
+                for (let i = 0; i < allChatsList.length; i++) {
+                  if (allChatsList[i].findname == currentChatFindname) {
+                    let totalnumber = allChatsList[i].messages.length
+                    if (currentUnreadNumber != totalnumber - userlastseen) {
+                      setCurrentUnreadNumber(totalnumber - userlastseen)
+                      return "upped"
+                    } else {
+                      setCurrentUnreadNumber(totalnumber - userlastseen)
+                      return "not"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
   useEffect(() => {
     unreadNumberFunc()
+    scrollOnFunc()
+    // scrollLastmsgIfAtBottom()
     // console.log("1")
   }, [currentChatFindname, currentChatMsgsList])
   // useEffect(() => {
@@ -682,7 +736,6 @@ export function UserInterface(this: any) {
     const audio = document.createElement("audio")
     audio.src = url
     audio.controls = true
-    console.log(blob)
     // document.body.appendChild(audio)
   }
 
@@ -692,7 +745,8 @@ export function UserInterface(this: any) {
     // oldsomespace?.push(new Blob(recordedChunks))
     // setcurrentsomespace(oldsomespace)
 
-    let oldCurrentChatMsgsList = structuredClone(currentChatMsgsList)
+    // let oldCurrentChatMsgsList = structuredClone(currentChatMsgsList)
+
     //   let audioCtx = new AudioContext();
     //   var analyser = audioCtx.createAnalyser();
 
@@ -1005,7 +1059,7 @@ export function UserInterface(this: any) {
           // microphoneStream.connect(analyserNode)
           // audioData = new Float32Array(analyserNode.fftSize)
           // corrolatedSignal = new Float32Array(analyserNode.fftSize)
-          //
+
           newRecorder.addEventListener("dataavailable", function (e) {
             if (e.data.size > 0) {
               recordedChunks.push(e.data)
@@ -1090,24 +1144,36 @@ export function UserInterface(this: any) {
   }
 
   async function checkIfAtBottom() {
-    if (
-      myRef.current.scrollTop /
-        (myRef.current.scrollHeight - myRef.current.clientHeight) >=
-      0.98
-    ) {
-      setNotAtBottom(true)
-    } else {
-      setNotAtBottom(false)
+    // console.log(myRef.current.children[1].getBoundingClientRect().top)
+    // console.log(
+    //   window.innerHeight - myRef.current.children[1].getBoundingClientRect().top
+    // )
+    // console.log(myRef.current.clientHeight)
+    if (myRef.current.children[1]) {
+      if (
+        myRef.current.children[1].getBoundingClientRect().top < 51
+        // 50 - top bar height
+      ) {
+        if (
+          myRef.current.scrollTop /
+            (myRef.current.scrollHeight - myRef.current.clientHeight) >=
+          0.98
+        ) {
+          setNotAtBottom(true)
+        } else {
+          setNotAtBottom(false)
+        }
+      } else {
+        setNotAtBottom(true)
+      }
     }
   }
 
   async function addToCurrentChat(newMessage: addMsgType | blobMsgType) {
-    if (currentChatMsgsList) {
-      let oldCurrentChatMsgsList = [...currentChatMsgsList]
-      oldCurrentChatMsgsList.push(newMessage)
-      setCurrentChatMsgsList(oldCurrentChatMsgsList)
-      setNotAtBottom(false)
-    }
+    let oldCurrentChatMsgsList = [...currentChatMsgsList]
+    oldCurrentChatMsgsList.push(newMessage)
+    setCurrentChatMsgsList(oldCurrentChatMsgsList)
+    checkIfAtBottom()
   }
   async function deleteFromCurrentChat() {
     if (currentChatMsgsList) {
@@ -1145,16 +1211,55 @@ export function UserInterface(this: any) {
         )
         number = number
         // number = number - 3
-        if (oldCurrentChatMsgsList[number].pinned == true) {
+        if (oldCurrentChatMsgsList[number].pinned === true) {
           oldCurrentChatMsgsList[number].pinned = false
         } else {
-          if (oldCurrentChatMsgsList[number].pinned == false) {
+          if (oldCurrentChatMsgsList[number].pinned === false) {
             oldCurrentChatMsgsList[number].pinned = true
           }
         }
 
-        setCurrentChatMsgsList(oldCurrentChatMsgsList)
         let time = oldCurrentChatMsgsList[number].time
+
+        if (oldCurrentChatMsgsList[number].pinned === true) {
+          let list = structuredClone(currentChatPinnedList)
+          for (let index = 0; index < list.length; index++) {
+            const listTime = list[index].time
+            if (listTime > time || list.length - 1 === index) {
+              for (let ooo = 0; ooo < list.length; ooo++) {
+                if (list[ooo].index >= index) {
+                  list[ooo].index++
+                }
+              }
+              list.splice(index, 0, {
+                time: oldCurrentChatMsgsList[number].time,
+                comentary: oldCurrentChatMsgsList[number].comentary,
+                photoLink: oldCurrentChatMsgsList[number].img,
+                index: index,
+              })
+              break
+            }
+          }
+          setCurrentChatPinnedList(list)
+          setCurrentPinnedMsgNumber(currentPinnedMsgNumber + 1)
+        } else {
+          let list = structuredClone(currentChatPinnedList)
+          for (let index = 0; index < list.length; index++) {
+            const listTime = list[index].time
+            if (listTime === time) {
+              for (let ooo = 0; ooo < list.length; ooo++) {
+                if (list[ooo].index >= index) {
+                  list[ooo].index--
+                }
+              }
+              list.splice(index, 1)
+              break
+            }
+          }
+          setCurrentChatPinnedList(list)
+          setCurrentPinnedMsgNumber(currentPinnedMsgNumber - 1)
+        }
+        setCurrentChatMsgsList(oldCurrentChatMsgsList)
         return time
       }
     }
@@ -1232,8 +1337,13 @@ export function UserInterface(this: any) {
     toDeleteArray: string[]
     toDeleteArrayIndexes: number[]
   }) {
-    if (allChatsListInUser && allChatsListInUser.chanellsList) {
+    if (
+      allChatsListInUser &&
+      allChatsListInUser.chanellsList &&
+      allChatsListInUser.chatsList
+    ) {
       let oldlist = { ...allChatsListInUser }
+      //  make chat delete possible
       if (currentChatType == "chanell") {
         if (oldlist.chanellsList) {
           for (let i = 0; i < oldlist.chanellsList.length; i++) {
@@ -1267,15 +1377,113 @@ export function UserInterface(this: any) {
           }
         }
       }
+      if (currentChatType == "chat") {
+        if (oldlist.chatsList) {
+          for (let i = 0; i < oldlist.chatsList.length; i++) {
+            if (oldlist.chatsList[i].findname == currentChatFindname) {
+              let oldLastSeen = Number(
+                allChatsListInUser.chatsList[i].lastSeenMsg
+              )
+              for (let m = 0; m < coolObj.toDeleteArrayIndexes.length; m++) {
+                if (coolObj.toDeleteArrayIndexes[m] <= oldLastSeen) {
+                  oldLastSeen--
+                }
+              }
+              oldlist.chatsList[i].lastSeenMsg = String(oldLastSeen)
+
+              // oldlist.chatsList[i].lastSeenMsg = String(
+              //   currentChatMsgsList?.length
+              // )
+              setAllChatsListInUser(oldlist)
+              let leMsg = {
+                action: "lastSeen",
+                type: "chat",
+                findname: currentChatFindname,
+                lastSeenMsg: String(oldLastSeen),
+              }
+              await (async () => {
+                ws?.send(JSON.stringify(leMsg))
+              })()
+
+              break
+            }
+          }
+        }
+      }
+    }
+  }
+  async function addToAllChatListNew(newMessage: addMsgType | blobMsgType) {
+    let oldAllChatList = [...allChatsList]
+    if (currentChatType == "chat") {
+      setOpenedChat({
+        type: currentChatType,
+        findname: `${userFindName}${currentChatFindname}`,
+      })
+      oldAllChatList.unshift({
+        group: "chat",
+        findname: `${userFindName}${currentChatFindname}`,
+        partisipants: [
+          { admin: "yes", findname: userFindName, deleted: [] },
+          { admin: "yes", findname: currentChatFindname, deleted: [] },
+        ],
+        lastUpdated: new Date().getTime().toString(),
+        messages: [newMessage],
+      })
+      setAllChatsList(oldAllChatList)
     }
   }
   async function addToAllChatList(newMessage: addMsgType | blobMsgType) {
+    // if (currentChatType =="chanell") {
     let oldAllChatList = [...allChatsList]
     for (let i = 0; i < allChatsList.length; i++) {
       if (allChatsList[i].findname == currentChatFindname) {
         oldAllChatList[i].messages.push(newMessage)
         setAllChatsList(oldAllChatList)
       }
+    }
+    // }
+    // if (currentChatType =="chat") {
+    //   let oldAllChatList = [...allChatsList]
+    //   for (let i = 0; i < allChatsList.length; i++) {
+    //     if (allChatsList[i].findname == currentChatFindname) {
+    //       oldAllChatList[i].messages.push(newMessage)
+    //       setAllChatsList(oldAllChatList)
+    //     }
+    //   }
+    // }
+  }
+  async function addToUserChatListNew(newMessage: addMsgType | blobMsgType) {
+    switch (currentChatType) {
+      case "chanell":
+        if (
+          allChatsListInUser &&
+          allChatsListInUser.chanellsList &&
+          currentChatMsgsList
+        ) {
+          // let allNotSeen = document.querySelectorAll('[data-notSeen="notSeen"]')
+          //       let newAll = { ...allChatsListInUser }
+          //       for (let i = 0; i < newAll.chanellsList.length; i++) {
+          //         if (newAll.chanellsList[i].findname == currentChatFindname) {
+          //           newAll.chanellsList[i].lastSeenMsg = String()
+          //           currentChatMsgsList?.length - allNotSeen.length
+          //         }
+          //       }
+          //       setAllChatsListInUser({ ...newAll })
+        }
+        break
+      case "chat":
+        let oldAllChatsListInUser = { ...allChatsListInUser }
+        oldAllChatsListInUser.chatsList?.push({
+          archived: "no",
+          findname: `${userFindName}${currentChatFindname}`,
+          lastSeenMsg: "1",
+          muted: "no",
+          pinned: "no",
+          photoLink: currentChatPhotoLink,
+          username: currentChatUserName,
+          userFindname: currentChatFindname,
+        })
+        break
     }
   }
   async function addToUserChatList(newMessage: addMsgType | blobMsgType) {
@@ -1572,6 +1780,7 @@ export function UserInterface(this: any) {
           | blobMsgType
         action: string
         pinned: boolean
+        reciever?: string
       } = {
         type: currentChatType,
         findname: currentChatFindname,
@@ -1579,7 +1788,6 @@ export function UserInterface(this: any) {
         action: action,
         pinned: false,
       }
-
       switch (action) {
         case "unmute":
           if (mainInfo.type == "unmute") {
@@ -1600,6 +1808,40 @@ export function UserInterface(this: any) {
                     currentChatFindname
                   ) {
                     oldAllChatsListInUser.chanellsList[index].muted = "no"
+                    setCurrentChatMutted("no")
+                    break
+                  }
+                }
+              }
+              setAllChatsListInUser(oldAllChatsListInUser)
+              let mutemsg = {
+                type: currentChatType,
+                findname: currentChatFindname,
+                mainInfo: mainInfo,
+                action: action,
+              }
+              let msgInString = JSON.stringify(mutemsg)
+              await (async () => {
+                ws?.send(msgInString)
+              })()
+            }
+            if (
+              currentChatType == "chat" &&
+              allChatsListInUser &&
+              allChatsListInUser.chatsList
+            ) {
+              let oldAllChatsListInUser = structuredClone(allChatsListInUser)
+              if (oldAllChatsListInUser && oldAllChatsListInUser.chatsList) {
+                for (
+                  let index = 0;
+                  index < oldAllChatsListInUser.chatsList.length;
+                  index++
+                ) {
+                  if (
+                    oldAllChatsListInUser.chatsList[index].findname ==
+                    currentChatFindname
+                  ) {
+                    oldAllChatsListInUser.chatsList[index].muted = "no"
                     setCurrentChatMutted("no")
                     break
                   }
@@ -1674,10 +1916,97 @@ export function UserInterface(this: any) {
                 ws?.send(msgInString)
               })()
             }
+            if (
+              currentChatType == "chat" &&
+              allChatsListInUser &&
+              allChatsListInUser.chatsList
+            ) {
+              let timeToStop: string
+              if (mainInfo.time === "permanent") {
+                timeToStop = "permanent"
+              } else {
+                timeToStop = String(
+                  new Date().getTime() + Number(mainInfo.time)
+                )
+              }
+
+              let oldAllChatsListInUser = structuredClone(allChatsListInUser)
+              if (oldAllChatsListInUser && oldAllChatsListInUser.chatsList) {
+                for (
+                  let index = 0;
+                  index < oldAllChatsListInUser.chatsList.length;
+                  index++
+                ) {
+                  if (
+                    oldAllChatsListInUser.chatsList[index].findname ==
+                    currentChatFindname
+                  ) {
+                    if (mainInfo.time == "permanent") {
+                      oldAllChatsListInUser.chatsList[index].muted = "permanent"
+                      setCurrentChatMutted("yes")
+                    } else {
+                      oldAllChatsListInUser.chatsList[index].muted = timeToStop
+                      setCurrentChatMutted("yes")
+                    }
+                    break
+                  }
+                }
+              }
+              setAllChatsListInUser(oldAllChatsListInUser)
+              let mutemsg = {
+                type: currentChatType,
+                findname: currentChatFindname,
+                mainInfo: {
+                  type: "mute",
+                  time: timeToStop,
+                },
+                action: action,
+              }
+              let msgInString = JSON.stringify(mutemsg)
+              await (async () => {
+                ws?.send(msgInString)
+              })()
+            }
           }
           break
         case "add":
           if (mainInfo.type == "add" || mainInfo.type == "blob") {
+            if (!currentChatMsgsList.length) {
+              if (currentChatType == "chat") {
+                let reciever = currentChatFindname
+                await addToCurrentChat(mainInfo)
+                await addToAllChatListNew(mainInfo)
+                await addToUserChatListNew(mainInfo)
+                msg = {
+                  type: currentChatType,
+                  findname: currentChatFindname,
+                  mainInfo: mainInfo,
+                  action: "addNew",
+                  pinned: false,
+                  reciever: reciever,
+                }
+                let msgInString = JSON.stringify(msg)
+                await (async () => {
+                  ws?.send(msgInString)
+                })()
+                setCurrentChatComentary("")
+                let input1 = document.getElementById(
+                  "userInterfaceChatMainInputTextInput"
+                ) as HTMLInputElement
+                if (input1) {
+                  input1.value = ""
+                }
+                let input2 = document.getElementById(
+                  "fileUploadCommentaryInput"
+                ) as HTMLInputElement
+                if (input2) {
+                  input2.value = ""
+                }
+                scrollLastmsgIfAtBottom()
+                setCurrentChatFindname(`${userFindName}${currentChatFindname}`)
+                break
+              }
+            }
             await addToCurrentChat(mainInfo)
             await addToAllChatList(mainInfo)
             await addToUserChatList(mainInfo)
@@ -1791,11 +2120,10 @@ export function UserInterface(this: any) {
               },
             }
             let msgInString = JSON.stringify(msgEdit)
-            console.log(msgInString)
             setMsgMenuTargets([])
-            // await (async () => {
-            //   ws?.send(msgInString)
-            // })()
+            await (async () => {
+              ws?.send(msgInString)
+            })()
           }
           break
         case "edit":
@@ -1937,9 +2265,12 @@ export function UserInterface(this: any) {
   async function forWsOnMessage(event: MessageEvent<any>) {
     let msgObj = JSON.parse(event.data)
     await onNewMsg(msgObj)
-    if (msgObj.action == "add" && msgObj.type == "chanell") {
+    if (
+      msgObj.action == "add" &&
+      (msgObj.type == "chanell" || msgObj.type == "chat")
+    ) {
       await scrollOnFunc()
-      setNotAtBottom(false)
+      checkIfAtBottom()
       scrollLastmsgIfAtBottom()
     }
   }
@@ -2006,11 +2337,30 @@ export function UserInterface(this: any) {
       // mainInfo: addMsgType
       mainInfo: any
       action: string
+    } & {
+      type: string
+      findname: string
+      // mainInfo: addMsgType
+      mainInfo: any
+      action: string
+      photoLink: string
+      username: string
+      userFindname: string
     }
   ) {
     await (async () => {
       // let msgObj = newWebSocketMsg
       if (msgObj) {
+        if (msgObj.action == "online") {
+          let oldOnlineList = structuredClone(onlineList)
+          for (let index = 0; index < oldOnlineList.length; index++) {
+            if (oldOnlineList[index].findname === msgObj.mainInfo.findname) {
+              oldOnlineList[index].online = msgObj.mainInfo.time
+              break
+            }
+          }
+          setOnlineList(oldOnlineList)
+        }
         if (msgObj.action == "changeSmile") {
           if (currentChatMsgsList) {
             let oldCurrentChatMsgsList = structuredClone(currentChatMsgsList)
@@ -2317,6 +2667,103 @@ export function UserInterface(this: any) {
             }
             await notifyNewMsg(msgObj.findname, msgObj.type)
           }
+          if (msgObj.type == "chat") {
+            let oldAllChatList: any = structuredClone(allChatsList)
+            for (let i = 0; i < allChatsList.length; i++) {
+              if (allChatsList[i].findname == msgObj.findname) {
+                oldAllChatList[i].messages.push(msgObj.mainInfo)
+                if (
+                  JSON.stringify(msgObj.mainInfo) !=
+                  JSON.stringify(
+                    allChatsList[i].messages[
+                      allChatsList[i].messages.length - 1
+                    ]
+                  )
+                ) {
+                  setAllChatsList(oldAllChatList)
+                }
+                break
+              }
+            }
+            if (currentChatFindname == msgObj.findname && currentChatMsgsList) {
+              let oldCurrentChatMsgsList = [...currentChatMsgsList]
+              oldCurrentChatMsgsList.push(msgObj.mainInfo)
+              if (
+                JSON.stringify(msgObj.mainInfo) !=
+                JSON.stringify(
+                  currentChatMsgsList[currentChatMsgsList.length - 1]
+                )
+              ) {
+                await (async () => {
+                  setCurrentChatMsgsList(oldCurrentChatMsgsList)
+                })()
+              }
+            }
+            await notifyNewMsg(msgObj.findname, msgObj.type)
+          }
+        }
+        if (msgObj.action == "addNew") {
+          // if (msgObj.type == "chanell") {
+          //   let oldAllChatList: any = structuredClone(allChatsList)
+          //   for (let i = 0; i < allChatsList.length; i++) {
+          //     if (allChatsList[i].findname == msgObj.findname) {
+          //       oldAllChatList[i].messages.push(msgObj.mainInfo)
+          //       if (
+          //         JSON.stringify(msgObj.mainInfo) !=
+          //         JSON.stringify(
+          //           allChatsList[i].messages[
+          //             allChatsList[i].messages.length - 1
+          //           ]
+          //         )
+          //       ) {
+          //         setAllChatsList(oldAllChatList)
+          //       }
+          //       break
+          //     }
+          //   }
+          //   if (currentChatFindname == msgObj.findname && currentChatMsgsList) {
+          //     let oldCurrentChatMsgsList = [...currentChatMsgsList]
+          //     oldCurrentChatMsgsList.push(msgObj.mainInfo)
+          //     if (
+          //       JSON.stringify(msgObj.mainInfo) !=
+          //       JSON.stringify(
+          //         currentChatMsgsList[currentChatMsgsList.length - 1]
+          //       )
+          //     ) {
+          //       await (async () => {
+          //         setCurrentChatMsgsList(oldCurrentChatMsgsList)
+          //       })()
+          //     }
+          //   }
+          //   await notifyNewMsg(msgObj.findname, msgObj.type)
+          // }
+          if (msgObj.type == "chat") {
+            let oldAllChatList: any = structuredClone(allChatsList)
+            oldAllChatList.unshift({
+              group: "chat",
+              findname: `${userFindName}${currentChatFindname}`,
+              partisipants: [
+                { admin: "yes", findname: userFindName, deleted: [] },
+                { admin: "yes", findname: currentChatFindname, deleted: [] },
+              ],
+              lastUpdated: new Date().getTime().toString(),
+              messages: [msgObj.mainInfo],
+            })
+            setAllChatsList(oldAllChatList)
+            let oldAllChatsListInUser = structuredClone(allChatsListInUser)
+            oldAllChatsListInUser?.chatsList?.push({
+              archived: "no",
+              findname: `${userFindName}${currentChatFindname}`,
+              lastSeenMsg: "0",
+              muted: "no",
+              pinned: "no",
+              photoLink: msgObj.photoLink,
+              username: msgObj.username,
+              userFindname: msgObj.userFindname,
+            })
+            setAllChatsListInUser(oldAllChatsListInUser)
+          }
+          await notifyNewMsg(msgObj.findname, msgObj.type)
         }
         if (msgObj.action == "edit") {
           if (msgObj.type == "chanell") {
@@ -2349,6 +2796,204 @@ export function UserInterface(this: any) {
                     ) {
                       oldAllChatList[i].messages[l].comentary =
                         msgObj.mainInfo.msgObjToEdit.currentEditTextInput
+                      setAllChatsList(oldAllChatList)
+                      break
+                    }
+                  }
+                  break
+                }
+              }
+            }
+          }
+          if (msgObj.type == "chat") {
+            if (allChatsList) {
+              if (
+                currentChatMsgsList &&
+                currentChatFindname == msgObj.findname
+              ) {
+                let oldCurrentChatMsgsList =
+                  structuredClone(currentChatMsgsList)
+                for (let i = 0; i < currentChatMsgsList.length; i++) {
+                  if (
+                    oldCurrentChatMsgsList[i].time ==
+                    msgObj.mainInfo.msgObjToEdit.time
+                  ) {
+                    oldCurrentChatMsgsList[i].comentary =
+                      msgObj.mainInfo.msgObjToEdit.currentEditTextInput
+                    setCurrentChatMsgsList(oldCurrentChatMsgsList)
+                    break
+                  }
+                }
+              }
+              let oldAllChatList = structuredClone(allChatsList)
+              for (let i = 0; i < allChatsList.length; i++) {
+                if (allChatsList[i].findname == msgObj.findname) {
+                  for (let l = 0; l < allChatsList[i].messages.length; l++) {
+                    if (
+                      allChatsList[i].messages[l].time ==
+                      msgObj.mainInfo.msgObjToEdit.time
+                    ) {
+                      oldAllChatList[i].messages[l].comentary =
+                        msgObj.mainInfo.msgObjToEdit.currentEditTextInput
+                      setAllChatsList(oldAllChatList)
+                      break
+                    }
+                  }
+                  break
+                }
+              }
+            }
+          }
+        }
+        if (msgObj.action == "pin") {
+          if (msgObj.type == "chanell") {
+            if (allChatsList) {
+              if (
+                currentChatMsgsList &&
+                currentChatFindname == msgObj.findname
+              ) {
+                let oldCurrentChatMsgsList =
+                  structuredClone(currentChatMsgsList)
+                for (let i = 0; i < currentChatMsgsList.length; i++) {
+                  if (
+                    oldCurrentChatMsgsList[i].time ==
+                    msgObj.mainInfo.msgObjToPin.time
+                  ) {
+                    oldCurrentChatMsgsList[i].pinned =
+                      !oldCurrentChatMsgsList[i].pinned
+                    let time = oldCurrentChatMsgsList[i].time
+                    if (oldCurrentChatMsgsList[i].pinned === true) {
+                      let list = structuredClone(currentChatPinnedList)
+                      for (let index = 0; index < list.length; index++) {
+                        const listTime = list[index].time
+                        if (listTime > time || list.length - 1 === index) {
+                          for (let ooo = 0; ooo < list.length; ooo++) {
+                            if (list[ooo].index >= index) {
+                              list[ooo].index++
+                            }
+                          }
+                          list.splice(index, 0, {
+                            time: oldCurrentChatMsgsList[i].time,
+                            comentary: oldCurrentChatMsgsList[i].comentary,
+                            photoLink: oldCurrentChatMsgsList[i].img,
+                            index: index,
+                          })
+                          break
+                        }
+                      }
+                      setCurrentChatPinnedList(list)
+                      setCurrentPinnedMsgNumber(currentPinnedMsgNumber + 1)
+                    } else {
+                      let list = structuredClone(currentChatPinnedList)
+                      for (let index = 0; index < list.length; index++) {
+                        const listTime = list[index].time
+                        if (listTime === time) {
+                          for (let ooo = 0; ooo < list.length; ooo++) {
+                            if (list[ooo].index >= index) {
+                              list[ooo].index--
+                            }
+                          }
+                          list.splice(index, 1)
+                          break
+                        }
+                      }
+                      setCurrentChatPinnedList(list)
+                      setCurrentPinnedMsgNumber(currentPinnedMsgNumber - 1)
+                    }
+
+                    setCurrentChatMsgsList(oldCurrentChatMsgsList)
+                    break
+                  }
+                }
+              }
+              let oldAllChatList = structuredClone(allChatsList)
+              for (let i = 0; i < allChatsList.length; i++) {
+                if (allChatsList[i].findname == msgObj.findname) {
+                  for (let l = 0; l < allChatsList[i].messages.length; l++) {
+                    if (
+                      allChatsList[i].messages[l].time ==
+                      msgObj.mainInfo.msgObjToPin.time
+                    ) {
+                      oldAllChatList[i].messages[l].pinned =
+                        !oldAllChatList[i].messages[l].pinned
+                      setAllChatsList(oldAllChatList)
+                      break
+                    }
+                  }
+                  break
+                }
+              }
+            }
+          }
+          if (msgObj.type == "chat") {
+            if (allChatsList) {
+              if (
+                currentChatMsgsList &&
+                currentChatFindname == msgObj.findname
+              ) {
+                let oldCurrentChatMsgsList =
+                  structuredClone(currentChatMsgsList)
+                for (let i = 0; i < currentChatMsgsList.length; i++) {
+                  if (
+                    oldCurrentChatMsgsList[i].time ==
+                    msgObj.mainInfo.msgObjToPin.time
+                  ) {
+                    oldCurrentChatMsgsList[i].pinned =
+                      !oldCurrentChatMsgsList[i].pinned
+                    let time = oldCurrentChatMsgsList[i].time
+                    if (oldCurrentChatMsgsList[i].pinned === true) {
+                      let list = structuredClone(currentChatPinnedList)
+                      for (let index = 0; index < list.length; index++) {
+                        const listTime = list[index].time
+                        if (listTime > time || list.length - 1 === index) {
+                          for (let ooo = 0; ooo < list.length; ooo++) {
+                            if (list[ooo].index >= index) {
+                              list[ooo].index++
+                            }
+                          }
+                          list.splice(index, 0, {
+                            time: oldCurrentChatMsgsList[i].time,
+                            comentary: oldCurrentChatMsgsList[i].comentary,
+                            photoLink: oldCurrentChatMsgsList[i].img,
+                            index: index,
+                          })
+                          break
+                        }
+                      }
+                      setCurrentChatPinnedList(list)
+                      setCurrentPinnedMsgNumber(currentPinnedMsgNumber + 1)
+                    } else {
+                      let list = structuredClone(currentChatPinnedList)
+                      for (let index = 0; index < list.length; index++) {
+                        const listTime = list[index].time
+                        if (listTime === time) {
+                          for (let ooo = 0; ooo < list.length; ooo++) {
+                            if (list[ooo].index >= index) {
+                              list[ooo].index--
+                            }
+                          }
+                          list.splice(index, 1)
+                          break
+                        }
+                      }
+                      setCurrentChatPinnedList(list)
+                      setCurrentPinnedMsgNumber(currentPinnedMsgNumber - 1)
+                    }
+                    setCurrentChatMsgsList(oldCurrentChatMsgsList)
+                    break
+                  }
+                }
+              }
+              let oldAllChatList = structuredClone(allChatsList)
+              for (let i = 0; i < allChatsList.length; i++) {
+                if (allChatsList[i].findname == msgObj.findname) {
+                  for (let l = 0; l < allChatsList[i].messages.length; l++) {
+                    if (
+                      allChatsList[i].messages[l].time ==
+                      msgObj.mainInfo.msgObjToPin.time
+                    ) {
+                      oldAllChatList[i].messages[l].pinned =
+                        !oldAllChatList[i].messages[l].pinned
                       setAllChatsList(oldAllChatList)
                       break
                     }
@@ -2455,12 +3100,110 @@ export function UserInterface(this: any) {
               }
             }
           }
+          if (msgObj.type == "chat") {
+            let arrayOfMsgIndexes = []
+            let arrayOfMsgTimes = []
+            if (msgObj.mainInfo.arrayOfObj) {
+              let arrayOfDeletedMsgTimesAndIndexes = msgObj.mainInfo.arrayOfObj
+              for (
+                let i = 0;
+                i < arrayOfDeletedMsgTimesAndIndexes.length;
+                i++
+              ) {
+                arrayOfMsgTimes.push(arrayOfDeletedMsgTimesAndIndexes[i].time)
+                arrayOfMsgIndexes.push(
+                  arrayOfDeletedMsgTimesAndIndexes[i].index
+                )
+              }
+              if (
+                currentChatFindname == msgObj.findname &&
+                currentChatMsgsList
+              ) {
+                let oldCurrentChatMsgsList = [...currentChatMsgsList]
+                for (let k = arrayOfMsgIndexes.length - 1; k >= 0; k--) {
+                  oldCurrentChatMsgsList.splice(arrayOfMsgIndexes[k], 1)
+                }
+                if (msgMenuTargets) {
+                  let newMsgMenuTargets = [...msgMenuTargets]
+                  for (let i = 0; i < msgMenuTargets.length; i++) {
+                    if (
+                      arrayOfMsgIndexes.includes(
+                        String(
+                          Number(
+                            msgMenuTargets[i]
+                              ?.getAttribute("data-msgkey")
+                              ?.slice(11)
+                          )
+                        )
+                      )
+                    ) {
+                      newMsgMenuTargets.slice(i, 1)
+                    }
+                  }
+                  setMsgMenuTargets(newMsgMenuTargets)
+                }
+                setCurrentChatMsgsList(oldCurrentChatMsgsList)
+              }
+            }
+            let oldAllChatList = [...allChatsList]
+            for (let i = 0; i < allChatsList.length; i++) {
+              if (allChatsList[i].findname == msgObj.findname) {
+                for (let k = arrayOfMsgIndexes.length - 1; k >= 0; k--) {
+                  oldAllChatList[i].messages.splice(arrayOfMsgIndexes[k], 1)
+                }
+                setAllChatsList(oldAllChatList)
+                break
+              }
+            }
+
+            let numberToReduceLastSeen = 0
+            if (allChatsListInUser && allChatsListInUser.chatsList) {
+              for (let i = 0; i < allChatsListInUser.chatsList.length; i++) {
+                if (
+                  allChatsListInUser.chatsList[i].findname ==
+                  currentChatFindname
+                ) {
+                  for (let l = 0; l < arrayOfMsgIndexes.length; l++) {
+                    if (
+                      allChatsListInUser.chatsList[i].lastSeenMsg >
+                      arrayOfMsgIndexes[l]
+                    ) {
+                      numberToReduceLastSeen++
+                    }
+                  }
+                  let newOldUserChatsList = { ...allChatsListInUser }
+                  if (newOldUserChatsList && newOldUserChatsList.chatsList) {
+                    let finalLastSeen = String(
+                      Number(allChatsListInUser.chatsList[i].lastSeenMsg) -
+                        numberToReduceLastSeen
+                    )
+                    newOldUserChatsList.chatsList[i].lastSeenMsg = finalLastSeen
+                    setAllChatsListInUser(newOldUserChatsList)
+                    let leMsg = {
+                      action: "lastSeen",
+                      type: "chat",
+                      findname: currentChatFindname,
+                      lastSeenMsg: finalLastSeen,
+                    }
+                    await (async () => {
+                      ws?.send(JSON.stringify(leMsg))
+                    })()
+                  }
+                  break
+                }
+              }
+            }
+          }
         }
       }
     })()
   }
   async function notifyNewMsg(theFindname: string, type: string) {
-    if (allChatsListInUser && allChatsListInUser.chanellsList) {
+    if (
+      allChatsListInUser &&
+      allChatsListInUser.chanellsList &&
+      allChatsListInUser.chatsList
+    ) {
       if (type == "chanell") {
         for (
           let index = 0;
@@ -2475,6 +3218,20 @@ export function UserInterface(this: any) {
           }
         }
       }
+      if (type == "chat") {
+        for (
+          let index = 0;
+          index < allChatsListInUser.chatsList.length;
+          index++
+        ) {
+          if (allChatsListInUser.chatsList[index].findname == theFindname) {
+            if (allChatsListInUser.chatsList[index].muted == "no") {
+              let audio = new Audio("./Voicy_Telegram notification.mp3")
+              audio.play().catch((error) => {})
+            }
+          }
+        }
+      }
     }
   }
   function toScrolldown() {
@@ -2483,7 +3240,7 @@ export function UserInterface(this: any) {
     if (currentChatMsgsList) {
       let msg = {
         action: "lastSeen",
-        type: "chanell",
+        type: currentChatType,
         findname: currentChatFindname,
         lastSeenMsg: String(currentChatMsgsList.length),
       }
@@ -2545,26 +3302,27 @@ export function UserInterface(this: any) {
       if (currentChatMsgsList) {
         if (
           document.querySelectorAll(
-            `[data-msgkey="data-msgkey${currentChatMsgsList.length}"]`
+            `[data-msgkey="data-msgkey${currentChatMsgsList.length - 1}"]`
           )[0]
         ) {
-          if (userStatus == "admin" && currentChatType == "chanell") {
+          if (
+            userStatus == "admin"
+            //  && currentChatType == "chanell"
+          ) {
             if (
               (document
                 .querySelectorAll(
-                  `[data-msgkey="data-msgkey${currentChatMsgsList.length}"]`
+                  `[data-msgkey="data-msgkey${currentChatMsgsList.length - 2}"]`
                 )[0]
                 .getBoundingClientRect().bottom /
                 vh) *
                 100 <=
-              83
+              87
             ) {
               setTimeout(() => {
                 ;(
                   document.querySelectorAll(
-                    `[data-msgkey="data-msgkey${
-                      currentChatMsgsList.length + 1
-                    }"]`
+                    `[data-msgkey="data-msgkey${currentChatMsgsList.length}"]`
                   )[0] as HTMLElement
                 )?.scrollIntoView({
                   block: "end",
@@ -2574,23 +3332,24 @@ export function UserInterface(this: any) {
               }, 500)
             }
           }
-          if (userStatus == "user" && currentChatType == "chanell") {
+          if (
+            userStatus == "user"
+            //  && currentChatType == "chanell"
+          ) {
             if (
               (document
                 .querySelectorAll(
-                  `[data-msgkey="data-msgkey${currentChatMsgsList.length}"]`
+                  `[data-msgkey="data-msgkey${currentChatMsgsList.length - 2}"]`
                 )[0]
                 .getBoundingClientRect().bottom /
                 vh) *
                 100 <=
-              99
+              97
             ) {
               setTimeout(() => {
                 ;(
                   document.querySelectorAll(
-                    `[data-msgkey="data-msgkey${
-                      currentChatMsgsList.length + 1
-                    }"]`
+                    `[data-msgkey="data-msgkey${currentChatMsgsList.length}"]`
                   )[0] as HTMLElement
                 )?.scrollIntoView({
                   block: "end",
@@ -2710,7 +3469,10 @@ export function UserInterface(this: any) {
           let lastmsgArr = document.querySelectorAll(
             '[data-lastmsg="thelastMessage"]'
           )
-          lastmsgArr[0].removeAttribute("data-lastmsg")
+          if (lastmsgArr.length) {
+            lastmsgArr[0].removeAttribute("data-lastmsg")
+          } else {
+          }
           meelems[i].setAttribute("data-lastmsg", "thelastMessage")
         }
       }
@@ -2721,7 +3483,7 @@ export function UserInterface(this: any) {
           if (currentChatMsgsList) {
             let msg = {
               action: "lastSeen",
-              type: "chanell",
+              type: currentChatType,
               findname: currentChatFindname,
               lastSeenMsg: String(currentChatMsgsList.length - meelems.length),
             }
@@ -2729,17 +3491,31 @@ export function UserInterface(this: any) {
             if (allChatsListInUser) {
               let newAll = { ...allChatsListInUser }
               if (newAll) {
-                if (newAll.chanellsList) {
-                  for (let i = 0; i < newAll.chanellsList.length; i++) {
-                    if (
-                      newAll.chanellsList[i].findname == currentChatFindname
-                    ) {
-                      newAll.chanellsList[i].lastSeenMsg = String(
-                        currentChatMsgsList.length - meelems.length
-                      )
+                if (currentChatType === "chanell") {
+                  if (newAll.chanellsList) {
+                    for (let i = 0; i < newAll.chanellsList.length; i++) {
+                      if (
+                        newAll.chanellsList[i].findname == currentChatFindname
+                      ) {
+                        newAll.chanellsList[i].lastSeenMsg = String(
+                          currentChatMsgsList.length - meelems.length
+                        )
+                      }
                     }
+                    setAllChatsListInUser(newAll)
                   }
-                  setAllChatsListInUser({ ...newAll })
+                }
+                if (currentChatType === "chat") {
+                  if (newAll.chatsList) {
+                    for (let i = 0; i < newAll.chatsList.length; i++) {
+                      if (newAll.chatsList[i].findname == currentChatFindname) {
+                        newAll.chatsList[i].lastSeenMsg = String(
+                          currentChatMsgsList.length - meelems.length
+                        )
+                      }
+                    }
+                    setAllChatsListInUser(newAll)
+                  }
                 }
               }
             }
@@ -2747,14 +3523,72 @@ export function UserInterface(this: any) {
         }
       }
     }
-    if (userStatus == "admin" && currentChatType == "chanell") {
+    if (userStatus == "admin") {
       let theTop = "91"
       insideFunc(theTop)
     }
-    if (userStatus == "user" && currentChatType == "chanell") {
+    if (userStatus == "user") {
       let theTop = "98"
       insideFunc(theTop)
     }
+    async function pinnedMsgScroll(theBott: string) {
+      if (useScroll) {
+        mainLoop: for (
+          let index = 0;
+          index < currentChatPinnedList.length;
+          index++
+        ) {
+          for (
+            let chatIndex = 0;
+            chatIndex < currentChatMsgsList.length;
+            chatIndex++
+          ) {
+            if (
+              currentChatPinnedList[index].time ===
+              currentChatMsgsList[chatIndex].time
+            ) {
+              if (
+                Number(
+                  (
+                    document.querySelectorAll(
+                      `[data-msgkey="data-msgkey${chatIndex}"]`
+                    )[0] as HTMLDivElement
+                  ).getBoundingClientRect().top
+                ) > Number(theBott)
+              ) {
+                // if (currentPinnedMsgNumber === 0) {
+                //   if (!index) {
+                //     setCurrentPinnedMsgNumber(index - 1)
+                //   }
+                // } else {
+                if (index !== 0) {
+                  setCurrentPinnedMsgNumber(index - 1)
+                }
+                // }
+                break mainLoop
+              }
+            }
+          }
+        }
+      }
+    }
+    if (userStatus == "admin") {
+      let theBott = "883"
+      pinnedMsgScroll(theBott)
+    }
+    if (userStatus == "user") {
+      let theBott = "962"
+      pinnedMsgScroll(theBott)
+    }
+    // if greater then theBott
+    // console.log(
+    //   (
+    //     document.querySelectorAll(
+    //       `[data-msgkey="data-msgkey${35}"]`
+    //     )[0] as HTMLDivElement
+    //   ).getBoundingClientRect().top
+    // )
+    // currentChatPinnedList[currentPinnedMsgNumber - 1]
   }
 
   async function onImageChooseForInput(
@@ -2783,6 +3617,91 @@ export function UserInterface(this: any) {
     } else {
       setInputImgUrl("")
       setInputImg(null)
+    }
+  }
+  const findPeopleAndSetNewChat = async (
+    findname: string,
+    type: string,
+    photoLink: string,
+    username: string,
+    phoneNumber: string,
+    bio: string
+  ) => {
+    // await fetch(
+    //   `${process.env.REACT_APP_SERVER_ENDPOINT}/users/CheckTokenAndReturnAllChats/${findname}/${type}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       withCredentials: "true",
+    //       "Access-Control-Allow-Origin": "*",
+    //     },
+    //   }
+    // ).then(async (response) => {
+    //   try {
+    //     const resText = await response.json()
+    //     if (resText[0] === "Back is good") {
+    //       // alert("Succesfull request but bad responce")
+    //       let userObj = resText[1]
+    //       document.cookie = `botsList=${JSON.stringify(
+    //         userObj.botsList
+    //       )}; expires=Session; path=/;`
+    //       document.cookie = `chatsList=${JSON.stringify(
+    //         userObj.chatsList
+    //       )}; expires=Session; path=/;`
+    //       document.cookie = `groupsList=${JSON.stringify(
+    //         userObj.groupsList
+    //       )}; expires=Session; path=/;`
+    //       document.cookie = `servicesList=${JSON.stringify(
+    //         userObj.servicesList
+    //       )}; expires=Session; path=/;`
+    //       document.cookie = `chanellsList=${JSON.stringify(
+    //         userObj.chanellsList
+    //       )}; expires=Session; path=/;`
+    //       setUserFindName(userObj.findname)
+    //       setBotsList(userObj.botsList)
+    //       setChatsList(userObj.chatsList)
+    //       setGroupsList(userObj.groupsList)
+    //       setServicesList(userObj.servicesList)
+    //       setChanellsList(userObj.chanellsList)
+    //       setAllChatsListInUser(resText[1])
+    //       setAllChatsList(resText[2])
+    //       console.log(resText[1])
+    //       console.log(resText[2])
+    //       return resText
+    //       // [
+    //       //   { botList: userObj.botsList },
+    //       //   { chatsList: userObj.chatsList },
+    //       //   { groupsList: userObj.groupsList },
+    //       //   { servicesList: userObj.servicesList },
+    //       //   { chanellsList: userObj.chanellsList },
+    //       // ]
+    //     }}catch(error){
+
+    //     }})
+    if (type == "chanell") {
+    }
+    if (type == "user") {
+      setCurrentChatType("chat")
+      setUserStatus("admin")
+      setCanSendMsg(true)
+      setCurrentChatMsgsList([])
+      setCurrentChatMutted("no")
+      setCurrentChatFindname(findname)
+      setCurrentChatImgSrc(photoLink)
+      setCurrentChatPhotoLink(photoLink)
+      setCurrentChatName(username)
+      setCurrentChatUserName(username)
+      setCurrentChatBio(bio)
+      setCurrentChatKnownPhone(phoneNumber)
+      setSearchFocused(false)
+      setChatSearchList([])
+      let input = document.getElementById(
+        "searchChatsInput"
+      ) as HTMLInputElement
+      if (input) {
+        input.value = ""
+      }
     }
   }
   const setMainPageInput = (type: string, findname: string) => {
@@ -2830,9 +3749,32 @@ export function UserInterface(this: any) {
             setCurrentChatLink(allChatsList[i].link)
             if (typeof allChatsList[i].messages === "undefined") {
               setCurrentChatMsgsList([])
+              setCurrentChatPinnedList([])
+              setCurrentPinnedMsgNumber(0)
             } else {
               setCurrentChatMsgsList(allChatsList[i].messages)
+              let list: {
+                time: any
+                comentary: any
+                photoLink: any
+                index: number
+              }[] = []
+              let number = 0
+              allChatsList[i].messages.forEach((message: any) => {
+                if (message.pinned) {
+                  list.push({
+                    time: message.time,
+                    comentary: message.comentary,
+                    photoLink: message.img,
+                    index: number,
+                  })
+                  number++
+                }
+              })
+              setCurrentChatPinnedList(list)
+              setCurrentPinnedMsgNumber(number ? number - 1 : number)
             }
+
             // setCurrentChatMsgsList((prevItems) => [
             //   allChatsList[i].list[l].messages,
             // ])
@@ -2871,18 +3813,44 @@ export function UserInterface(this: any) {
                   setCurrentChatMutted(
                     allChatsListInUser.chatsList[index].muted
                   )
+                  setCurrentChatImgSrc(
+                    allChatsListInUser.chatsList[index].photoLink
+                  )
+                  setCurrentChatName(
+                    allChatsListInUser.chatsList[index].username
+                  )
                   break
                 }
               }
             }
-            // setCurrentChatFindname(allChatsList[i].findname) роби
-            // setCurrentChatImgSrc(allChatsList[i].photoLink) роби
-            // setCurrentChatName(allChatsList[i].username) роби
-            // setCurrentChatSubs(allChatsList[i].partisipants.length) роби
+            setCurrentChatFindname(allChatsList[i].findname)
+
             if (typeof allChatsList[i].messages === "undefined") {
               setCurrentChatMsgsList([])
+              setCurrentChatPinnedList([])
+              setCurrentPinnedMsgNumber(0)
             } else {
               setCurrentChatMsgsList(allChatsList[i].messages)
+              let list: {
+                time: any
+                comentary: any
+                photoLink: any
+                index: number
+              }[] = []
+              let number = 0
+              allChatsList[i].messages.forEach((message: any) => {
+                if (message.pinned) {
+                  list.push({
+                    time: message.time,
+                    comentary: message.comentary,
+                    photoLink: message.img,
+                    index: number,
+                  })
+                  number++
+                }
+              })
+              setCurrentChatPinnedList(list)
+              setCurrentPinnedMsgNumber(number ? number - 1 : number)
             }
             // setCurrentChatMsgsList((prevItems) => [
             //   allChatsList[i].list[l].messages,
@@ -2904,8 +3872,30 @@ export function UserInterface(this: any) {
             setCurrentChatName(allChatsList[i].username)
             if (typeof allChatsList[i].messages === "undefined") {
               setCurrentChatMsgsList([])
+              setCurrentChatPinnedList([])
+              setCurrentPinnedMsgNumber(0)
             } else {
               setCurrentChatMsgsList(allChatsList[i].messages)
+              let list: {
+                time: any
+                comentary: any
+                photoLink: any
+                index: number
+              }[] = []
+              let number = 0
+              allChatsList[i].messages.forEach((message: any) => {
+                if (message.pinned) {
+                  list.push({
+                    time: message.time,
+                    comentary: message.comentary,
+                    photoLink: message.img,
+                    index: number,
+                  })
+                  number++
+                }
+              })
+              setCurrentChatPinnedList(list)
+              setCurrentPinnedMsgNumber(number ? number - 1 : number)
             }
             // setCurrentChatMsgsList((prevItems) => [
             //   allChatsList[i].list[l].messages,
@@ -2955,8 +3945,10 @@ export function UserInterface(this: any) {
           setChanellsList(userObj.chanellsList)
           setAllChatsListInUser(resText[1])
           setAllChatsList(resText[2])
+          setOnlineList(resText[3])
           console.log(resText[1])
           console.log(resText[2])
+          console.log(resText[3])
           return resText
           // [
           //   { botList: userObj.botsList },
@@ -3030,6 +4022,7 @@ export function UserInterface(this: any) {
         emotions: [],
         time: String(new Date().getTime()),
         pinned: false,
+        author: userFindName,
       }
     } else {
       msg = {
@@ -3039,6 +4032,7 @@ export function UserInterface(this: any) {
         emotions: [],
         time: String(new Date().getTime()),
         pinned: false,
+        author: userFindName,
       }
     }
     return msg
@@ -3090,7 +4084,7 @@ export function UserInterface(this: any) {
     await (async () => {
       ws?.send(JSON.stringify(msg))
     })()
-    setNotAtBottom(false)
+    checkIfAtBottom()
     // ДОРОБИТИ
     setCurrentChatComentary("")
     if (document.getElementById("fileUploadCommentaryInput")) {
@@ -3159,7 +4153,13 @@ export function UserInterface(this: any) {
       }
     ).then(async (response) => {
       const resText = await response.json()
-      return resText
+      let withoutUser: any = []
+      resText.forEach((element: any) => {
+        if (element.findname != userFindName) {
+          withoutUser.push(element)
+        }
+      })
+      return withoutUser
     })
     // result = [
     //   {
@@ -3701,17 +4701,32 @@ export function UserInterface(this: any) {
                                             {oneList.array.map(
                                               (oneElement: any) => {
                                                 return (
-                                                  <div id="ChatsSearchAfterSearchResultsResult">
+                                                  <div
+                                                    id="ChatsSearchAfterSearchResultsResult"
+                                                    onClick={() => {
+                                                      findPeopleAndSetNewChat(
+                                                        oneElement.findname,
+                                                        oneElement.type,
+                                                        oneElement.photoLink,
+                                                        oneElement.username,
+                                                        oneElement.phoneNumber,
+                                                        oneElement.bio
+                                                      )
+                                                    }}
+                                                  >
                                                     <img
                                                       src={oneElement.photoLink}
                                                       alt=""
                                                     />
                                                     <div id="ChatsSearchAfterSearchResultsResultColumn">
                                                       <div id="ChatsSearchAfterSearchResultsResultTop">
-                                                        {oneElement.findname}
+                                                        {oneElement.username}
                                                       </div>
                                                       <div id="ChatsSearchAfterSearchResultsResultBot">
-                                                        {oneElement.findname}
+                                                        {oneElement.findname}{" "}
+                                                        {oneElement.subscribers
+                                                          ? oneElement.subscribers
+                                                          : undefined}
                                                       </div>
                                                     </div>
                                                   </div>
@@ -4281,6 +5296,285 @@ export function UserInterface(this: any) {
                                 : undefined
                               : undefined}
                           </>
+                        ) : oneChat.group == "chat" ? (
+                          <>
+                            {allChatsListInUser
+                              ? allChatsListInUser.chatsList
+                                ? allChatsListInUser.chatsList.map(
+                                    (oneChatChat: any) => {
+                                      return oneChat.findname ==
+                                        oneChatChat.findname ? (
+                                        <div
+                                          // key={key++}
+                                          className="userInterfaceChatsColumnOneChat"
+                                          style={
+                                            openedChat.findname ==
+                                            oneChat.findname
+                                              ? {
+                                                  backgroundColor: "#3390EC",
+                                                  color: "white",
+                                                }
+                                              : {
+                                                  backgroundColor:
+                                                    "transparent",
+                                                  color: "black",
+                                                }
+                                          }
+                                          onClick={async () => {
+                                            setChatSelected(true)
+                                            async function bgbfbf() {
+                                              setOpenedChat({
+                                                type: "chat",
+                                                findname: oneChat.findname,
+                                              })
+                                              setMainPageInput(
+                                                "chat",
+                                                oneChat.findname
+                                              )
+                                            }
+                                            await bgbfbf()
+                                            let meMsgDiv =
+                                              document.getElementById(
+                                                "userInterfaceChatMainMsgesColumn"
+                                              )
+                                            if (meMsgDiv) {
+                                              let rectmsgDiv =
+                                                meMsgDiv?.getBoundingClientRect()
+                                              let meelem =
+                                                document.querySelectorAll(
+                                                  '[data-lastmsg="thelastMessage"]'
+                                                )[0]
+
+                                              if (meelem) {
+                                                // let rect =
+                                                //   meelem.getBoundingClientRect()
+                                                // let toLowDown =
+                                                //   rect?.top - rectmsgDiv?.top
+                                                // meMsgDiv.scrollTop = toLowDown
+                                                meelem.scrollIntoView(false)
+                                              }
+                                            }
+                                          }}
+                                        >
+                                          <div className="userInterfaceChatsColumnOneChatImg">
+                                            <img
+                                              src={oneChatChat.photoLink}
+                                              alt=""
+                                            />
+                                            {onlineList.length ? (
+                                              onlineList.find(
+                                                (o: any) =>
+                                                  o.findname ===
+                                                  oneChatChat.findname.replace(
+                                                    userFindName,
+                                                    ""
+                                                  )
+                                              ).online === "online" ? (
+                                                <div
+                                                  id="blueOnline"
+                                                  style={
+                                                    oneChatChat.findname ===
+                                                    currentChatFindname
+                                                      ? {
+                                                          backgroundColor:
+                                                            "white",
+                                                          borderColor:
+                                                            "#3390ec",
+                                                        }
+                                                      : undefined
+                                                  }
+                                                ></div>
+                                              ) : undefined
+                                            ) : undefined}
+                                            {/* {onlineList.includes({
+                                              findname: oneChatChat.findname,
+                                              online: "online",
+                                            }) ? (
+                                              <img
+                                                id="blueOnline"
+                                                src=""
+                                                alt=""
+                                              />
+                                            ) : undefined} */}
+                                          </div>
+                                          <div className="userInterfaceChatsColumnOneChatNotImg">
+                                            <div className="userInterfaceChatsColumnOneChatNotImgTopLine">
+                                              <div className="userInterfaceChatsColumnOneChatNotImgName">
+                                                {oneChatChat.username}
+                                                {oneChatChat.muted != "no" ? (
+                                                  <img
+                                                    src="./muttedSpeaker.png"
+                                                    alt=""
+                                                  />
+                                                ) : undefined}
+                                              </div>
+                                              <div className="userInterfaceChatsColumnOneChatNotImgDate">
+                                                {Math.abs(
+                                                  Number(oneChat.lastUpdated) -
+                                                    Number(new Date().getTime())
+                                                ) <= 86400000
+                                                  ? `${new Date(
+                                                      Number(
+                                                        oneChat.lastUpdated
+                                                      )
+                                                    ).toLocaleTimeString()}`
+                                                  : Math.abs(
+                                                      Number(
+                                                        oneChat.lastUpdated
+                                                      ) -
+                                                        Number(
+                                                          new Date().getTime()
+                                                        )
+                                                    ) <= 172800000
+                                                  ? `${new Date(
+                                                      Number(
+                                                        oneChat.lastUpdated
+                                                      )
+                                                    )
+                                                      .toUTCString()
+                                                      .slice(0, 3)}`
+                                                  : new Date().getFullYear() !=
+                                                    new Date(
+                                                      Number(
+                                                        oneChat.lastUpdated
+                                                      )
+                                                    ).getFullYear()
+                                                  ? `${new Date(
+                                                      Number(
+                                                        oneChat.lastUpdated
+                                                      )
+                                                    ).toLocaleDateString(
+                                                      "en-GB"
+                                                    )}`
+                                                  : `${new Date(
+                                                      Number(
+                                                        oneChat.lastUpdated
+                                                      )
+                                                    )
+                                                      .toString()
+                                                      .slice(4, 10)}`}
+                                              </div>
+                                            </div>
+                                            <div className="userInterfaceChatsColumnOneChatNotImgBotLine">
+                                              <div
+                                                className="userInterfaceChatsColumnOneChatNotImgLastMsg"
+                                                style={
+                                                  openedChat.findname ==
+                                                  oneChat.findname
+                                                    ? {
+                                                        color: "white",
+                                                      }
+                                                    : {
+                                                        color: "#7b7f83",
+                                                      }
+                                                }
+                                                // style={
+                                                //   oneChat.messages[-1]
+                                                //     ? { color: "black" }
+                                                //     : { color: "green" }
+                                                // }
+                                              >
+                                                {oneChat.messages ? (
+                                                  oneChat.messages[
+                                                    oneChat.messages.length - 1
+                                                  ] ? (
+                                                    oneChat.messages[
+                                                      oneChat.messages.length -
+                                                        1
+                                                    ].img ? (
+                                                      <>
+                                                        <img
+                                                          src={
+                                                            oneChat.messages[
+                                                              oneChat.messages
+                                                                .length - 1
+                                                            ].img
+                                                              ? oneChat
+                                                                  .messages[
+                                                                  oneChat
+                                                                    .messages
+                                                                    .length - 1
+                                                                ].img
+                                                              : "./blank_photo.png"
+                                                          }
+                                                        />
+                                                        Photo
+                                                        {
+                                                          oneChat.messages[
+                                                            oneChat.messages
+                                                              .length - 1
+                                                          ].comentary
+                                                        }
+                                                      </>
+                                                    ) : oneChat.messages[
+                                                        oneChat.messages
+                                                          .length - 1
+                                                      ].blob ? (
+                                                      "Voice message"
+                                                    ) : (
+                                                      `${
+                                                        oneChat.messages[
+                                                          oneChat.messages
+                                                            .length - 1
+                                                        ].comentary
+                                                      }`
+                                                    )
+                                                  ) : (
+                                                    "Created Succesfully"
+                                                  )
+                                                ) : undefined}
+                                              </div>
+                                              <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
+                                                {oneChat.messages &&
+                                                oneChatChat.lastSeenMsg !=
+                                                  "0" &&
+                                                oneChat.messages.length -
+                                                  oneChatChat.lastSeenMsg !=
+                                                  0 ? (
+                                                  <div
+                                                    id="notSeenCounterChats"
+                                                    style={
+                                                      openedChat.findname ==
+                                                      oneChat.findname
+                                                        ? {
+                                                            backgroundColor:
+                                                              "white",
+                                                            color: "#3390EC",
+                                                          }
+                                                        : oneChatChat.muted ==
+                                                          "no"
+                                                        ? {
+                                                            backgroundColor:
+                                                              "#3390EC",
+                                                            color: "white",
+                                                          }
+                                                        : {
+                                                            backgroundColor:
+                                                              "rgb(162, 171, 178)",
+                                                            color: "white",
+                                                          }
+                                                    }
+                                                  >
+                                                    {oneChat.messages.length -
+                                                      oneChatChat.lastSeenMsg}
+                                                  </div>
+                                                ) : oneChatChat.pinned ==
+                                                  "yes" ? (
+                                                  <img
+                                                    src={"./pinned.png"}
+                                                    alt=""
+                                                  />
+                                                ) : undefined}
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ) : undefined
+                                    }
+                                  )
+                                : undefined
+                              : undefined}
+                          </>
                         ) : // <div
                         //   key={key++}
                         //   className="userInterfaceChatsColumnOneChat"
@@ -4405,18 +5699,82 @@ export function UserInterface(this: any) {
                     userSettingsEdit ? "toleft" : "back"
                   }`}
                 >
-                  <div id="userSettingsEditHead">
-                    <img
-                      src={"./icons8-arrow-left-50.png"}
-                      alt=""
-                      onClick={() => {
-                        setUserSettingsEdit(false)
-                      }}
-                    />
-                    <p>Edit profile</p>
-                  </div>
-                  <div></div>
-                  <div></div>
+                  <form action="">
+                    <div id="userSettingsEditHead">
+                      <input
+                        type="reset"
+                        value=" "
+                        onClick={() => {
+                          setUserSettingsEdit(false)
+                          setUserSettings(true)
+                        }}
+                      />
+                      <img src={"./icons8-arrow-left-50.png"} alt="" />
+                      <p>Edit Profile</p>
+                    </div>
+                    <div id="userSettingsEditImg">
+                      <img
+                        id="userSettingsEditImgOrigin"
+                        src="./defaultUser.png"
+                        alt=""
+                      />
+                      <div id="userSettingsEditImgNotOrigin">
+                        <img src="./backlessCamera.png" alt="" />
+                      </div>
+                    </div>
+                    <div id="userSettingsEditInputs">
+                      <div>
+                        <input
+                          type="text"
+                          placeholder=""
+                          defaultValue={currentUserName}
+                          maxLength={10}
+                        />
+                        <h2>Name</h2>
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder=""
+                          defaultValue={currentUserLastName}
+                          maxLength={10}
+                        />
+                        <h2>Last Name</h2>
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder=""
+                          defaultValue={currentUserBio}
+                          maxLength={30}
+                        />
+                        <h2>Bio (optional)</h2>
+                      </div>
+                      <p>
+                        Any details such as age, occupation or city. Example: 23
+                        y.o. designer from San Francisco
+                      </p>
+                      <h1>Username</h1>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder=""
+                          defaultValue={userFindName}
+                          maxLength={10}
+                        />
+                        <h2>Username (optional)</h2>
+                      </div>
+                      <p>
+                        You can choose a username on <b>Telegram</b>. If you do,
+                        people will be able to find you by this username and
+                        contact you without needing your phone number.
+                        <p>
+                          You can use a-z, 0-9 and underscores. Minimum length
+                          is 5 characters.
+                        </p>
+                      </p>
+                    </div>
+                  </form>
                 </div>
                 <div
                   className={`userSettings ${
@@ -4590,7 +5948,7 @@ export function UserInterface(this: any) {
                   : { width: "calc(100% + 420px)" }
               }
             >
-              <div id="userInterfaceChatMainPart">
+              <div id="userInterfaceChatMainPart" onScroll={() => {}}>
                 <div
                   id="userInterfaceChatHead"
                   style={
@@ -4611,17 +5969,307 @@ export function UserInterface(this: any) {
                         {currentChatName}
                       </div>
                       <div id="userInterfaceChatHeadNameColumnLastSeen">
-                        {currentChatType == "chanell"
-                          ? `${currentChatSubs} subscribers`
-                          : "Bot or participants or subs and online or last seen or service notification"}
+                        {currentChatType === "chanell" ? (
+                          `${currentChatSubs} subscribers`
+                        ) : currentChatType === "chat" ? (
+                          // onlineList.includes({
+                          //   findname: currentChatFindname.replace(
+                          //     userFindName,
+                          //     ""
+                          //   ),
+                          //   online: "online",
+                          // })
+                          onlineList.find(
+                            (o: any) =>
+                              o.findname ===
+                              currentChatFindname.replace(userFindName, "")
+                          ).online === "online" ? (
+                            <>
+                              {" "}
+                              <img src="./online.png" alt="" /> online{" "}
+                            </>
+                          ) : (
+                            `last seen ${
+                              Math.abs(
+                                Number(
+                                  onlineList.find(
+                                    (o: any) =>
+                                      o.findname ===
+                                      currentChatFindname.replace(
+                                        userFindName,
+                                        ""
+                                      )
+                                  ).online
+                                ) - Number(new Date().getTime())
+                              ) <= 86400000
+                                ? `${new Date(
+                                    Number(
+                                      onlineList.find(
+                                        (o: any) =>
+                                          o.findname ===
+                                          currentChatFindname.replace(
+                                            userFindName,
+                                            ""
+                                          )
+                                      ).online
+                                    )
+                                  ).toLocaleTimeString()}`
+                                : Math.abs(
+                                    Number(
+                                      onlineList.find(
+                                        (o: any) =>
+                                          o.findname ===
+                                          currentChatFindname.replace(
+                                            userFindName,
+                                            ""
+                                          )
+                                      ).online
+                                    ) - Number(new Date().getTime())
+                                  ) <= 172800000
+                                ? `${new Date(
+                                    Number(
+                                      onlineList.find(
+                                        (o: any) =>
+                                          o.findname ===
+                                          currentChatFindname.replace(
+                                            userFindName,
+                                            ""
+                                          )
+                                      ).online
+                                    )
+                                  )
+                                    .toUTCString()
+                                    .slice(0, 3)}`
+                                : new Date().getFullYear() !=
+                                  new Date(
+                                    Number(
+                                      onlineList.find(
+                                        (o: any) =>
+                                          o.findname ===
+                                          currentChatFindname.replace(
+                                            userFindName,
+                                            ""
+                                          )
+                                      ).online
+                                    )
+                                  ).getFullYear()
+                                ? `${new Date(
+                                    Number(
+                                      onlineList.find(
+                                        (o: any) =>
+                                          o.findname ===
+                                          currentChatFindname.replace(
+                                            userFindName,
+                                            ""
+                                          )
+                                      ).online
+                                    )
+                                  ).toLocaleDateString("en-GB")}`
+                                : `${new Date(
+                                    Number(
+                                      onlineList.find(
+                                        (o: any) =>
+                                          o.findname ===
+                                          currentChatFindname.replace(
+                                            userFindName,
+                                            ""
+                                          )
+                                      ).online
+                                    )
+                                  )
+                                    .toString()
+                                    .slice(4, 10)}`
+                            }`
+                          )
+                        ) : (
+                          "Bot or participants or subs and online or last seen or service notification"
+                        )}
                       </div>
                     </div>
                   </div>
                   {/* <div id="userInterfaceChatHeadCall">Call</div> */}
                   {/* <div id="userInterfaceChatHeadHidePinned">HidePinned</div> */}
                   {/* <div id="userInterfaceChatHeadOnePinned">OnePinned</div> */}
-                  <div id="userInterfaceChatHeadAllPinned">AllPinned</div>
-                  <div id="userInterfaceChatHeadAllPinnedList">AllPinned</div>
+                  {currentChatPinnedList.length ? (
+                    <div
+                      id="userInterfaceChatHeadAllPinned"
+                      onClick={() => {
+                        setUseScroll(false)
+                        if (currentPinnedMsgNumber === 0) {
+                          for (
+                            let index = 0;
+                            index < currentChatMsgsList.length;
+                            index++
+                          ) {
+                            if (
+                              currentChatMsgsList[index].time ===
+                              currentChatPinnedList[
+                                currentChatPinnedList.length - 1
+                              ].time
+                            ) {
+                              let f = document.querySelectorAll(
+                                `[data-msgkey="data-msgkey${index}"]`
+                              )[0] as HTMLDivElement
+                              f.scrollIntoView({
+                                behavior: "smooth",
+                                block: "nearest",
+                                inline: "center",
+                              })
+
+                              f.classList.add("blinkBackground")
+                              setTimeout(function () {
+                                f.classList.remove("blinkBackground")
+                              }, 1000)
+                              break
+                            }
+                          }
+                        } else {
+                          for (
+                            let index = 0;
+                            index < currentChatMsgsList.length;
+                            index++
+                          ) {
+                            if (
+                              currentChatMsgsList[index].time ===
+                              currentChatPinnedList[currentPinnedMsgNumber - 1]
+                                .time
+                            ) {
+                              let f = document.querySelectorAll(
+                                `[data-msgkey="data-msgkey${index}"]`
+                              )[0] as HTMLDivElement
+                              f.scrollIntoView({
+                                behavior: "smooth",
+                                block: "nearest",
+                                // block: "center",
+                                inline: "center",
+                              })
+
+                              // let msgElement = document.querySelectorAll(
+                              //   `[data-msgkey="data-msgkey${index}"]`
+                              // )[0] as HTMLElement
+
+                              // let scrolledDiv = document.querySelectorAll(
+                              //   `[data-msgkey="data-msgkey${index}"]`
+                              // )[0].parentElement as HTMLElement
+                              // let msgTop =
+                              //   msgElement.getBoundingClientRect().top
+                              // let scrolledDivCurrentPos = scrolledDiv.scrollTop
+
+                              // myRef.current.scrollTop =
+                              // myRef.current.scrollHeight - myRef.current.clientHeight + 100
+
+                              // різниця між курент позішином діва а також бажаним (102 по топу), ця різниця застосовується
+                              // до скролдіва і його позицію скрол топа міняє на знач цієї різниці.
+                              // console.log(msgElement)
+                              // console.log(msgTop)
+                              // console.log(scrolledDiv)
+                              // console.log(scrolledDivCurrentPos)
+
+                              f.classList.add("blinkBackground")
+                              setTimeout(function () {
+                                f.classList.remove("blinkBackground")
+                              }, 1000)
+                              break
+                            }
+                          }
+                        }
+                        setCurrentPinnedMsgNumber(
+                          currentPinnedMsgNumber === 0
+                            ? currentChatPinnedList.length - 1
+                            : currentPinnedMsgNumber - 1
+                        )
+                      }}
+                    >
+                      {/* <div className="center">
+                        <div className="center2">
+                          <div className="mover"></div>
+                        </div>
+                      </div> */}
+                      <div className="userInterfaceChatHeadAllPinnedLine">
+                        <div id="circlesWrap">
+                          {currentChatPinnedList.map((oneMsg) => {
+                            return (
+                              <div
+                                className={`blueSquare `}
+                                // ${
+                                //   currentPinnedMsgNumber === 0
+                                //     ? "center"
+                                //     : oneMsg.index > currentPinnedMsgNumber
+                                //     ? "pinnedBottom"
+                                //     : "pinnedUp transparent"
+                                // }`}
+                                style={{
+                                  transform: `translateY(${
+                                    currentChatPinnedList.length ===
+                                    currentPinnedMsgNumber + 1
+                                      ? "0"
+                                      : currentPinnedMsgNumber <= 3
+                                      ? (currentChatPinnedList.length - 4) * 9
+                                      : (currentChatPinnedList.length -
+                                          currentPinnedMsgNumber -
+                                          1) *
+                                        9
+                                  }px)`,
+                                }}
+                                // ${
+                                //   oneMsg.index == currentPinnedMsgNumber
+                                //     ? "blue"
+                                //     : "notBlue"
+                                // }`}
+                              ></div>
+                            )
+                          })}
+                        </div>
+                        <div id="moverWrap">
+                          <div
+                            className={`mover`}
+                            style={{
+                              transform: `translateY(-${
+                                currentPinnedMsgNumber >= 3
+                                  ? "0"
+                                  : (3 - currentPinnedMsgNumber) * 9
+                              }px)`,
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                      <div id="userInterfaceChatHeadAllPinnedDiv">
+                        <div id="userInterfaceChatHeadAllPinnedDivText">
+                          Pinned Message
+                          {currentPinnedMsgNumber ==
+                          currentChatPinnedList.length
+                            ? `#${currentPinnedMsgNumber + 1}`
+                            : `#${currentPinnedMsgNumber + 1}`}
+                        </div>
+                        <div id="userInterfaceChatHeadAllPinnedList">
+                          {currentChatPinnedList.map((oneMsg) => {
+                            return (
+                              <div
+                                className={`onePinnedMsg 
+                                ${
+                                  oneMsg.index === currentPinnedMsgNumber
+                                    ? "pinnedBack"
+                                    : oneMsg.index > currentPinnedMsgNumber
+                                    ? "pinnedBottom"
+                                    : "pinnedUp transparent"
+                                }`}
+                              >
+                                {oneMsg.photoLink ? (
+                                  <>
+                                    <img src={oneMsg.photoLink} alt="" />
+                                    Photo
+                                  </>
+                                ) : undefined}
+                                {oneMsg.comentary}
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  ) : undefined}
+
+                  <div id="userInterfaceChatHeadAllPinnedButton">PinButt</div>
                   <div
                     id="userInterfaceChatHeadNotifications"
                     onClick={() => {
@@ -4677,6 +6325,9 @@ export function UserInterface(this: any) {
                   <div
                     id="userInterfaceChatMainMsgesColumn"
                     ref={myRef}
+                    onWheel={() => {
+                      setUseScroll(true)
+                    }}
                     onScroll={async () => {
                       await scrollOnFunc()
                       checkIfAtBottom()
@@ -4980,217 +6631,238 @@ export function UserInterface(this: any) {
                       </div>
                     </div>
 
-                    {currentChatMsgsList
-                      ? currentChatMsgsList.map((item) => {
-                          valToEvalLastMsg = false
-                          if (allChatsListInUser) {
-                            if (allChatsListInUser.chanellsList) {
-                              for (
-                                let i = 0;
-                                i < allChatsListInUser.chanellsList.length;
-                                i++
+                    {currentChatMsgsList?.length ? (
+                      currentChatMsgsList.map((item) => {
+                        valToEvalLastMsg = false
+                        if (allChatsListInUser) {
+                          if (allChatsListInUser.chanellsList) {
+                            for (
+                              let i = 0;
+                              i < allChatsListInUser.chanellsList.length;
+                              i++
+                            ) {
+                              if (
+                                allChatsListInUser?.chanellsList[i].findname ==
+                                currentChatFindname
                               ) {
-                                if (
+                                let msgNumber = Number(
                                   allChatsListInUser?.chanellsList[i]
-                                    .findname == currentChatFindname
-                                ) {
-                                  let msgNumber = Number(
-                                    allChatsListInUser?.chanellsList[i]
-                                      .lastSeenMsg
-                                  )
-                                  if (currentMappedListKey == msgNumber - 1) {
-                                    valToEvalLastMsg = true
-                                    break
-                                  }
-
-                                  if (currentMappedListKey > msgNumber - 1) {
-                                    valToEvalNotSeen = true
-                                  } else {
-                                    valToEvalNotSeen = false
-                                  }
-                                } else {
+                                    .lastSeenMsg
+                                )
+                                if (currentMappedListKey == msgNumber - 1) {
+                                  valToEvalLastMsg = true
+                                  break
                                 }
+
+                                if (currentMappedListKey > msgNumber - 1) {
+                                  valToEvalNotSeen = true
+                                } else {
+                                  valToEvalNotSeen = false
+                                }
+                              } else {
                               }
                             }
                           }
+                          if (allChatsListInUser.chatsList) {
+                            for (
+                              let i = 0;
+                              i < allChatsListInUser.chatsList.length;
+                              i++
+                            ) {
+                              if (
+                                allChatsListInUser?.chatsList[i].findname ==
+                                currentChatFindname
+                              ) {
+                                let msgNumber = Number(
+                                  allChatsListInUser?.chatsList[i].lastSeenMsg
+                                )
+                                if (currentMappedListKey == msgNumber - 1) {
+                                  valToEvalLastMsg = true
+                                  break
+                                }
 
-                          if (
-                            currentChatMsgsList.length - 1 ==
-                            currentMappedListKey
-                          ) {
-                            // currentMappedListKey = 0
-                          } else {
-                            currentMappedListKey++
+                                if (currentMappedListKey > msgNumber - 1) {
+                                  valToEvalNotSeen = true
+                                } else {
+                                  valToEvalNotSeen = false
+                                }
+                              } else {
+                              }
+                            }
                           }
+                        }
 
-                          return (
-                            <>
-                              {timeForCorrectMsgTime == "0" ? (
-                                <div id="msgGlobalTime">
-                                  Created Successfully
-                                </div>
-                              ) : timeForCorrectMsgTime != "0" ? (
-                                new Date(Number(item.time)).toDateString() !=
-                                new Date(
-                                  Number(timeForCorrectMsgTime)
-                                ).toDateString() ? (
-                                  new Date().getFullYear() ==
-                                  new Date(Number(item.time)).getFullYear() ? (
-                                    <div id="msgGlobalTime">
-                                      {new Date(Number(item.time))
-                                        .toDateString()
-                                        .split(" ")[1] +
-                                        " " +
-                                        new Date(Number(item.time))
-                                          .toDateString()
-                                          .split(" ")[2]}
-                                    </div>
-                                  ) : (
-                                    <div id="msgGlobalTime">
-                                      {new Date(Number(item.time))
-                                        .toDateString()
-                                        .split(" ")[1] +
-                                        " " +
-                                        new Date(Number(item.time))
-                                          .toDateString()
-                                          .split(" ")[2] +
-                                        " " +
-                                        new Date(Number(item.time))
-                                          .toDateString()
-                                          .split(" ")[3]}
-                                    </div>
-                                  )
-                                ) : undefined
-                              ) : undefined}
+                        if (
+                          currentChatMsgsList.length - 1 ==
+                          currentMappedListKey
+                        ) {
+                          // currentMappedListKey = 0
+                        } else {
+                          currentMappedListKey++
+                        }
 
-                              <div
-                                data-lastmsg={
-                                  valToEvalLastMsg ? "thelastMessage" : "none"
-                                }
-                                data-notseen={
-                                  valToEvalNotSeen ? "notseen" : "none"
-                                }
-                                id="msg"
-                                key={`msgkey${key++}`}
-                                data-msgkey={`data-msgkey${key}`}
-                                onClick={(event) => {
-                                  event.preventDefault()
-                                  let target = event.target as HTMLDivElement
-                                  if (msgMenuSelectPressed) {
-                                    if (msgMenuTargets) {
-                                      for (
-                                        let i = 0;
-                                        i < msgMenuTargets.length;
-                                        i++
-                                      ) {
-                                        if (target != msgMenuTargets[i]) {
-                                          continue
+                        return (
+                          <>
+                            {timeForCorrectMsgTime == "0" ? (
+                              <div id="msgGlobalTime">Created Successfully</div>
+                            ) : timeForCorrectMsgTime != "0" ? (
+                              new Date(Number(item.time)).toDateString() !=
+                              new Date(
+                                Number(timeForCorrectMsgTime)
+                              ).toDateString() ? (
+                                new Date().getFullYear() ==
+                                new Date(Number(item.time)).getFullYear() ? (
+                                  <div id="msgGlobalTime">
+                                    {new Date(Number(item.time))
+                                      .toDateString()
+                                      .split(" ")[1] +
+                                      " " +
+                                      new Date(Number(item.time))
+                                        .toDateString()
+                                        .split(" ")[2]}
+                                  </div>
+                                ) : (
+                                  <div id="msgGlobalTime">
+                                    {new Date(Number(item.time))
+                                      .toDateString()
+                                      .split(" ")[1] +
+                                      " " +
+                                      new Date(Number(item.time))
+                                        .toDateString()
+                                        .split(" ")[2] +
+                                      " " +
+                                      new Date(Number(item.time))
+                                        .toDateString()
+                                        .split(" ")[3]}
+                                  </div>
+                                )
+                              ) : undefined
+                            ) : undefined}
+
+                            <div
+                              data-lastmsg={
+                                valToEvalLastMsg ? "thelastMessage" : "none"
+                              }
+                              data-notseen={
+                                valToEvalNotSeen ? "notseen" : "none"
+                              }
+                              id="msg"
+                              key={`msgkey${key++}`}
+                              data-msgkey={`data-msgkey${key}`}
+                              onClick={(event) => {
+                                event.preventDefault()
+                                let target = event.target as HTMLDivElement
+                                if (msgMenuSelectPressed) {
+                                  if (msgMenuTargets) {
+                                    for (
+                                      let i = 0;
+                                      i < msgMenuTargets.length;
+                                      i++
+                                    ) {
+                                      if (target != msgMenuTargets[i]) {
+                                        continue
+                                      } else {
+                                        let notUndefTarget = msgMenuTargets[i]
+                                        if (notUndefTarget) {
+                                          notUndefTarget.style.backgroundColor =
+                                            "transparent"
+                                        }
+                                        let oldmsgContextMenu = [
+                                          ...msgMenuTargets,
+                                        ]
+                                        if (msgMenuTargets.length == 1) {
+                                          setMsgMenuTargets([])
+                                          setMsgMenuSelectPressed(false)
+                                          return
+                                        }
+
+                                        if (i == 0) {
+                                          oldmsgContextMenu.shift()
+                                          setMsgMenuTargets(oldmsgContextMenu)
+                                          return
                                         } else {
-                                          let notUndefTarget = msgMenuTargets[i]
-                                          if (notUndefTarget) {
-                                            notUndefTarget.style.backgroundColor =
-                                              "transparent"
-                                          }
-                                          let oldmsgContextMenu = [
-                                            ...msgMenuTargets,
-                                          ]
-                                          if (msgMenuTargets.length == 1) {
-                                            setMsgMenuTargets([])
-                                            setMsgMenuSelectPressed(false)
-                                            return
-                                          }
-
-                                          if (i == 0) {
-                                            oldmsgContextMenu.shift()
+                                          if (
+                                            i ==
+                                            msgContextMenu.target.length - 1
+                                          ) {
+                                            oldmsgContextMenu.pop()
                                             setMsgMenuTargets(oldmsgContextMenu)
                                             return
                                           } else {
-                                            if (
-                                              i ==
-                                              msgContextMenu.target.length - 1
-                                            ) {
-                                              oldmsgContextMenu.pop()
-                                              setMsgMenuTargets(
-                                                oldmsgContextMenu
+                                            let oldTarget = oldmsgContextMenu
+                                              .slice(0, i)
+                                              .concat(
+                                                oldmsgContextMenu.slice(i + 1)
                                               )
-                                              return
-                                            } else {
-                                              let oldTarget = oldmsgContextMenu
-                                                .slice(0, i)
-                                                .concat(
-                                                  oldmsgContextMenu.slice(i + 1)
-                                                )
-                                              oldmsgContextMenu = oldTarget
-                                              setMsgMenuTargets(
-                                                oldmsgContextMenu
-                                              )
-                                              return
-                                            }
+                                            oldmsgContextMenu = oldTarget
+                                            setMsgMenuTargets(oldmsgContextMenu)
+                                            return
                                           }
                                         }
                                       }
-                                      setMsgMenuSelectPressed(true)
-                                      let aaaa = [...msgMenuTargets]
-                                      aaaa.push(target)
-                                      setMsgMenuTargets(aaaa)
-                                      target.style.backgroundColor =
-                                        "rgb(112, 117, 121, 0.8)"
+                                    }
+                                    setMsgMenuSelectPressed(true)
+                                    let aaaa = [...msgMenuTargets]
+                                    aaaa.push(target)
+                                    setMsgMenuTargets(aaaa)
+                                    target.style.backgroundColor =
+                                      "rgb(112, 117, 121, 0.8)"
+                                  }
+                                }
+                              }}
+                              onContextMenu={(event) => {
+                                event.preventDefault()
+                                let target = event.target as HTMLDivElement
+                                if (msgMenuTargets) {
+                                  if (msgMenuTargets[0]) {
+                                    if (!currentEditingState) {
+                                      return
                                     }
                                   }
-                                }}
-                                onContextMenu={(event) => {
-                                  event.preventDefault()
-                                  let target = event.target as HTMLDivElement
-                                  if (msgMenuTargets) {
-                                    if (msgMenuTargets[0]) {
-                                      if (!currentEditingState) {
-                                        return
-                                      }
-                                    }
-                                  }
-                                  let vw = window.innerWidth + 840
-                                  let vh = window.innerHeight + 100
-                                  setMsgMenuCoords({
-                                    top: String((event.pageY / vh) * 100),
-                                    left: String((event.pageX / vw) * 100),
-                                  })
-                                  setMsgMenu(true)
-                                  // if(!currentEditingState){
-                                  setMsgMenuTargets([target])
-                                  // }
-                                  setMsgMenuListener(true)
-                                }}
-                                // className={
-                                //   currentChatMsgsList.length - 1 ==
-                                //   currentMappedListKey
-                                //     ? "trackMe"
-                                //     : undefined
+                                }
+                                let vw = window.innerWidth + 840
+                                let vh = window.innerHeight + 100
+                                setMsgMenuCoords({
+                                  top: String((event.pageY / vh) * 100),
+                                  left: String((event.pageX / vw) * 100),
+                                })
+                                setMsgMenu(true)
+                                // if(!currentEditingState){
+                                setMsgMenuTargets([target])
                                 // }
-                                // className={key % 2 ? "rightmsg" : "leftmsg"}
+                                setMsgMenuListener(true)
+                              }}
+                              // className={
+                              //   currentChatMsgsList.length - 1 ==
+                              //   currentMappedListKey
+                              //     ? "trackMe"
+                              //     : undefined
+                              // }
+                              // className={key % 2 ? "rightmsg" : "leftmsg"}
+                            >
+                              <div
+                                id="surroundDiv"
+                                className={
+                                  msgMenuSelectPressed &&
+                                  msgMenuTargets &&
+                                  msgMenuTargets.length
+                                    ? "toright-msg"
+                                    : "back-msg"
+                                }
+                                // style={ ? {}: {display: "flex"}}
                               >
-                                <div
-                                  id="surroundDiv"
-                                  className={
-                                    msgMenuSelectPressed &&
-                                    msgMenuTargets &&
-                                    msgMenuTargets.length
-                                      ? "toright-msg"
-                                      : "back-msg"
-                                  }
-                                  // style={ ? {}: {display: "flex"}}
-                                >
-                                  {item.type == "blob" ? (
-                                    <div id="audioMsgDiv">
-                                      <audio
-                                        data-keepplaying
-                                        onEnded={(event) => {
-                                          setTheAudio(undefined)
-                                          let target =
-                                            event.target as HTMLAudioElement
-                                          if (target.parentElement) {
-                                            target.parentElement.children[2].children[1].children[0].innerHTML = `${Math.trunc(
-                                              Number(item.blobTime) / 60
-                                            )} :
+                                {item.type == "blob" ? (
+                                  <div id="audioMsgDiv">
+                                    <audio
+                                      data-keepplaying
+                                      onEnded={(event) => {
+                                        setTheAudio(undefined)
+                                        let target =
+                                          event.target as HTMLAudioElement
+                                        if (target.parentElement) {
+                                          target.parentElement.children[2].children[1].children[0].innerHTML = `${Math.trunc(
+                                            Number(item.blobTime) / 60
+                                          )} :
                                             ${
                                               Math.trunc(
                                                 Number(item.blobTime) % 60
@@ -5203,27 +6875,27 @@ export function UserInterface(this: any) {
                                                     Number(item.blobTime) % 60
                                                   )
                                             }`
-                                          }
-                                        }}
-                                        onTimeUpdate={(event) => {
-                                          let target =
-                                            event.target as HTMLAudioElement
-                                          if (target.parentElement) {
-                                            if (target.currentTime != 0) {
-                                              target.parentElement.children[2].children[1].children[0].innerHTML = `${Math.trunc(
-                                                target.currentTime / 60
-                                              )} : ${
-                                                Math.trunc(
-                                                  target.currentTime % 60
-                                                ) < 10
-                                                  ? "0" +
-                                                    Math.trunc(
-                                                      target.currentTime % 60
-                                                    )
-                                                  : Math.trunc(
-                                                      target.currentTime % 60
-                                                    )
-                                              }  /  
+                                        }
+                                      }}
+                                      onTimeUpdate={(event) => {
+                                        let target =
+                                          event.target as HTMLAudioElement
+                                        if (target.parentElement) {
+                                          if (target.currentTime != 0) {
+                                            target.parentElement.children[2].children[1].children[0].innerHTML = `${Math.trunc(
+                                              target.currentTime / 60
+                                            )} : ${
+                                              Math.trunc(
+                                                target.currentTime % 60
+                                              ) < 10
+                                                ? "0" +
+                                                  Math.trunc(
+                                                    target.currentTime % 60
+                                                  )
+                                                : Math.trunc(
+                                                    target.currentTime % 60
+                                                  )
+                                            }  /  
                                             ${Math.trunc(
                                               Number(item.blobTime) / 60
                                             )} :
@@ -5239,8 +6911,8 @@ export function UserInterface(this: any) {
                                                     Number(item.blobTime) % 60
                                                   )
                                             }`
-                                            } else {
-                                              target.parentElement.children[2].children[1].children[0].innerHTML = `
+                                          } else {
+                                            target.parentElement.children[2].children[1].children[0].innerHTML = `
                                               ${Math.trunc(
                                                 Number(item.blobTime) / 60
                                               )} :
@@ -5256,93 +6928,93 @@ export function UserInterface(this: any) {
                                                       Number(item.blobTime) % 60
                                                     )
                                               }`
-                                            }
                                           }
-                                        }}
-                                        src={
-                                          item.blob
-                                          //   URL.createObjectURL(
-                                          //   // new Blob([item.blob], {
-                                          //   //   type: "audio/webm",
-                                          //   // })
-                                          //   new Blob(
-                                          //     // @ts-ignore
-                                          //     [item.blob],
-                                          //     {
-                                          //       type: "audio/mp3",
-                                          //     }
-                                          //   )
-                                          //   // b64toBlob(item.blob, "audio/webm")
-                                          // )
                                         }
-                                      ></audio>
-                                      <div
-                                        id="audioButton"
-                                        onClick={(event) => {
-                                          // new Audio(
-                                          //   URL.createObjectURL(item.blob)
-                                          // ).play()
-                                          let theAudioNow = (
-                                            event.target as HTMLDivElement
-                                          ).parentElement?.parentElement
-                                            ?.children[0] as HTMLAudioElement
-                                          setTheAudio(theAudioNow)
-                                          if (
-                                            theAudio &&
-                                            theAudio == theAudioNow
-                                          ) {
-                                            if (theAudio.paused) {
-                                              theAudio.play()
-                                            } else {
-                                              theAudio.pause()
-                                            }
+                                      }}
+                                      src={
+                                        item.blob
+                                        //   URL.createObjectURL(
+                                        //   // new Blob([item.blob], {
+                                        //   //   type: "audio/webm",
+                                        //   // })
+                                        //   new Blob(
+                                        //     // @ts-ignore
+                                        //     [item.blob],
+                                        //     {
+                                        //       type: "audio/mp3",
+                                        //     }
+                                        //   )
+                                        //   // b64toBlob(item.blob, "audio/webm")
+                                        // )
+                                      }
+                                    ></audio>
+                                    <div
+                                      id="audioButton"
+                                      onClick={(event) => {
+                                        // new Audio(
+                                        //   URL.createObjectURL(item.blob)
+                                        // ).play()
+                                        let theAudioNow = (
+                                          event.target as HTMLDivElement
+                                        ).parentElement?.parentElement
+                                          ?.children[0] as HTMLAudioElement
+                                        setTheAudio(theAudioNow)
+                                        if (
+                                          theAudio &&
+                                          theAudio == theAudioNow
+                                        ) {
+                                          if (theAudio.paused) {
+                                            theAudio.play()
                                           } else {
-                                            if (theAudioNow) {
-                                              if (theAudioNow.paused) {
-                                                theAudioNow.play()
-                                                // theAudioNow.addEventListener(
-                                                //   "canplay",
-                                                //   function handler(e) {
-                                                //     theAudioNow.play()
-                                                //     console.log("play2")
-                                                //     e.currentTarget?.removeEventListener(
-                                                //       e.type,
-                                                //       handler
-                                                //     )
-                                                //   }
-                                                // )
-                                              } else {
-                                                theAudioNow.pause()
-                                              }
+                                            theAudio.pause()
+                                          }
+                                        } else {
+                                          if (theAudioNow) {
+                                            if (theAudioNow.paused) {
+                                              theAudioNow.play()
+                                              // theAudioNow.addEventListener(
+                                              //   "canplay",
+                                              //   function handler(e) {
+                                              //     theAudioNow.play()
+                                              //     console.log("play2")
+                                              //     e.currentTarget?.removeEventListener(
+                                              //       e.type,
+                                              //       handler
+                                              //     )
+                                              //   }
+                                              // )
+                                            } else {
+                                              theAudioNow.pause()
                                             }
                                           }
-                                          //  else if () {
-                                          //   theAudio.pause();
-                                          //   theAudio.currentTime = 0;
-                                          // }
-                                          // else {
-                                          //   return false;
-                                          // }
-                                        }}
-                                      >
-                                        <img src="./audioForward.png" alt="" />
-                                      </div>
-                                      <div id="notAudioButton">
-                                        <div id="audioProgress">
-                                          {/* <MyVisual /> */}
-                                          {item.blobWave.map((height: any) => {
-                                            return (
-                                              <div
-                                                id="oneAudioRect"
-                                                style={{
-                                                  height: `${height}px`,
-                                                }}
-                                              >
-                                                {" "}
-                                              </div>
-                                            )
-                                          })}
-                                          {/* <AudioVisualizer
+                                        }
+                                        //  else if () {
+                                        //   theAudio.pause();
+                                        //   theAudio.currentTime = 0;
+                                        // }
+                                        // else {
+                                        //   return false;
+                                        // }
+                                      }}
+                                    >
+                                      <img src="./audioForward.png" alt="" />
+                                    </div>
+                                    <div id="notAudioButton">
+                                      <div id="audioProgress">
+                                        {/* <MyVisual /> */}
+                                        {item.blobWave.map((height: any) => {
+                                          return (
+                                            <div
+                                              id="oneAudioRect"
+                                              style={{
+                                                height: `${height}px`,
+                                              }}
+                                            >
+                                              {" "}
+                                            </div>
+                                          )
+                                        })}
+                                        {/* <AudioVisualizer
                                             blob={item.blob}
                                             width={205}
                                             height={50}
@@ -5356,145 +7028,170 @@ export function UserInterface(this: any) {
                                             //     : URL.createObjectURL(item.blob)
                                             // }
                                           /> */}
-                                          {/* {item.blobWave} */}
+                                        {/* {item.blobWave} */}
+                                      </div>
+                                      <div id="audioTimeWraper">
+                                        <div id="audioTime">
+                                          {item.blobTime}
                                         </div>
-                                        <div id="audioTimeWraper">
-                                          <div id="audioTime">
-                                            {item.blobTime}
+                                        {item.comentary ? (
+                                          <></>
+                                        ) : (
+                                          <div
+                                            id="time"
+                                            data-msgtime={
+                                              (timeForCorrectMsgTime =
+                                                item.time)
+                                            }
+                                          >
+                                            {new Date(
+                                              Number(item.time)
+                                            ).toLocaleTimeString([], {
+                                              hour: "2-digit",
+                                              minute: "2-digit",
+                                            })}
                                           </div>
-                                          {item.comentary ? (
-                                            <></>
-                                          ) : (
-                                            <div
-                                              id="time"
-                                              data-msgtime={
-                                                (timeForCorrectMsgTime =
-                                                  item.time)
-                                              }
-                                            >
-                                              {new Date(
-                                                Number(item.time)
-                                              ).toLocaleTimeString([], {
-                                                hour: "2-digit",
-                                                minute: "2-digit",
-                                              })}
-                                            </div>
-                                          )}
-                                        </div>
+                                        )}
                                       </div>
                                     </div>
-                                  ) : item.img ? (
-                                    <div id="msgImgWithCommentary">
-                                      <img src={item.img} alt="" />
-                                      {item.comentary ? undefined : (
-                                        <div
-                                          id="time"
-                                          data-msgtime={
-                                            (timeForCorrectMsgTime = item.time)
-                                          }
-                                        >
-                                          {new Date(
-                                            Number(item.time)
-                                          ).toLocaleTimeString([], {
-                                            hour: "2-digit",
-                                            minute: "2-digit",
-                                          })}
-                                        </div>
-                                      )}{" "}
-                                    </div>
-                                  ) : (
-                                    <></>
-                                  )}
-                                  {item.comentary ? (
-                                    <div id="comentary">
-                                      <p>{item.comentary}</p>
-                                      {!item.emotions.length &&
-                                      currentChatMsgsList[key].comentary &&
-                                      getTextWidth(
-                                        currentChatMsgsList[key].comentary,
-                                        "16px open sans"
-                                      ) <= 429 ? (
-                                        <div
-                                          id="time"
-                                          data-msgtime={
-                                            (timeForCorrectMsgTime = item.time)
-                                          }
-                                        >
-                                          {item.pinned ? (
-                                            <img
-                                              src="./icons8-pin-50.png"
-                                              alt=""
-                                            />
-                                          ) : undefined}
-                                          {new Date(
-                                            Number(item.time)
-                                          ).toLocaleTimeString([], {
-                                            hour: "2-digit",
-                                            minute: "2-digit",
-                                          })}
-                                        </div>
-                                      ) : undefined}
-                                    </div>
-                                  ) : undefined}
-                                  {item.emotions.length ? (
-                                    <div id="emotions">
-                                      {item.emotions
-                                        ? item.emotions.map((emotion) => {
-                                            return (
-                                              <div
-                                                id="oneemo"
-                                                style={
-                                                  emotion.users.includes(
-                                                    userFindName
-                                                  )
-                                                    ? {
-                                                        backgroundColor:
-                                                          "#3390ec",
-                                                        color: "white",
-                                                      }
-                                                    : { display: "flex" }
-                                                }
-                                                // key={key++} CHAGE "KEY" TO SOME OTHER WORD OR EMOTIONS WONT WORK
-                                              >
-                                                <p>{emotion.smile}</p>
-                                                <p>{emotion.count}</p>
-                                              </div>
-                                            )
-                                          })
-                                        : undefined}
-                                      {item.emotions.length ||
-                                      getTextWidth(
-                                        currentChatMsgsList[key].comentary,
-                                        "16px open sans"
-                                      ) > 429 ? (
-                                        <div
-                                          id="time"
-                                          data-msgtime={
-                                            (timeForCorrectMsgTime = item.time)
-                                          }
-                                        >
-                                          {item.pinned ? (
-                                            <img
-                                              src="./icons8-pin-50.png"
-                                              alt=""
-                                            />
-                                          ) : undefined}
-                                          {new Date(
-                                            Number(item.time)
-                                          ).toLocaleTimeString([], {
-                                            hour: "2-digit",
-                                            minute: "2-digit",
-                                          })}
-                                        </div>
-                                      ) : undefined}
-                                    </div>
-                                  ) : undefined}
-                                </div>
+                                  </div>
+                                ) : item.img ? (
+                                  <div id="msgImgWithCommentary">
+                                    <img src={item.img} alt="" />
+                                    {item.comentary ? undefined : (
+                                      <div
+                                        id="time"
+                                        data-msgtime={
+                                          (timeForCorrectMsgTime = item.time)
+                                        }
+                                      >
+                                        {new Date(
+                                          Number(item.time)
+                                        ).toLocaleTimeString([], {
+                                          hour: "2-digit",
+                                          minute: "2-digit",
+                                        })}
+                                      </div>
+                                    )}{" "}
+                                  </div>
+                                ) : (
+                                  <></>
+                                )}
+                                {item.comentary ? (
+                                  <div id="comentary">
+                                    <p>{item.comentary}</p>
+                                    {!item.emotions.length &&
+                                    currentChatMsgsList[key].comentary &&
+                                    getTextWidth(
+                                      currentChatMsgsList[key].comentary,
+                                      "16px open sans"
+                                    ) <= 429 ? (
+                                      <div
+                                        id="time"
+                                        data-msgtime={
+                                          (timeForCorrectMsgTime = item.time)
+                                        }
+                                      >
+                                        {item.pinned ? (
+                                          <img
+                                            src="./icons8-pin-50.png"
+                                            alt=""
+                                          />
+                                        ) : undefined}
+                                        {new Date(
+                                          Number(item.time)
+                                        ).toLocaleTimeString([], {
+                                          hour: "2-digit",
+                                          minute: "2-digit",
+                                        })}
+                                      </div>
+                                    ) : undefined}
+                                  </div>
+                                ) : undefined}
+                                {item.emotions.length ? (
+                                  <div id="emotions">
+                                    {item.emotions
+                                      ? item.emotions.map((emotion) => {
+                                          return (
+                                            <div
+                                              id="oneemo"
+                                              style={
+                                                emotion.users.includes(
+                                                  userFindName
+                                                )
+                                                  ? {
+                                                      backgroundColor:
+                                                        "#3390ec",
+                                                      color: "white",
+                                                    }
+                                                  : { display: "flex" }
+                                              }
+                                              // key={key++} CHAGE "KEY" TO SOME OTHER WORD OR EMOTIONS WONT WORK
+                                            >
+                                              <p>{emotion.smile}</p>
+                                              <p>{emotion.count}</p>
+                                            </div>
+                                          )
+                                        })
+                                      : undefined}
+                                    {item.emotions.length ||
+                                    getTextWidth(
+                                      currentChatMsgsList[key].comentary,
+                                      "16px open sans"
+                                    ) > 429 ? (
+                                      <div
+                                        id="time"
+                                        data-msgtime={
+                                          (timeForCorrectMsgTime = item.time)
+                                        }
+                                      >
+                                        {item.pinned ? (
+                                          <img
+                                            src="./icons8-pin-50.png"
+                                            alt=""
+                                          />
+                                        ) : undefined}
+                                        {new Date(
+                                          Number(item.time)
+                                        ).toLocaleTimeString([], {
+                                          hour: "2-digit",
+                                          minute: "2-digit",
+                                        })}
+                                      </div>
+                                    ) : undefined}
+                                  </div>
+                                ) : getTextWidth(
+                                    currentChatMsgsList[key].comentary,
+                                    "16px open sans"
+                                  ) > 429 ? (
+                                  <div
+                                    id="time"
+                                    data-msgtime={
+                                      (timeForCorrectMsgTime = item.time)
+                                    }
+                                  >
+                                    {item.pinned ? (
+                                      <img src="./icons8-pin-50.png" alt="" />
+                                    ) : undefined}
+                                    {new Date(
+                                      Number(item.time)
+                                    ).toLocaleTimeString([], {
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                    })}
+                                  </div>
+                                ) : undefined}
                               </div>
-                            </>
-                          )
-                        })
-                      : undefined}
+                            </div>
+                          </>
+                        )
+                      })
+                    ) : currentChatType ? (
+                      <div id="noMessagesYet">
+                        No Messages Yet
+                        <img src="" alt="" />
+                      </div>
+                    ) : undefined}
                   </div>
                   {msgMenuSelectPressed &&
                   msgMenuTargets &&
@@ -6329,6 +8026,7 @@ export function UserInterface(this: any) {
                                   emotions: [],
                                   time: String(new Date().getTime()),
                                   pinned: false,
+                                  author: userFindName,
                                 }
 
                                 await universalChatManipulationFunction(
@@ -6725,34 +8423,78 @@ export function UserInterface(this: any) {
                         setShowDiscription(false)
                       }}
                     />
-                    <p>{`${currentChatType} Info`}</p>
+                    <p>{`${
+                      currentChatType == "chat" ? "user" : currentChatType
+                    } Info`}</p>
                   </div>
                   <img src="././icons8-edit-50.png" alt="" />
                 </div>
                 <div id="userInterfaceChatInfoPhoto">
                   <img src={currentChatImgSrc} alt="" />
                   <h1>{currentChatName}</h1>
-                  <p>{`${currentChatSubs} subscribers`}</p>
+                  {currentChatType == "chat" ? (
+                    <p>{
+                      // ${currentChatLastSeen}
+                      `currentChatLastSeen`
+                    }</p>
+                  ) : (
+                    <p>{`${currentChatSubs} subscribers`}</p>
+                  )}
                 </div>
                 <div id="userInterfaceChatInfoOptions">
-                  <div id="commonOption">
-                    <img src="" alt="" />
-                    <div>
-                      <h1>{currentChatDiscription}</h1>
-                      <p>Info</p>
+                  {currentChatType == "chat" ? (
+                    currentChatKnownPhone ? (
+                      <div id="commonOption">
+                        <img src="" alt="" />
+                        <div>
+                          <h1>{currentChatKnownPhone}</h1>
+                          <p>Phone</p>
+                        </div>
+                      </div>
+                    ) : undefined
+                  ) : undefined}
+                  {currentChatType == "chat" ? (
+                    <div id="commonOption">
+                      <img src="" alt="" />
+                      <div>
+                        <h1>{currentChatUserName}</h1>
+                        <p>Username</p>
+                      </div>
                     </div>
-                  </div>
-                  <div id="commonOption">
-                    <img src="" alt="" />
-                    <div>
-                      <a
-                        href={`${process.env.REACT_APP_MAIN_DOMAIN}/addTo/${currentChatLink}/${currentChatType}`}
-                      >
-                        {`${process.env.REACT_APP_MAIN_DOMAIN}/addTo/${currentChatLink}/${currentChatType}`}
-                      </a>
-                      <p>Link</p>
-                    </div>
-                  </div>
+                  ) : undefined}
+                  {currentChatType == "chat" ? (
+                    currentChatBio ? (
+                      <div id="commonOption">
+                        <img src="" alt="" />
+                        <div>
+                          <h1>{currentChatBio}</h1>
+                          <p>Bio</p>
+                        </div>
+                      </div>
+                    ) : undefined
+                  ) : undefined}
+                  {currentChatType == "chanell" ? (
+                    <>
+                      <div id="commonOption">
+                        <img src="" alt="" />
+                        <div>
+                          <h1>{currentChatDiscription}</h1>
+                          <p>Info</p>
+                        </div>
+                      </div>
+                      <div id="commonOption">
+                        <img src="" alt="" />
+                        <div>
+                          <a
+                            href={`${process.env.REACT_APP_MAIN_DOMAIN}/addTo/${currentChatLink}/${currentChatType}`}
+                          >
+                            {`${process.env.REACT_APP_MAIN_DOMAIN}/addTo/${currentChatLink}/${currentChatType}`}
+                          </a>
+                          <p>Link</p>
+                        </div>
+                      </div>
+                    </>
+                  ) : undefined}
                   <div id="unCommonOption">
                     <div>
                       <img src="" alt="" />

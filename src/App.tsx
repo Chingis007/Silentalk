@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path={`/:findname`} element={<UserInterface />} />
-        <Route path={`addTo/:chatLink/:chatType`} element={<AddToChat />} />
+        <Route path={`addTo/:chatFindname/:chatType`} element={<AddToChat />} />
       </Routes>
     </>
   )

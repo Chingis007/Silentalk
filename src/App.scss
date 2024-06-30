@@ -8,6 +8,7 @@
     opacity: 0;
   }
 }
+
 @keyframes searchOpacity {
   0% {
     opacity: 0;
@@ -65,6 +66,9 @@ body {
 //   animation-fill-mode: forwards;
 //   animation-duration: 1s;
 // }
+#root {
+  height: 100vh;
+}
 .toright-msg {
   transition: 0.3s;
   transform: translate(20px, 0);
@@ -111,15 +115,15 @@ body {
   transform: translate(0, 0);
 }
 .toleft {
-  transition: 0.5s;
+  transition: 0.3s;
   transform: translate(-100%, 0);
 }
 .toHardLeft {
-  transition: 0.5s;
+  transition: 0.3s;
   transform: translate(-200%, 0);
 }
 .back {
-  transition: 0.5s;
+  transition: 0.3s;
   transform: translate(0, 0);
 }
 .toright {
@@ -137,139 +141,214 @@ body {
 #hide {
   display: none;
 }
+.blinkBackground {
+  background-color: rgb(0, 0, 0, 0.3);
+}
 //Login
 #loginPage {
-  width: 1920px;
-  height: 500px;
-  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  height: 100%;
   color: black;
+  user-select: none;
+  padding-top: calc(0.1 * 100vh);
   #loginWindow {
-    background-color: green;
-    width: 40%;
-    height: 60%;
     position: relative;
-    top: 20%;
-    left: 20%;
     display: flex;
     flex-direction: column;
-    #LoginWindowChoose {
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    gap: 20px;
+    #icon-img {
+      width: 200px;
+      height: 200px;
+    }
+    h1 {
+      padding: 0;
+      margin: 0;
+    }
+    #phoneNumber {
+      position: relative;
       display: flex;
       flex-direction: row;
-      justify-content: space-evenly;
+      justify-content: center;
       align-items: center;
-      width: 100%;
-      height: 100%;
-      #Login {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
+      gap: 30px;
+      #p1 {
+        all: unset;
+        position: absolute;
+        left: 55px;
+        font-size: 15px;
+        pointer-events: none;
       }
-      #SignUp {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
+      #p2 {
+        all: unset;
+      }
+      input {
+        width: 220px;
+        padding: 15px;
+        color: transparent;
       }
     }
-    #LoginWindowLogin {
+    .phoneNumber {
+      position: relative;
       display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
+      flex-direction: row;
+      justify-content: center;
       align-items: center;
-      width: 100%;
-      height: 100%;
-      #backToChoose {
+      gap: 20px;
+      #p1 {
+        all: unset;
+        display: none;
         position: absolute;
-        top: 0;
-        right: 0;
+        left: 55px;
+        font-size: 15px;
+        pointer-events: none;
       }
-      #phoneNumber {
+      .p2 {
+        all: unset;
+      }
+      input {
+        border: 1px solid;
+        border-radius: 10px;
+        border-color: #7b7f83;
+        width: 360px;
+        padding: 15px;
+        // color: transparent;
+      }
+    }
+    .phoneNumberBlink {
+      input {
+        border: 1px solid;
+        border-radius: 10px;
+        border-color: red;
+      }
+      .p2 {
+        color: red;
+      }
+    }
+    #loginChoice {
+      transition: opacity 1s, top 1s ease-in-out;
+      position: absolute;
+      opacity: 1;
+      pointer-events: all;
+      top: 360px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 50px;
+      #choiceDiv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #3390ec;
+        border-radius: 20px;
+        padding: 5px;
+        min-width: 100px;
+        min-height: 60px;
+        color: white;
+      }
+    }
+    .afterPressed {
+      transition: opacity 1s, top 1s ease-in-out;
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      top: 800px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      height: fit-content;
+      #mainDiv {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0;
-        p {
-          all: unset;
-        }
-      }
-      #password {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-    #LoginWindowRegister {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      #backToChoose {
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
-      #phoneNumber {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0;
-        p {
-          all: unset;
-        }
-      }
-      #password {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      #repeatPassword {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        p {
-          all: unset;
-        }
-      }
-      #toSingUpButton {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-    #LoginWindowGoogle {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      #backToChoose {
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
-      #phoneNumber {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0;
-        p {
-          all: unset;
-        }
-      }
-      #SignUpGoogle {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         width: 100%;
+        height: 100%;
+        padding: 20px;
+        background-color: white;
+        gap: 20px;
+        #password {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+          p {
+          }
+          input {
+            border: 1px solid #7b7f83;
+            border-radius: 10px;
+            width: 220px;
+
+            padding: 15px;
+          }
+        }
+        #repeatPassword {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+          p {
+          }
+          input {
+            border: 1px solid #7b7f83;
+            border-radius: 10px;
+            width: 360px;
+            padding: 15px;
+          }
+        }
+        #signWrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: fit-content;
+          #toSingUpButton {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #3390ec;
+            border-radius: 20px;
+            padding: 5px;
+            width: fit-content;
+            min-width: 100px;
+            min-height: 50px;
+            color: white;
+            margin: auto;
+            cursor: pointer;
+          }
+          #SignUpGoogle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            border: 2px solid #3390ec;
+            width: fit-content;
+            height: fit-content;
+            color: white;
+          }
+        }
+        #changeOption {
+          cursor: pointer;
+          margin: auto;
+        }
       }
     }
+    .screen {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      z-index: 50;
+      top: 800px;
+    }
+
     // #LoginWindowGoogle {
     //   display: flex;
     //   flex-direction: column;
@@ -286,6 +365,70 @@ body {
     // }
   }
 }
+@media screen and (min-width: 500px) {
+  #loginPage {
+    #loginWindow {
+      #icon-img {
+      }
+      h1 {
+      }
+      #phoneNumber {
+        #p1 {
+        }
+        #p2 {
+        }
+        input {
+          width: 360px;
+        }
+      }
+      .phoneNumber {
+        #p1 {
+        }
+        .p2 {
+        }
+        input {
+        }
+      }
+      .phoneNumberBlink {
+        input {
+        }
+        .p2 {
+        }
+      }
+      #loginChoice {
+        #choiceDiv {
+        }
+      }
+      .afterPressed {
+        #mainDiv {
+          #password {
+            p {
+            }
+            input {
+            }
+          }
+          #repeatPassword {
+            p {
+            }
+            input {
+            }
+          }
+          #signWrapper {
+            #toSingUpButton {
+            }
+            #SignUpGoogle {
+            }
+          }
+          #changeOption {
+          }
+        }
+      }
+      .screen {
+      }
+    }
+  }
+}
+
 //UserInterface
 #userInterfaceBorder {
   display: flex;
@@ -312,7 +455,7 @@ body {
     justify-content: start;
     align-items: start;
     width: 87.7%;
-    height: 100%;
+    height: 100vh;
     border: 1px solid rgb(223, 225, 229);
     overflow: hidden;
     // border: 1px solid;
@@ -323,7 +466,7 @@ body {
       flex-direction: column;
       width: 25%;
       height: 100%;
-      overflow-x: hidden;
+      overflow: hidden;
       border-left: 1px solid rgb(223, 225, 229);
       border-right: 1px solid rgb(223, 225, 229);
       #bigInterfaceColumn {
@@ -670,12 +813,13 @@ body {
               justify-content: start;
               align-items: center;
               flex-direction: row;
-              width: 98%;
-              height: 68px;
+              width: calc(100% - 20px);
+              height: 58px;
               border-radius: 10px;
-              padding: 5px;
+              padding: 10px;
               gap: 5%;
               .userInterfaceChatsColumnOneChatImg {
+                position: relative;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -686,6 +830,16 @@ body {
                   max-height: 60px;
                   padding: auto;
                   border-radius: 50%;
+                }
+                #blueOnline {
+                  position: absolute;
+                  background-color: #3390ec;
+                  border-radius: 50%;
+                  bottom: 1px;
+                  right: 2px;
+                  width: 10px;
+                  height: 10px;
+                  border: 2px solid white;
                 }
               }
               .userInterfaceChatsColumnOneChatNotImg {
@@ -708,10 +862,10 @@ body {
                     align-items: center;
                     width: 83%;
                     height: 25px;
-                    gap: 10px;
+                    gap: 5px;
                     img {
-                      width: 25px;
-                      height: 25px;
+                      width: 20px;
+                      height: 20px;
                     }
                   }
                   .userInterfaceChatsColumnOneChatNotImgDate {
@@ -720,6 +874,7 @@ body {
                     align-items: center;
                     width: 17%;
                     height: 25px;
+                    font-size: 12px;
                   }
                 }
                 .userInterfaceChatsColumnOneChatNotImgBotLine {
@@ -798,8 +953,12 @@ body {
           border-radius: 10px;
         }
         #columnForOther {
+          position: relative;
           width: 50%;
           .userSettingsEdit {
+            position: absolute;
+            top: 0;
+            left: 0;
             display: flex;
             flex-direction: column;
             justify-content: start;
@@ -811,6 +970,7 @@ body {
             font-size: 14px;
             font-weight: 400;
             #userSettingsEditHead {
+              position: relative;
               display: flex;
               flex-direction: row;
               justify-content: start;
@@ -825,13 +985,126 @@ body {
               font-weight: bold;
               gap: 10px;
               padding: 0 15px;
-              img {
+              input {
+                all: unset;
                 width: 25px;
                 height: 25px;
+              }
+              img {
+                position: absolute;
+                top: 19px;
+                left: 15px;
+                width: 25px;
+                height: 25px;
+                pointer-events: none;
+              }
+            }
+            #userSettingsEditImg {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+              height: 120px;
+              #userSettingsEditImgOrigin {
+                position: absolute;
+                border-radius: 50%;
+                width: 100px;
+                height: 100px;
+              }
+              #userSettingsEditImgNotOrigin {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                border-radius: 50%;
+                width: 100px;
+                height: 100px;
+                z-index: 10;
+                background-color: rgb(0, 0, 0, 0.3);
+                img {
+                  width: 35px;
+                  height: 35px;
+                  transition: all 0.2s;
+                }
+                img:hover {
+                  transform: scale(1.3);
+                }
+              }
+            }
+            #userSettingsEditInputs {
+              width: calc(100% - 15px);
+              padding-left: 10px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 15px;
+              h1 {
+                color: #3390ec;
+                font-size: 12px;
+                text-align: start;
+                width: 100%;
+              }
+              p {
+                white-space: initial;
+                font-size: 10px;
+                color: #7b7f83;
+              }
+              div {
+                width: 100%;
+                position: relative;
+                h2 {
+                  all: unset;
+                  user-select: none;
+                  pointer-events: none;
+                  position: absolute;
+                  top: 22%;
+                  left: 7px;
+                  color: rgb(112, 117, 121, 0.65);
+                  font-size: 14px;
+                  background-color: white;
+                  padding: 0 2px;
+                  transition: font-size 0.2s, top 0.2s, left 0.2s;
+                }
+                input:focus,
+                input:not(:placeholder-shown) {
+                  + h2 {
+                    top: -24%;
+                    left: 7px;
+                    font-size: 10px;
+                    color: #3390ec;
+                  }
+                }
+                input {
+                  all: unset;
+                  width: calc(100% - 15px);
+                  height: 44px;
+                  font-size: 16px;
+                  font-weight: 400;
+                  justify-content: start;
+                  align-items: center;
+                  box-shadow: 0 0 0 1px rgb(223, 225, 229);
+                  border-radius: 10px;
+                  padding-left: 15px;
+                }
+                input:hover {
+                  box-shadow: 0 0 0 1px #3390ec;
+                  + h2 {
+                    color: #3390ec;
+                  }
+                }
+                input:focus {
+                  box-shadow: 0 0 0 2px #3390ec;
+                }
               }
             }
           }
           .userSettings {
+            position: absolute;
+            top: 0;
+            left: 0;
             display: flex;
             flex-direction: column;
             justify-content: start;
@@ -1170,6 +1443,7 @@ body {
           height: 100vh;
 
           #userInterfaceChatHead {
+            position: sticky;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -1178,6 +1452,7 @@ body {
             height: 50px;
             background-color: white;
             #userInterfaceChatHeadSmallDiv {
+              float: left;
               height: 50px;
               width: 100%;
               display: flex;
@@ -1191,9 +1466,10 @@ body {
                 align-items: center;
                 width: 50px;
                 height: 50px;
+                margin-left: 15px;
                 img {
-                  width: 50px;
-                  height: 50px;
+                  width: 40px;
+                  height: 40px;
                   border-radius: 50%;
                 }
               }
@@ -1203,13 +1479,16 @@ body {
                 align-items: center;
                 flex-direction: column;
                 width: 100%;
-                height: 50px;
+                height: 35px;
+                margin-left: 15px;
                 #userInterfaceChatHeadNameColumnName {
                   display: flex;
                   justify-content: start;
                   align-items: center;
                   width: 100%;
                   height: 25px;
+                  font-weight: bold;
+                  font-size: 15px;
                 }
                 #userInterfaceChatHeadNameColumnLastSeen {
                   display: flex;
@@ -1217,10 +1496,14 @@ body {
                   align-items: center;
                   width: 100%;
                   height: 25px;
+                  font-size: 13px;
+                  font-weight: bold;
+                  color: rgb(0, 0, 0, 0.5);
                 }
               }
             }
             #userInterfaceChatHeadCall {
+              float: right;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -1228,6 +1511,8 @@ body {
               height: 50px;
             }
             #userInterfaceChatHeadNotifications {
+              float: right;
+
               display: flex;
               justify-content: center;
               align-items: center;
@@ -1235,6 +1520,8 @@ body {
               height: 50px;
             }
             #userInterfaceChatHeadHidePinned {
+              float: right;
+
               display: flex;
               justify-content: center;
               align-items: center;
@@ -1242,6 +1529,8 @@ body {
               height: 50px;
             }
             #userInterfaceChatHeadOnePinned {
+              float: right;
+
               display: flex;
               justify-content: center;
               align-items: center;
@@ -1249,13 +1538,213 @@ body {
               height: 50px;
             }
             #userInterfaceChatHeadAllPinned {
+              position: relative;
+              float: right;
               display: flex;
-              justify-content: center;
+              justify-content: start;
               align-items: center;
-              width: 50px;
-              height: 50px;
+              flex-direction: row;
+              width: 256px;
+              height: 38px;
+              gap: 5px;
+              padding: 0 2.5px;
+              // .center {
+              //   position: absolute;
+              //   top: 0;
+              //   left: 2.5px;
+              //   width: 2px;
+              //   height: 38px;
+              //   .center2 {
+              //     position: relative;
+              //     width: 2px;
+              //     height: 38px;
+              //     .mover {
+              //       position: absolute;
+              //       bottom: 0;
+              //       left: 0;
+              //       width: 2px;
+              //       min-height: 8px;
+              //       border-radius: 2px;
+              //       background-color: #3390ec;
+              //     }
+              //   }
+              // }
+              .userInterfaceChatHeadAllPinnedLine {
+                position: relative;
+                display: flex;
+                justify-content: end;
+                align-items: end;
+                flex-direction: column;
+                width: 2px;
+                height: 38px;
+                overflow: hidden;
+                gap: 1px;
+                #moverWrap {
+                  position: absolute;
+                  display: flex;
+                  justify-content: center;
+                  align-items: end;
+                  top: 0;
+                  bottom: 0;
+                  width: 2px;
+                  height: 38px;
+                  .mover {
+                    width: 2px;
+                    height: 8px;
+                    border-radius: 2px;
+                    background-color: rgb(51, 144, 236);
+                    transition: all 0.5s ease;
+                  }
+                }
+                #circlesWrap {
+                  display: flex;
+                  justify-content: end;
+                  align-items: end;
+                  flex-direction: column;
+                  width: 2px;
+                  height: 38px;
+                  overflow: hidden;
+                  gap: 1px;
+                  background-color: white;
+                  .blueSquare {
+                    width: 2px;
+                    min-height: 8px;
+                    border-radius: 2px;
+                    background-color: rgb(51, 144, 236, 0.5);
+                    transition: all 0.5s ease;
+                  }
+                }
+
+                // #blueish {
+                //   z-index: 1;
+                //   position: absolute;
+                //   top: 0;
+                //   bottom: 0;
+                //   width: 2px;
+                //   height: 38px;
+                //   background-color: rgb(51, 144, 236, 0.5);
+                // }
+                // #mover {
+                //   z-index: 2;
+                //   position: absolute;
+                //   top: 0;
+                //   bottom: 0;
+                //   width: 2px;
+                //   height: 8px;
+                //   border-radius: 2px;
+                //   background-color: rgb(51, 144, 236);
+                // }
+                // #holls {
+                //   z-index: 3;
+                //   display: flex;
+                //   justify-content: center;
+                //   align-items: center;
+                //   flex-direction: column;
+                //   width: 2px;
+                //   height: 38px;
+                //   overflow: hidden;
+                //   gap: 1px;
+                //   background-color: white;
+
+                // }
+                // // .blueSquare {
+                // //   width: 2px;
+                // //   min-height: 8px;
+                // //   border-radius: 2px;
+                // //   transition: all 1s ease;
+                // //   background: linear-gradient(
+                // //     to bottom,
+                // //     rgb(51, 144, 236) 50%,
+                // //     rgb(51, 144, 236, 0.5) 50%
+                // //   );
+                // //   background-size: 100% 200%;
+                // //   background-position: right bottom;
+                // // }
+                // // .blue {
+                // //   background-position: right top;
+                // //   // background: linear-gradient(
+                // //   //   to top,
+                // //   //   rgb(51, 144, 236) 50%,
+                // //   //   rgb(51, 144, 236, 0.5) 50%
+                // //   // );
+                // //   // background-size: 100% 200%;
+                // // }
+                // // .notBlue {
+                // //   background-position: left bottom;
+                // //   // background: linear-gradient(
+                // //   //   to bottom,
+                // //   //   rgb(51, 144, 236) 50%,
+                // //   //   rgb(51, 144, 236, 0.5) 50%
+                // //   // );
+                // //   // background-size: 100% 200%;
+                // // }
+              }
+              #userInterfaceChatHeadAllPinnedDiv {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                width: 238px;
+                height: 32px;
+                overflow: hidden;
+                #userInterfaceChatHeadAllPinnedDivText {
+                  display: flex;
+                  justify-content: start;
+                  align-items: center;
+                  flex-direction: row;
+                  width: 238px;
+                  height: 16px;
+                  font-size: 13px;
+                  font-weight: 400;
+                  color: #3390ec;
+                  user-select: none;
+                }
+                #userInterfaceChatHeadAllPinnedList {
+                  position: relative;
+                  display: flex;
+                  justify-content: start;
+                  align-items: start;
+                  flex-direction: column;
+                  width: 238px;
+                  height: 16px;
+                  overflow: hidden;
+                  .onePinnedMsg {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: start;
+                    flex-direction: column;
+                    width: 238px;
+                    height: 16px;
+                    font-size: 14px;
+                    font-weight: 400;
+                    cursor: pointer;
+                    user-select: none;
+                  }
+                  .pinnedBack {
+                    transition-property: transform;
+                    transition-duration: 0.3s;
+                    transform: translateY(0);
+                  }
+                  .pinnedBottom {
+                    transition-property: transform;
+                    transition-duration: 0.3s;
+                    transform: translateY(110%);
+                  }
+                  .pinnedUp {
+                    transition-property: transform;
+                    transition-duration: 0.3s;
+                    transform: translateY(-110%);
+                  }
+                  .transparent {
+                    opacity: 0;
+                  }
+                }
+              }
             }
-            #userInterfaceChatHeadAllPinned {
+            #userInterfaceChatHeadAllPinnedButton {
               display: flex;
               justify-content: center;
               align-items: center;
@@ -1297,9 +1786,11 @@ body {
           #userInterfaceChatMainBackground {
             background-image: linear-gradient(
                 to bottom right,
-                rgba(246, 255, 0, 0.4),
-                rgba(75, 251, 0, 0.4),
-                rgba(246, 255, 0, 0.4)
+                rgba(246, 255, 0, 0.5),
+                rgba(60, 193, 4, 0.4),
+                rgba(60, 193, 4, 0.5),
+                rgba(60, 193, 4, 0.4),
+                rgba(246, 255, 0, 0.5)
               ),
               url("/public/backgroundlight.png");
             display: flex;
@@ -1439,7 +1930,24 @@ body {
                 color: white;
                 font-weight: 600;
               }
-
+              #noMessagesYet {
+                width: 250px;
+                height: 300px;
+                margin-bottom: 25vh;
+                background-color: rgb(0, 0, 0, 0.3);
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                border-radius: 20px;
+                color: white;
+                padding-top: 10px;
+                flex-direction: column;
+                gap: 20px;
+                img {
+                  width: 150px;
+                  height: 220px;
+                }
+              }
               #msg {
                 // position: relative;
                 display: flex;
@@ -1447,10 +1955,10 @@ body {
                 padding-left: 45.5%;
                 // margin-left: 45.5%;
                 display: flex;
-
+                transition: background-color 0.5s;
                 #surroundDiv {
                   position: relative;
-                  width: min-content;
+                  width: fit-content;
                   height: fit-content;
                   background-color: white;
                   padding: 5px;
@@ -1651,7 +2159,21 @@ body {
                       }
                     }
                   }
-
+                  #time {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: end;
+                    align-items: center;
+                    width: fit-content;
+                    color: rgb(112, 117, 121);
+                    font-size: 11px;
+                    margin-top: auto;
+                    margin-left: auto;
+                    img {
+                      width: 8px;
+                      height: 8px;
+                    }
+                  }
                   #emotions {
                     display: flex;
                     flex-wrap: wrap;
