@@ -377,45 +377,57 @@ export function Home() {
                 : {}
             }
           >
-            <div
-              id="choiceDiv"
-              onClick={() => {
-                if (phoneNumberValidationText === "Not possible phone number") {
-                  let pn = document.getElementById(
-                    "phoneNumber"
-                  ) as HTMLDivElement
-                  pn.classList.add("phoneNumberBlink")
-                  setTimeout(function () {
-                    pn.classList.remove("phoneNumberBlink")
-                  }, 1000)
-                  return
-                }
-                setPressedLogin(true)
-              }}
-            >
-              Login
+            <div id="choiceDivMega">
+              <div
+                id="choiceDiv"
+                onClick={() => {
+                  if (
+                    phoneNumberValidationText === "Not possible phone number"
+                  ) {
+                    let pn = document.getElementById(
+                      "phoneNumber"
+                    ) as HTMLDivElement
+                    pn.classList.add("phoneNumberBlink")
+                    setTimeout(function () {
+                      pn.classList.remove("phoneNumberBlink")
+                    }, 1000)
+                    return
+                  }
+                  setPressedLogin(true)
+                }}
+              >
+                Login
+              </div>
+              Or
+              <div
+                id="choiceDiv"
+                onClick={() => {
+                  if (
+                    phoneNumberValidationText === "Not possible phone number"
+                  ) {
+                    let pn = document.getElementById(
+                      "phoneNumber"
+                    ) as HTMLDivElement
+                    pn.classList.add("phoneNumberBlink")
+                    setTimeout(function () {
+                      pn.classList.remove("phoneNumberBlink")
+                    }, 1000)
+                    return
+                  }
+                  setPressedRegister(true)
+                }}
+              >
+                Sign Up
+              </div>
             </div>
             Or
             <div
-              id="choiceDiv"
-              onClick={() => {
-                if (phoneNumberValidationText === "Not possible phone number") {
-                  let pn = document.getElementById(
-                    "phoneNumber"
-                  ) as HTMLDivElement
-                  pn.classList.add("phoneNumberBlink")
-                  setTimeout(function () {
-                    pn.classList.remove("phoneNumberBlink")
-                  }, 1000)
-                  return
-                }
-                setPressedRegister(true)
+              id="googleChoiceDiv"
+              style={{
+                pointerEvents:
+                  phoneNumberValidationText === "✔" ? "auto" : "none",
               }}
             >
-              Sign Up
-            </div>
-            Or
-            <div id="choiceDiv" style={{ pointerEvents: "none" }}>
               <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
                 <GoogleLogin
                   onSuccess={(CredentialResponse: any) => {

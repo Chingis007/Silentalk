@@ -312,8 +312,17 @@ body {
   font-size: 15px;
   pointer-events: none;
 }
-#loginPage #loginWindow #phoneNumber #p2 {
+#loginPage #loginWindow #phoneNumber .p2 {
   all: unset;
+  position: absolute;
+  left: 53px;
+  top: -8px;
+  background-color: white;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  font-size: 12px;
 }
 #loginPage #loginWindow #phoneNumber input {
   width: 220px;
@@ -361,21 +370,50 @@ body {
   pointer-events: all;
   top: 360px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 10px;
+  font-size: 14px;
 }
 #loginPage #loginWindow #loginChoice #choiceDiv {
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #3390ec;
   border-radius: 20px;
   padding: 5px;
-  min-width: 100px;
-  min-height: 60px;
+  min-width: 50px;
+  min-height: 30px;
+  font-size: 12px;
   color: white;
+}
+#loginPage #loginWindow #loginChoice #googleChoiceDiv {
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #3390ec;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+#loginPage #loginWindow #loginChoice #googleChoiceDiv div {
+  font-size: 12px;
+}
+#loginPage #loginWindow #loginChoice #choiceDivMega {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  gap: 10px;
 }
 #loginPage #loginWindow .afterPressed {
   transition: opacity 1s, top 1s ease-in-out;
@@ -420,7 +458,7 @@ body {
 #loginPage #loginWindow .afterPressed #mainDiv #repeatPassword input {
   border: 1px solid #7b7f83;
   border-radius: 10px;
-  width: 360px;
+  width: 220px;
   padding: 15px;
 }
 #loginPage #loginWindow .afterPressed #mainDiv #signWrapper {
@@ -440,8 +478,9 @@ body {
   padding: 5px;
   width: -moz-fit-content;
   width: fit-content;
-  min-width: 100px;
-  min-height: 50px;
+  min-width: 50px;
+  min-height: 20px;
+  font-size: 14px;
   color: white;
   margin: auto;
   cursor: pointer;
@@ -458,9 +497,13 @@ body {
   height: fit-content;
   color: white;
 }
+#loginPage #loginWindow .afterPressed #mainDiv #signWrapper #SignUpGoogle div span {
+  font-size: 12px;
+}
 #loginPage #loginWindow .afterPressed #mainDiv #changeOption {
   cursor: pointer;
   margin: auto;
+  font-size: 14px;
 }
 #loginPage #loginWindow .screen {
   position: absolute;
@@ -474,6 +517,45 @@ body {
 @media screen and (min-width: 500px) {
   #loginPage #loginWindow #phoneNumber input {
     width: 360px;
+  }
+  #loginPage #loginWindow #loginChoice #googleChoiceDiv div {
+    font-size: 14px;
+  }
+  #loginPage #loginWindow .afterPressed #mainDiv #password input {
+    width: 360px;
+  }
+  #loginPage #loginWindow .afterPressed #mainDiv #repeatPassword input {
+    width: 360px;
+  }
+  #loginPage #loginWindow .afterPressed #mainDiv #signWrapper #toSingUpButton {
+    min-width: 100px;
+    min-height: 50px;
+    font-size: 16px;
+  }
+  #loginPage #loginWindow .afterPressed #mainDiv #signWrapper #SignUpGoogle div span {
+    font-size: 15px;
+  }
+  #loginPage #loginWindow .afterPressed #mainDiv #changeOption {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 580px) {
+  #loginPage #loginWindow #phoneNumber input {
+    width: 360px;
+  }
+  #loginPage #loginWindow #loginChoice {
+    flex-direction: row;
+    font-size: 17px;
+    gap: 25px;
+  }
+  #loginPage #loginWindow #loginChoice #choiceDiv {
+    padding: 5px;
+    min-width: 80px;
+    min-height: 45px;
+    font-size: 18px;
+  }
+  #loginPage #loginWindow #loginChoice #choiceDivMega {
+    gap: 25px;
   }
 }
 #userInterfaceBorder {

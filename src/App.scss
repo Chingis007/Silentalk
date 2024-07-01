@@ -187,8 +187,15 @@ body {
         font-size: 15px;
         pointer-events: none;
       }
-      #p2 {
+      .p2 {
         all: unset;
+        position: absolute;
+        left: 53px;
+        top: -8px;
+        background-color: white;
+        width: fit-content;
+        height: fit-content;
+        font-size: 12px;
       }
       input {
         width: 220px;
@@ -240,20 +247,45 @@ body {
       pointer-events: all;
       top: 360px;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 50px;
+      gap: 10px;
+      font-size: 14px;
       #choiceDiv {
+        cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
         background-color: #3390ec;
         border-radius: 20px;
         padding: 5px;
-        min-width: 100px;
-        min-height: 60px;
+        min-width: 50px;
+        min-height: 30px;
+        font-size: 12px;
         color: white;
+      }
+      #googleChoiceDiv {
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #3390ec;
+        width: fit-content;
+        height: fit-content;
+        div {
+          font-size: 12px;
+        }
+      }
+      #choiceDivMega {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
+        height: fit-content;
+        gap: 10px;
       }
     }
     .afterPressed {
@@ -286,7 +318,6 @@ body {
             border: 1px solid #7b7f83;
             border-radius: 10px;
             width: 220px;
-
             padding: 15px;
           }
         }
@@ -299,7 +330,7 @@ body {
           input {
             border: 1px solid #7b7f83;
             border-radius: 10px;
-            width: 360px;
+            width: 220px;
             padding: 15px;
           }
         }
@@ -317,8 +348,9 @@ body {
             border-radius: 20px;
             padding: 5px;
             width: fit-content;
-            min-width: 100px;
-            min-height: 50px;
+            min-width: 50px;
+            min-height: 20px;
+            font-size: 14px;
             color: white;
             margin: auto;
             cursor: pointer;
@@ -332,11 +364,17 @@ body {
             width: fit-content;
             height: fit-content;
             color: white;
+            div {
+              span {
+                font-size: 12px;
+              }
+            }
           }
         }
         #changeOption {
           cursor: pointer;
           margin: auto;
+          font-size: 14px;
         }
       }
     }
@@ -348,23 +386,9 @@ body {
       z-index: 50;
       top: 800px;
     }
-
-    // #LoginWindowGoogle {
-    //   display: flex;
-    //   flex-direction: column;
-    //   justify-content: space-evenly;
-    //   align-items: center;
-    //   width: 100%;
-    //   height: 100%;
-    //   #SignUpGoogle {
-    //     display: flex;
-    //     justify-content: center;
-    //     align-items: center;
-    //     width: 100%;
-    //   }
-    // }
   }
 }
+
 @media screen and (min-width: 500px) {
   #loginPage {
     #loginWindow {
@@ -375,7 +399,7 @@ body {
       #phoneNumber {
         #p1 {
         }
-        #p2 {
+        .p2 {
         }
         input {
           width: 360px;
@@ -398,6 +422,13 @@ body {
       #loginChoice {
         #choiceDiv {
         }
+        #choiceDivMega {
+        }
+        #googleChoiceDiv {
+          div {
+            font-size: 14px;
+          }
+        }
       }
       .afterPressed {
         #mainDiv {
@@ -405,25 +436,84 @@ body {
             p {
             }
             input {
+              width: 360px;
             }
           }
           #repeatPassword {
             p {
             }
             input {
+              width: 360px;
             }
           }
           #signWrapper {
             #toSingUpButton {
+              min-width: 100px;
+              min-height: 50px;
+              font-size: 16px;
             }
             #SignUpGoogle {
+              div {
+                span {
+                  font-size: 15px;
+                }
+              }
             }
           }
           #changeOption {
+            font-size: 16px;
           }
         }
       }
       .screen {
+      }
+    }
+  }
+}
+@media screen and (min-width: 580px) {
+  #loginPage {
+    #loginWindow {
+      #icon-img {
+      }
+      h1 {
+      }
+      #phoneNumber {
+        #p1 {
+        }
+        .p2 {
+        }
+        input {
+          width: 360px;
+        }
+      }
+      .phoneNumber {
+        #p1 {
+        }
+        .p2 {
+        }
+        input {
+        }
+      }
+      .phoneNumberBlink {
+        input {
+        }
+        .p2 {
+        }
+      }
+      #loginChoice {
+        flex-direction: row;
+        font-size: 17px;
+        gap: 25px;
+
+        #choiceDiv {
+          padding: 5px;
+          min-width: 80px;
+          min-height: 45px;
+          font-size: 18px;
+        }
+        #choiceDivMega {
+          gap: 25px;
+        }
       }
     }
   }
