@@ -308,8 +308,9 @@ body {
 #loginPage #loginWindow #phoneNumber #p1 {
   all: unset;
   position: absolute;
-  left: 55px;
-  font-size: 15px;
+  left: 60px;
+  top: 34px;
+  font-size: 9px;
   pointer-events: none;
 }
 #loginPage #loginWindow #phoneNumber .p2 {
@@ -327,7 +328,6 @@ body {
 #loginPage #loginWindow #phoneNumber input {
   width: 220px;
   padding: 15px;
-  color: transparent;
 }
 #loginPage #loginWindow .phoneNumber {
   position: relative;
@@ -336,6 +336,10 @@ body {
   justify-content: center;
   align-items: center;
   gap: 20px;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: #7b7f83;
+  padding: 3px 5px;
 }
 #loginPage #loginWindow .phoneNumber #p1 {
   all: unset;
@@ -349,11 +353,9 @@ body {
   all: unset;
 }
 #loginPage #loginWindow .phoneNumber input {
-  border: 1px solid;
-  border-radius: 10px;
-  border-color: #7b7f83;
   width: 360px;
   padding: 15px;
+  border: none;
 }
 #loginPage #loginWindow .phoneNumberBlink input {
   border: 1px solid;
@@ -368,7 +370,7 @@ body {
   position: absolute;
   opacity: 1;
   pointer-events: all;
-  top: 360px;
+  top: 366px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -420,7 +422,7 @@ body {
   position: absolute;
   opacity: 0;
   pointer-events: none;
-  top: 800px;
+  top: 806px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -444,22 +446,46 @@ body {
   flex-direction: row;
   gap: 10px;
 }
+#loginPage #loginWindow .afterPressed #mainDiv #password p {
+  position: absolute;
+  left: 27px;
+  top: 0px;
+  background-color: white;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  font-size: 12px;
+  padding: 0 2px;
+}
 #loginPage #loginWindow .afterPressed #mainDiv #password input {
   border: 1px solid #7b7f83;
-  border-radius: 10px;
-  width: 220px;
-  padding: 15px;
+  border-radius: 5px;
+  width: 271px;
+  padding: 18px 15px;
 }
 #loginPage #loginWindow .afterPressed #mainDiv #repeatPassword {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
+#loginPage #loginWindow .afterPressed #mainDiv #repeatPassword p {
+  position: absolute;
+  left: 27px;
+  top: 71px;
+  background-color: white;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  font-size: 12px;
+  padding: 0 2px;
+}
 #loginPage #loginWindow .afterPressed #mainDiv #repeatPassword input {
   border: 1px solid #7b7f83;
-  border-radius: 10px;
-  width: 220px;
-  padding: 15px;
+  border-radius: 5px;
+  width: 271px;
+  padding: 18px 15px;
 }
 #loginPage #loginWindow .afterPressed #mainDiv #signWrapper {
   display: flex;
@@ -522,10 +548,10 @@ body {
     font-size: 14px;
   }
   #loginPage #loginWindow .afterPressed #mainDiv #password input {
-    width: 360px;
+    width: 411px;
   }
   #loginPage #loginWindow .afterPressed #mainDiv #repeatPassword input {
-    width: 360px;
+    width: 411px;
   }
   #loginPage #loginWindow .afterPressed #mainDiv #signWrapper #toSingUpButton {
     min-width: 100px;

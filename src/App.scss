@@ -165,6 +165,11 @@ body {
     height: fit-content;
     position: relative;
     gap: 20px;
+
+    // .PhoneInput {
+    //   border: none;
+    // }
+
     #icon-img {
       width: 200px;
       height: 200px;
@@ -183,9 +188,11 @@ body {
       #p1 {
         all: unset;
         position: absolute;
-        left: 55px;
-        font-size: 15px;
+        left: 60px;
+        top: 34px;
+        font-size: 9px;
         pointer-events: none;
+        // display: none;
       }
       .p2 {
         all: unset;
@@ -200,7 +207,9 @@ body {
       input {
         width: 220px;
         padding: 15px;
-        color: transparent;
+        // padding-left: 50px;
+        // color: transparent;
+        // user-select: none;
       }
     }
     .phoneNumber {
@@ -210,6 +219,10 @@ body {
       justify-content: center;
       align-items: center;
       gap: 20px;
+      border: 1px solid;
+      border-radius: 5px;
+      border-color: #7b7f83;
+      padding: 3px 5px;
       #p1 {
         all: unset;
         display: none;
@@ -222,11 +235,9 @@ body {
         all: unset;
       }
       input {
-        border: 1px solid;
-        border-radius: 10px;
-        border-color: #7b7f83;
         width: 360px;
         padding: 15px;
+        border: none;
         // color: transparent;
       }
     }
@@ -245,7 +256,7 @@ body {
       position: absolute;
       opacity: 1;
       pointer-events: all;
-      top: 360px;
+      top: 366px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -293,7 +304,7 @@ body {
       position: absolute;
       opacity: 0;
       pointer-events: none;
-      top: 800px;
+      top: 806px;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -313,12 +324,20 @@ body {
           flex-direction: row;
           gap: 10px;
           p {
+            position: absolute;
+            left: 27px;
+            top: 0px;
+            background-color: white;
+            width: fit-content;
+            height: fit-content;
+            font-size: 12px;
+            padding: 0 2px;
           }
           input {
             border: 1px solid #7b7f83;
-            border-radius: 10px;
-            width: 220px;
-            padding: 15px;
+            border-radius: 5px;
+            width: 271px;
+            padding: 18px 15px;
           }
         }
         #repeatPassword {
@@ -326,12 +345,20 @@ body {
           flex-direction: row;
           gap: 10px;
           p {
+            position: absolute;
+            left: 27px;
+            top: 71px;
+            background-color: white;
+            width: fit-content;
+            height: fit-content;
+            font-size: 12px;
+            padding: 0 2px;
           }
           input {
             border: 1px solid #7b7f83;
-            border-radius: 10px;
-            width: 220px;
-            padding: 15px;
+            border-radius: 5px;
+            width: 271px;
+            padding: 18px 15px;
           }
         }
         #signWrapper {
@@ -436,14 +463,14 @@ body {
             p {
             }
             input {
-              width: 360px;
+              width: 411px;
             }
           }
           #repeatPassword {
             p {
             }
             input {
-              width: 360px;
+              width: 411px;
             }
           }
           #signWrapper {

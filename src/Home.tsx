@@ -355,7 +355,7 @@ export function Home() {
             <PhoneInput
               defaultCountry="UA"
               placeholder="Enter phone number"
-              value={phoneNumber}
+              // value={phoneNumber}
               onChange={(event: any) => {
                 try {
                   setPhoneNumber(event)
@@ -373,7 +373,7 @@ export function Home() {
             id="loginChoice"
             style={
               pressedRegister || pressedLogin
-                ? { opacity: "0", top: "680px", pointerEvents: "none" }
+                ? { opacity: "0", top: "686px", pointerEvents: "none" }
                 : {}
             }
           >
@@ -456,7 +456,7 @@ export function Home() {
             className="afterPressed"
             style={
               pressedLogin
-                ? { opacity: "1", top: "335px", pointerEvents: "all" }
+                ? { opacity: "1", top: "341px", pointerEvents: "all" }
                 : {}
             }
           >
@@ -525,7 +525,7 @@ export function Home() {
             className="afterPressed"
             style={
               pressedRegister
-                ? { opacity: "1", top: "335px", pointerEvents: "all" }
+                ? { opacity: "1", top: "341px", pointerEvents: "all" }
                 : {}
             }
           >
