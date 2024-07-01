@@ -145,8 +145,6 @@ export function Home() {
         if (resText[0] === "Email Exists and Logged Successfully") {
           document.cookie = `auth_token=${resText[1].auth_token}; expires=Session; path=/;`
           const findname = resText[1].findname
-          document.cookie = `email=${resText[1].email}; expires=Session; path=/;`
-          document.cookie = `emailImgUrl=${resText[1].emailImgUrl}; expires=Session; path=/;`
           document.cookie = `findname=${resText[1].findname}; expires=Session; path=/;`
           // if (
           //   resText[1].cartItemsArray !== undefined &&
@@ -220,20 +218,12 @@ export function Home() {
       username: "",
       password: password,
       phoneNumber: phoneNumber,
-      groupsList: [],
-      publicsList: [],
-      chatsList: [],
-      botsList: [],
     }
     if (chatLink && chatType) {
       data = {
         username: "",
         password: password,
         phoneNumber: phoneNumber,
-        groupsList: [],
-        publicsList: [],
-        chatsList: [],
-        botsList: [],
         chatLink: chatLink,
         chatType: chatType,
       }
