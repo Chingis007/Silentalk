@@ -370,6 +370,7 @@ export function UserInterface(this: any) {
     },
   ])
 
+  const [onScreen, setOnScreen] = useState("chatsList")
   const [selectedSearchMegaOption, setSelectedSearchMegaOption] =
     useState("Chats")
   const [prevSelectedSearchMegaOption, setPrevSelectedSearchMegaOption] =
@@ -570,6 +571,10 @@ export function UserInterface(this: any) {
       }
     }
   }
+  useEffect(() => {
+    console.log(onScreen)
+  }, [onScreen])
+
   useEffect(() => {
     unreadNumberFunc()
     scrollOnFunc()
@@ -1534,6 +1539,7 @@ export function UserInterface(this: any) {
     const context = canvas.getContext("2d")
     context.font = font
     const metrics = context.measureText(text)
+    // console.log(metrics.width)
     return metrics.width
   }
 
@@ -4338,26 +4344,26 @@ export function UserInterface(this: any) {
           }
         }}
         id="userInterfaceBorder"
-        onMouseMove={(event) => {
-          if (msgMenuListener) {
-            let vw = window.innerWidth + 420
-            let vh = window.innerHeight + 50
-            let x = (event.pageX / vw) * 100
-            let y = (event.pageY / vh) * 100
-            if (msgMenuCoords.left && msgMenuCoords.top) {
-              if (Math.abs(Number(msgMenuCoords.left) - x) >= 20) {
-                setMsgMenu(false)
-                setMsgMenuTargets([])
-                setMsgMenuListener(false)
-              }
-              if (Math.abs(Number(msgMenuCoords.top) - y) >= 22) {
-                setMsgMenu(false)
-                setMsgMenuTargets([])
-                setMsgMenuListener(false)
-              }
-            }
-          }
-        }}
+        // onMouseMove={(event) => {
+        //   if (msgMenuListener) {
+        //     let vw = window.innerWidth + 420
+        //     let vh = window.innerHeight + 50
+        //     let x = (event.pageX / vw) * 100
+        //     let y = (event.pageY / vh) * 100
+        //     if (msgMenuCoords.left && msgMenuCoords.top) {
+        //       if (Math.abs(Number(msgMenuCoords.left) - x) >= 20) {
+        //         setMsgMenu(false)
+        //         setMsgMenuTargets([])
+        //         setMsgMenuListener(false)
+        //       }
+        //       if (Math.abs(Number(msgMenuCoords.top) - y) >= 22) {
+        //         setMsgMenu(false)
+        //         setMsgMenuTargets([])
+        //         setMsgMenuListener(false)
+        //       }
+        //     }
+        //   }
+        // }}
       >
         {/* {currentsomespace
           ? currentsomespace.map((audio: any) => {
@@ -4377,1016 +4383,991 @@ export function UserInterface(this: any) {
             />
           </div>
         ) : undefined}
-        <div id="userInterfaceMain">
-          <div id="userInterfaceChatsColumn">
-            <div id="bigInterfaceColumn">
-              <div
-                className={`regularColumn ${
-                  userSettingsEdit
-                    ? "toleft"
-                    : createNewChanell ||
-                      createNewGroup ||
-                      createNewPrivateChat ||
-                      userSettings
-                    ? "toleft"
-                    : pageJustLoaded
-                    ? "none"
-                    : "back"
-                } `}
-              >
-                {userMenu ? (
-                  <div
-                    id="userMenu"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      setUserMenu(false)
-                    }}
-                  >
-                    <div id="userMenuMenu">
-                      <div id="userMenuMenuDiv">
-                        <img src="./icons8-close-50.png" alt="" />
-                        <p>Saved Messages</p>
-                      </div>
-                      <div id="userMenuMenuDiv">
-                        <img src="./icons8-close-50.png" alt="" />
-                        <p>My Stories</p>
-                      </div>
-                      <div id="userMenuMenuDiv">
-                        <img src="./icons8-close-50.png" alt="" />
-                        <p>Contacts</p>
-                      </div>
-                      <div
-                        id="userMenuMenuDiv"
-                        onClick={() => {
-                          setUserMenu(false)
-                          setUserSettings(true)
-                        }}
-                      >
-                        <img src="./icons8-close-50.png" alt="" />
-                        <p>Settings</p>
-                      </div>
-                      <div id="userMenuMenuDiv">
-                        <img src="./icons8-close-50.png" alt="" />
-                        <p>Dark Mode</p>
-                      </div>
-                      <div id="userMenuMenuDiv">
-                        <img src="./icons8-close-50.png" alt="" />
-                        <p>Animations</p>
-                      </div>
-                      <div id="userMenuMenuDiv">
-                        <img src="./icons8-close-50.png" alt="" />
-                        <p>Telegram Features</p>
-                      </div>
-                      <div id="userMenuMenuDiv">
-                        <img src="./icons8-close-50.png" alt="" />
-                        <p>Report Bug</p>
-                      </div>
-                      <div id="userMenuMenuDiv">
-                        <img src="./icons8-close-50.png" alt="" />
-                        <p>Switch to A version</p>
-                      </div>
-                      <div id="userMenuMenuFooter">SilentTalk WebK 1.0.0</div>
+        {/* <div id="userInterfaceMain"> */}
+        <div
+          id="userInterfaceChatsColumn"
+          className={`${onScreen === "chatsList" ? "" : "leftChatLeft"}`}
+          // style={
+          //   onScreen === "chatsList"
+          //     ? {
+          //         transform: "translate(0, 0)",
+          //       }
+          //     : {
+          //         transform: "translate(-100%, 0)",
+          //       }
+          // }
+        >
+          <div id="bigInterfaceColumn">
+            <div
+              className={`regularColumn ${
+                userSettingsEdit
+                  ? "toleft"
+                  : createNewChanell ||
+                    createNewGroup ||
+                    createNewPrivateChat ||
+                    userSettings
+                  ? "toleft"
+                  : pageJustLoaded
+                  ? "none"
+                  : "back"
+              } `}
+            >
+              {userMenu ? (
+                <div
+                  id="userMenu"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setUserMenu(false)
+                  }}
+                >
+                  <div id="userMenuMenu">
+                    <div id="userMenuMenuDiv">
+                      <img src="./icons8-close-50.png" alt="" />
+                      <p>Saved Messages</p>
                     </div>
+                    <div id="userMenuMenuDiv">
+                      <img src="./icons8-close-50.png" alt="" />
+                      <p>My Stories</p>
+                    </div>
+                    <div id="userMenuMenuDiv">
+                      <img src="./icons8-close-50.png" alt="" />
+                      <p>Contacts</p>
+                    </div>
+                    <div
+                      id="userMenuMenuDiv"
+                      onClick={() => {
+                        setUserMenu(false)
+                        setUserSettings(true)
+                      }}
+                    >
+                      <img src="./icons8-close-50.png" alt="" />
+                      <p>Settings</p>
+                    </div>
+                    <div id="userMenuMenuDiv">
+                      <img src="./icons8-close-50.png" alt="" />
+                      <p>Dark Mode</p>
+                    </div>
+                    <div id="userMenuMenuDiv">
+                      <img src="./icons8-close-50.png" alt="" />
+                      <p>Animations</p>
+                    </div>
+                    <div id="userMenuMenuDiv">
+                      <img src="./icons8-close-50.png" alt="" />
+                      <p>Telegram Features</p>
+                    </div>
+                    <div id="userMenuMenuDiv">
+                      <img src="./icons8-close-50.png" alt="" />
+                      <p>Report Bug</p>
+                    </div>
+                    <div id="userMenuMenuDiv">
+                      <img src="./icons8-close-50.png" alt="" />
+                      <p>Switch to A version</p>
+                    </div>
+                    <div id="userMenuMenuFooter">SilentTalk WebK 1.0.0</div>
                   </div>
-                ) : undefined}
+                </div>
+              ) : undefined}
 
-                <div id="userInterfaceChatsColumnHead">
-                  <div id="userInterfaceChatsColumnHeadSettings">
-                    {searchFocused ? (
-                      <img
-                        src="./icons8-close-50.png"
-                        alt=""
-                        onClick={() => {
-                          setSearchFocused(false)
-                          setChatSearchList([])
-                          let input = document.getElementById(
-                            "searchChatsInput"
-                          ) as HTMLInputElement
-                          if (input) {
-                            input.value = ""
-                          }
-                        }}
-                      />
-                    ) : (
-                      <img
-                        src="./menu.png"
-                        alt=""
-                        onClick={() => {
-                          setUserMenu(true)
-                        }}
-                      />
-                    )}
-                  </div>
-                  <div
-                    id="userInterfaceChatsColumnHeadSearch"
-                    onFocus={() => {
-                      setSearchFocused(true)
-                      if (!searchFocused) {
-                        setSelectedSearchMegaOption("Chats")
-                      }
-                    }}
-                  >
-                    <img src="./search.png" alt="" />
-                    <input
-                      id="searchChatsInput"
-                      type="text"
-                      placeholder="Search"
-                      onChange={async (event) => {
-                        let target = event.target as HTMLInputElement
-                        let value = target.value
-                        if (!value) {
-                          setChatSearchList([])
-                          return
+              <div id="userInterfaceChatsColumnHead">
+                <div id="userInterfaceChatsColumnHeadSettings">
+                  {searchFocused ? (
+                    <img
+                      src="./icons8-close-50.png"
+                      alt=""
+                      onClick={() => {
+                        setSearchFocused(false)
+                        setChatSearchList([])
+                        let input = document.getElementById(
+                          "searchChatsInput"
+                        ) as HTMLInputElement
+                        if (input) {
+                          input.value = ""
                         }
-                        let allArray: any = []
-                        let theNamesList:
-                          | {
-                              array: Array<any>
-                              target: "Chats"
-                              changed: Boolean
-                            }
-                          | {
-                              array: Array<any>
-                              target: "Chats"
-                              changed: boolean
-                            } = { array: [], target: "Chats", changed: false }
-                        for (
-                          let index = 0;
-                          index < allChatsList.length;
-                          index++
-                        ) {
-                          const element = allChatsList[index]
-                          if (element.findname) {
-                            if (element.findname.includes(value)) {
-                              if (element.partisipants) {
-                                theNamesList.array.push({
-                                  photoLink: element.photoLink,
-                                  findname: element.findname,
-                                  partisipants: element.partisipants,
-                                  username: element.username,
-                                })
-                                continue
-                              }
-                              // if (condition) {
-                              theNamesList.array.push({
-                                photoLink: element.photoLink,
-                                findname: element.findname,
-                                username: element.username,
-                              })
-                              continue
-                              // }
-                            }
+                      }}
+                    />
+                  ) : (
+                    <img
+                      src="./menu.png"
+                      alt=""
+                      onClick={() => {
+                        setUserMenu(true)
+                      }}
+                    />
+                  )}
+                </div>
+                <div
+                  id="userInterfaceChatsColumnHeadSearch"
+                  onFocus={() => {
+                    setSearchFocused(true)
+                    if (!searchFocused) {
+                      setSelectedSearchMegaOption("Chats")
+                    }
+                  }}
+                >
+                  <img src="./search.png" alt="" />
+                  <input
+                    id="searchChatsInput"
+                    type="text"
+                    placeholder="Search"
+                    onChange={async (event) => {
+                      let target = event.target as HTMLInputElement
+                      let value = target.value
+                      if (!value) {
+                        setChatSearchList([])
+                        return
+                      }
+                      let allArray: any = []
+                      let theNamesList:
+                        | {
+                            array: Array<any>
+                            target: "Chats"
+                            changed: Boolean
                           }
-                          if (element.username) {
-                            if (element.username.includes(value)) {
+                        | {
+                            array: Array<any>
+                            target: "Chats"
+                            changed: boolean
+                          } = { array: [], target: "Chats", changed: false }
+                      for (
+                        let index = 0;
+                        index < allChatsList.length;
+                        index++
+                      ) {
+                        const element = allChatsList[index]
+                        if (element.findname) {
+                          if (element.findname.includes(value)) {
+                            if (element.partisipants) {
                               theNamesList.array.push({
                                 photoLink: element.photoLink,
                                 findname: element.findname,
+                                partisipants: element.partisipants,
                                 username: element.username,
-                                // partisipants: element.partisipants,
                               })
                               continue
                             }
                             // if (condition) {
-                            // theNamesList.array.push({
-                            //   photoLink: element.photoLink,
-                            //   findname: element.findname,
-                            // })
-                            // console.log("5")
-                            // console.log(theNamesList.array)
-                            // continue
+                            theNamesList.array.push({
+                              photoLink: element.photoLink,
+                              findname: element.findname,
+                              username: element.username,
+                            })
+                            continue
                             // }
                           }
                         }
-                        // element.messages.forEach(message => {
-                        // });
-                        if (!theNamesList.array.length) {
-                          theNamesList.array = await chatGlobalSearch(value)
-                          theNamesList.changed = true
-                          allArray.push(theNamesList)
-                          setChatSearchList(allArray)
-                        } else {
-                          allArray.push(theNamesList)
-                          setChatSearchList(allArray)
+                        if (element.username) {
+                          if (element.username.includes(value)) {
+                            theNamesList.array.push({
+                              photoLink: element.photoLink,
+                              findname: element.findname,
+                              username: element.username,
+                              // partisipants: element.partisipants,
+                            })
+                            continue
+                          }
+                          // if (condition) {
+                          // theNamesList.array.push({
+                          //   photoLink: element.photoLink,
+                          //   findname: element.findname,
+                          // })
+                          // console.log("5")
+                          // console.log(theNamesList.array)
+                          // continue
+                          // }
                         }
-                      }}
-                    />
-                  </div>
+                      }
+                      // element.messages.forEach(message => {
+                      // });
+                      if (!theNamesList.array.length) {
+                        theNamesList.array = await chatGlobalSearch(value)
+                        theNamesList.changed = true
+                        allArray.push(theNamesList)
+                        setChatSearchList(allArray)
+                      } else {
+                        allArray.push(theNamesList)
+                        setChatSearchList(allArray)
+                      }
+                    }}
+                  />
                 </div>
-                {searchFocused ? (
-                  <div
-                    className="userInterfaceChatsColumnChatsSearch"
-                    style={
-                      searchFocused ? { zIndex: "5" } : { display: "flex" }
-                    }
-                  >
-                    {chatSearchList.length ? (
-                      <div id="userInterfaceChatsColumnChatsSearchAfterSearch">
-                        {/* <div id="userInterfaceChatsColumnChatsSearchAfterSearchTop"></div> */}
-                        <div id="userInterfaceChatsColumnChatsSearchOptions">
-                          {chatSearchMegaList.map((option) => {
-                            return (
-                              <div
-                                id="userInterfaceChatsColumnChatsSearchOptionsOption"
-                                style={
-                                  option == selectedSearchMegaOption
-                                    ? {
-                                        color: "#3390ec",
-                                        borderBottom: "#3390ec solid 2px",
-                                      }
-                                    : { display: "flex" }
-                                }
-                                onClick={() => {
-                                  setPrevSelectedSearchMegaOption(
-                                    selectedSearchMegaOption
-                                  )
-                                  setSelectedSearchMegaOption(option)
-                                }}
-                              >
-                                {option}
-                              </div>
-                            )
-                          })}
-                        </div>
+              </div>
+              {searchFocused ? (
+                <div
+                  className="userInterfaceChatsColumnChatsSearch"
+                  style={searchFocused ? { zIndex: "5" } : { display: "flex" }}
+                >
+                  {chatSearchList.length ? (
+                    <div id="userInterfaceChatsColumnChatsSearchAfterSearch">
+                      {/* <div id="userInterfaceChatsColumnChatsSearchAfterSearchTop"></div> */}
+                      <div id="userInterfaceChatsColumnChatsSearchOptions">
+                        {chatSearchMegaList.map((option) => {
+                          return (
+                            <div
+                              id="userInterfaceChatsColumnChatsSearchOptionsOption"
+                              style={
+                                option == selectedSearchMegaOption
+                                  ? {
+                                      color: "#3390ec",
+                                      borderBottom: "#3390ec solid 2px",
+                                    }
+                                  : { display: "flex" }
+                              }
+                              onClick={() => {
+                                setPrevSelectedSearchMegaOption(
+                                  selectedSearchMegaOption
+                                )
+                                setSelectedSearchMegaOption(option)
+                              }}
+                            >
+                              {option}
+                            </div>
+                          )
+                        })}
+                      </div>
 
-                        <div id="userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv">
-                          {chatSearchMegaList.map((option) => {
-                            return (
-                              <div
-                                className={`userInterfaceChatsColumnChatsSearchAfterSearchResults ${
-                                  option === selectedSearchMegaOption
-                                    ? "selectedSearch"
-                                    : chatSearchMegaList.indexOf(option) <
-                                      chatSearchMegaList.indexOf(
-                                        selectedSearchMegaOption
-                                      )
-                                    ? "toLeftSearch"
-                                    : "toRightSearch"
-                                } ${
-                                  Math.abs(
+                      <div id="userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv">
+                        {chatSearchMegaList.map((option) => {
+                          return (
+                            <div
+                              className={`userInterfaceChatsColumnChatsSearchAfterSearchResults ${
+                                option === selectedSearchMegaOption
+                                  ? "selectedSearch"
+                                  : chatSearchMegaList.indexOf(option) <
                                     chatSearchMegaList.indexOf(
-                                      prevSelectedSearchMegaOption
-                                    ) -
+                                      selectedSearchMegaOption
+                                    )
+                                  ? "toLeftSearch"
+                                  : "toRightSearch"
+                              } ${
+                                Math.abs(
+                                  chatSearchMegaList.indexOf(
+                                    prevSelectedSearchMegaOption
+                                  ) -
+                                    chatSearchMegaList.indexOf(
+                                      selectedSearchMegaOption
+                                    )
+                                ) > 1
+                                  ? (chatSearchMegaList.indexOf(option) >
                                       chatSearchMegaList.indexOf(
-                                        selectedSearchMegaOption
-                                      )
-                                  ) > 1
-                                    ? (chatSearchMegaList.indexOf(option) >
+                                        prevSelectedSearchMegaOption
+                                      ) &&
+                                      chatSearchMegaList.indexOf(option) <
                                         chatSearchMegaList.indexOf(
-                                          prevSelectedSearchMegaOption
-                                        ) &&
-                                        chatSearchMegaList.indexOf(option) <
-                                          chatSearchMegaList.indexOf(
-                                            selectedSearchMegaOption
-                                          )) ||
-                                      (chatSearchMegaList.indexOf(option) <
+                                          selectedSearchMegaOption
+                                        )) ||
+                                    (chatSearchMegaList.indexOf(option) <
+                                      chatSearchMegaList.indexOf(
+                                        prevSelectedSearchMegaOption
+                                      ) &&
+                                      chatSearchMegaList.indexOf(option) >
                                         chatSearchMegaList.indexOf(
-                                          prevSelectedSearchMegaOption
-                                        ) &&
-                                        chatSearchMegaList.indexOf(option) >
-                                          chatSearchMegaList.indexOf(
-                                            selectedSearchMegaOption
-                                          ))
-                                      ? "instaOpacity"
-                                      : ""
+                                          selectedSearchMegaOption
+                                        ))
+                                    ? "instaOpacity"
                                     : ""
-                                }`}
-                              >
-                                {chatSearchList.map((oneList) => {
-                                  if (option === "Chats") {
-                                    if (oneList.target === "Chats") {
-                                      if (!oneList.changed) {
-                                        return (
-                                          <div>
-                                            {oneList.array.length ? (
-                                              <div id="userInterfaceChatsColumnChatsSearchAfterSearchResultsName">
-                                                Chats
-                                              </div>
-                                            ) : undefined}
+                                  : ""
+                              }`}
+                            >
+                              {chatSearchList.map((oneList) => {
+                                if (option === "Chats") {
+                                  if (oneList.target === "Chats") {
+                                    if (!oneList.changed) {
+                                      return (
+                                        <div>
+                                          {oneList.array.length ? (
+                                            <div id="userInterfaceChatsColumnChatsSearchAfterSearchResultsName">
+                                              Chats
+                                            </div>
+                                          ) : undefined}
 
-                                            {oneList.array.map(
-                                              (oneElement: any) => {
-                                                return (
-                                                  <div id="ChatsSearchAfterSearchResultsResult">
-                                                    <img
-                                                      src={
-                                                        oneElement.photoLink
-                                                          ? oneElement.photoLink
-                                                          : "./defaultUser.png"
-                                                      }
-                                                      alt=""
-                                                    />
-                                                    <div id="ChatsSearchAfterSearchResultsResultColumn">
-                                                      <div id="ChatsSearchAfterSearchResultsResultTop">
-                                                        {oneElement.username}
-                                                      </div>
-                                                      <div id="ChatsSearchAfterSearchResultsResultBot">
-                                                        {oneElement.findname}
-                                                      </div>
+                                          {oneList.array.map(
+                                            (oneElement: any) => {
+                                              return (
+                                                <div id="ChatsSearchAfterSearchResultsResult">
+                                                  <img
+                                                    src={
+                                                      oneElement.photoLink
+                                                        ? oneElement.photoLink
+                                                        : "./defaultUser.png"
+                                                    }
+                                                    alt=""
+                                                  />
+                                                  <div id="ChatsSearchAfterSearchResultsResultColumn">
+                                                    <div id="ChatsSearchAfterSearchResultsResultTop">
+                                                      {oneElement.username}
+                                                    </div>
+                                                    <div id="ChatsSearchAfterSearchResultsResultBot">
+                                                      {oneElement.findname}
                                                     </div>
                                                   </div>
-                                                )
-                                              }
-                                            )}
-                                          </div>
-                                        )
-                                      } else {
-                                        return (
-                                          <div>
-                                            {oneList.array.length ? (
-                                              <div id="userInterfaceChatsColumnChatsSearchAfterSearchResultsName">
-                                                Global Search
-                                              </div>
-                                            ) : undefined}
-                                            {oneList.array.map(
-                                              (oneElement: any) => {
-                                                return (
-                                                  <div
-                                                    id="ChatsSearchAfterSearchResultsResult"
-                                                    onClick={() => {
-                                                      findPeopleAndSetNewChat(
-                                                        oneElement.findname,
-                                                        oneElement.type,
-                                                        oneElement.photoLink,
-                                                        oneElement.username,
-                                                        oneElement.phoneNumber,
-                                                        oneElement.bio
-                                                      )
-                                                    }}
-                                                  >
-                                                    <img
-                                                      src={oneElement.photoLink}
-                                                      alt=""
-                                                    />
-                                                    <div id="ChatsSearchAfterSearchResultsResultColumn">
-                                                      <div id="ChatsSearchAfterSearchResultsResultTop">
-                                                        {oneElement.username}
-                                                      </div>
-                                                      <div id="ChatsSearchAfterSearchResultsResultBot">
-                                                        {oneElement.findname}{" "}
-                                                        {oneElement.subscribers
-                                                          ? oneElement.subscribers
-                                                          : undefined}
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                )
-                                              }
-                                            )}
-                                          </div>
-                                        )
-                                      }
-                                    } else {
-                                      if (oneList.target === "Messages") {
-                                        return (
-                                          <div
-                                            className={
-                                              selectedSearchMegaOption ==
-                                              oneList.target
-                                                ? "back"
-                                                : "toleftSearch"
+                                                </div>
+                                              )
                                             }
-                                          >
-                                            {oneList.array.length ? (
-                                              <div id="userInterfaceChatsColumnChatsSearchAfterSearchResultsName">
-                                                Messages
-                                              </div>
-                                            ) : undefined}
-
-                                            {oneList.array.map(
-                                              (oneElement: any) => {
-                                                return (
-                                                  <div id="ChatsSearchAfterSearchResultsResult">
-                                                    <img
-                                                      src={oneElement.photoLink}
-                                                      alt=""
-                                                    />
-                                                    <div id="ChatsSearchAfterSearchResultsResultColumn">
-                                                      <div id="ChatsSearchAfterSearchResultsResultTop">
-                                                        {oneElement.findname}
-                                                      </div>
-                                                      <div id="ChatsSearchAfterSearchResultsResultBot">
-                                                        {oneElement.findname}
-                                                      </div>
+                                          )}
+                                        </div>
+                                      )
+                                    } else {
+                                      return (
+                                        <div>
+                                          {oneList.array.length ? (
+                                            <div id="userInterfaceChatsColumnChatsSearchAfterSearchResultsName">
+                                              Global Search
+                                            </div>
+                                          ) : undefined}
+                                          {oneList.array.map(
+                                            (oneElement: any) => {
+                                              return (
+                                                <div
+                                                  id="ChatsSearchAfterSearchResultsResult"
+                                                  onClick={() => {
+                                                    findPeopleAndSetNewChat(
+                                                      oneElement.findname,
+                                                      oneElement.type,
+                                                      oneElement.photoLink,
+                                                      oneElement.username,
+                                                      oneElement.phoneNumber,
+                                                      oneElement.bio
+                                                    )
+                                                  }}
+                                                >
+                                                  <img
+                                                    src={oneElement.photoLink}
+                                                    alt=""
+                                                  />
+                                                  <div id="ChatsSearchAfterSearchResultsResultColumn">
+                                                    <div id="ChatsSearchAfterSearchResultsResultTop">
+                                                      {oneElement.username}
+                                                    </div>
+                                                    <div id="ChatsSearchAfterSearchResultsResultBot">
+                                                      {oneElement.findname}{" "}
+                                                      {oneElement.subscribers
+                                                        ? oneElement.subscribers
+                                                        : undefined}
                                                     </div>
                                                   </div>
-                                                )
-                                              }
-                                            )}
-                                          </div>
-                                        )
-                                      }
+                                                </div>
+                                              )
+                                            }
+                                          )}
+                                        </div>
+                                      )
+                                    }
+                                  } else {
+                                    if (oneList.target === "Messages") {
+                                      return (
+                                        <div
+                                          className={
+                                            selectedSearchMegaOption ==
+                                            oneList.target
+                                              ? "back"
+                                              : "toleftSearch"
+                                          }
+                                        >
+                                          {oneList.array.length ? (
+                                            <div id="userInterfaceChatsColumnChatsSearchAfterSearchResultsName">
+                                              Messages
+                                            </div>
+                                          ) : undefined}
+
+                                          {oneList.array.map(
+                                            (oneElement: any) => {
+                                              return (
+                                                <div id="ChatsSearchAfterSearchResultsResult">
+                                                  <img
+                                                    src={oneElement.photoLink}
+                                                    alt=""
+                                                  />
+                                                  <div id="ChatsSearchAfterSearchResultsResultColumn">
+                                                    <div id="ChatsSearchAfterSearchResultsResultTop">
+                                                      {oneElement.findname}
+                                                    </div>
+                                                    <div id="ChatsSearchAfterSearchResultsResultBot">
+                                                      {oneElement.findname}
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              )
+                                            }
+                                          )}
+                                        </div>
+                                      )
                                     }
                                   }
-                                  if (option === "Media") {
-                                    return <div>Hi media</div>
-                                  }
-                                  if (option === "Links") {
-                                    return <div>Hi Links</div>
-                                  }
-                                  if (option === "Files") {
-                                    return <div>Hi Files</div>
-                                  }
-                                  if (option === "Music") {
-                                    return <div>Hi Music</div>
-                                  }
-                                  if (option === "Voices") {
-                                    return <div>Hi Voices</div>
-                                  }
-                                })}
-                              </div>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <div id="userInterfaceChatsColumnChatsSearchOptions">
-                          {chatSearchMegaList.map((option) => {
-                            return (
-                              <div
-                                id="userInterfaceChatsColumnChatsSearchOptionsOption"
-                                style={
-                                  option.name == selectedSearchMegaOption
-                                    ? {
-                                        color: "#3390ec",
-                                        borderBottom: "#3390ec solid 2px",
-                                      }
-                                    : { display: "flex" }
                                 }
-                                onClick={() => {
-                                  setSelectedSearchMegaOption(option.name)
-                                }}
-                              >
-                                {option.name}
-                              </div>
-                            )
-                          })}
-                        </div>
-                        {selectedSearchMegaOption === "Chats" ? (
-                          <>
-                            <div id="userInterfaceChatsColumnChatsSearchContacts">
-                              {listOfMajorContacts.map((contact) => {
-                                return (
-                                  <div id="userInterfaceChatsColumnChatsSearchContactsContact">
-                                    <img src={contact.src} alt="" />
-                                    {contact.name}
-                                  </div>
-                                )
+                                if (option === "Media") {
+                                  return <div>Hi media</div>
+                                }
+                                if (option === "Links") {
+                                  return <div>Hi Links</div>
+                                }
+                                if (option === "Files") {
+                                  return <div>Hi Files</div>
+                                }
+                                if (option === "Music") {
+                                  return <div>Hi Music</div>
+                                }
+                                if (option === "Voices") {
+                                  return <div>Hi Voices</div>
+                                }
                               })}
                             </div>
-                            <div id="userInterfaceChatsColumnChatsSearchRecent">
-                              <p>Recent</p>{" "}
-                              <img src="./icons8-close-50.png" alt="" />
+                          )
+                        })}
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div id="userInterfaceChatsColumnChatsSearchOptions">
+                        {chatSearchMegaList.map((option) => {
+                          return (
+                            <div
+                              id="userInterfaceChatsColumnChatsSearchOptionsOption"
+                              style={
+                                option.name == selectedSearchMegaOption
+                                  ? {
+                                      color: "#3390ec",
+                                      borderBottom: "#3390ec solid 2px",
+                                    }
+                                  : { display: "flex" }
+                              }
+                              onClick={() => {
+                                setSelectedSearchMegaOption(option.name)
+                              }}
+                            >
+                              {option.name}
                             </div>
-                            <div id="userInterfaceChatsColumnChatsSearchRecentResults">
-                              {listOfRecentContacts.map((contact) => {
-                                return (
-                                  <div id="userInterfaceChatsColumnChatsSearchContactsContact">
-                                    <img src={contact.src} alt="" />
-                                    {contact.name}
-                                  </div>
-                                )
-                              })}
-                            </div>
-                          </>
-                        ) : selectedSearchMegaOption === "Media" ? (
-                          <div></div>
-                        ) : selectedSearchMegaOption === "Links" ? (
-                          <div></div>
-                        ) : selectedSearchMegaOption === "Files" ? (
-                          <div></div>
-                        ) : selectedSearchMegaOption === "Music" ? (
-                          <div></div>
-                        ) : selectedSearchMegaOption === "Voice" ? (
-                          <div></div>
-                        ) : undefined}
-                      </>
-                    )}
-                  </div>
-                ) : undefined}
+                          )
+                        })}
+                      </div>
+                      {selectedSearchMegaOption === "Chats" ? (
+                        <>
+                          <div id="userInterfaceChatsColumnChatsSearchContacts">
+                            {listOfMajorContacts.map((contact) => {
+                              return (
+                                <div id="userInterfaceChatsColumnChatsSearchContactsContact">
+                                  <img src={contact.src} alt="" />
+                                  {contact.name}
+                                </div>
+                              )
+                            })}
+                          </div>
+                          <div id="userInterfaceChatsColumnChatsSearchRecent">
+                            <p>Recent</p>{" "}
+                            <img src="./icons8-close-50.png" alt="" />
+                          </div>
+                          <div id="userInterfaceChatsColumnChatsSearchRecentResults">
+                            {listOfRecentContacts.map((contact) => {
+                              return (
+                                <div id="userInterfaceChatsColumnChatsSearchContactsContact">
+                                  <img src={contact.src} alt="" />
+                                  {contact.name}
+                                </div>
+                              )
+                            })}
+                          </div>
+                        </>
+                      ) : selectedSearchMegaOption === "Media" ? (
+                        <div></div>
+                      ) : selectedSearchMegaOption === "Links" ? (
+                        <div></div>
+                      ) : selectedSearchMegaOption === "Files" ? (
+                        <div></div>
+                      ) : selectedSearchMegaOption === "Music" ? (
+                        <div></div>
+                      ) : selectedSearchMegaOption === "Voice" ? (
+                        <div></div>
+                      ) : undefined}
+                    </>
+                  )}
+                </div>
+              ) : undefined}
 
-                <div className={`userInterfaceChatsColumnChats`}>
-                  {allChatsList != undefined
-                    ? allChatsList.map((oneChat: any) => {
-                        return oneChat.group == "service" ? (
-                          <>
-                            {allChatsListInUser
-                              ? allChatsListInUser.servicesList
-                                ? allChatsListInUser.servicesList.map(
-                                    (oneService: any) => {
-                                      return oneChat.findname ==
-                                        oneService.findname ? (
-                                        <div
-                                          // key={key++}
-                                          className="userInterfaceChatsColumnOneChat"
-                                          style={
-                                            openedChat.findname ==
+              <div className={`userInterfaceChatsColumnChats`}>
+                {allChatsList != undefined
+                  ? allChatsList.map((oneChat: any) => {
+                      return oneChat.group == "service" ? (
+                        <>
+                          {allChatsListInUser
+                            ? allChatsListInUser.servicesList
+                              ? allChatsListInUser.servicesList.map(
+                                  (oneService: any) => {
+                                    return oneChat.findname ==
+                                      oneService.findname ? (
+                                      <div
+                                        // key={key++}
+                                        className="userInterfaceChatsColumnOneChat"
+                                        style={
+                                          openedChat.findname ==
+                                          oneChat.findname
+                                            ? {
+                                                backgroundColor: "#3390EC",
+                                                color: "white",
+                                              }
+                                            : {
+                                                backgroundColor: "transparent",
+                                                color: "black",
+                                              }
+                                        }
+                                        onClick={() => {
+                                          setOnScreen("chat")
+                                          setChatSelected(true)
+                                          setOpenedChat({
+                                            type: "service",
+                                            findname: oneChat.findname,
+                                          })
+                                          setMainPageInput(
+                                            "service",
                                             oneChat.findname
-                                              ? {
-                                                  backgroundColor: "#3390EC",
-                                                  color: "white",
-                                                }
-                                              : {
-                                                  backgroundColor:
-                                                    "transparent",
-                                                  color: "black",
-                                                }
-                                          }
-                                          onClick={() => {
-                                            setChatSelected(true)
+                                          )
+                                        }}
+                                      >
+                                        <div className="userInterfaceChatsColumnOneChatImg">
+                                          <img src={oneChat.photoLink} alt="" />
+                                        </div>
+                                        <div className="userInterfaceChatsColumnOneChatNotImg">
+                                          <div className="userInterfaceChatsColumnOneChatNotImgTopLine">
+                                            <div className="userInterfaceChatsColumnOneChatNotImgName">
+                                              {oneChat.username}
+                                            </div>
+                                            <div className="userInterfaceChatsColumnOneChatNotImgDate">
+                                              {Math.abs(
+                                                Number(oneChat.lastUpdated) -
+                                                  Number(new Date().getTime())
+                                              ) <= 86400000
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).toLocaleTimeString()}`
+                                                : Math.abs(
+                                                    Number(
+                                                      oneChat.lastUpdated
+                                                    ) -
+                                                      Number(
+                                                        new Date().getTime()
+                                                      )
+                                                  ) <= 172800000
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  )
+                                                    .toUTCString()
+                                                    .slice(0, 3)}`
+                                                : new Date().getFullYear() !=
+                                                  new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).getFullYear()
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).toLocaleDateString(
+                                                    "en-GB"
+                                                  )}`
+                                                : `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  )
+                                                    .toString()
+                                                    .slice(4, 10)}`}
+                                            </div>
+                                          </div>
+                                          <div className="userInterfaceChatsColumnOneChatNotImgBotLine">
+                                            <div
+                                              className="userInterfaceChatsColumnOneChatNotImgLastMsg"
+                                              style={
+                                                openedChat.findname ==
+                                                oneChat.findname
+                                                  ? {
+                                                      color: "white",
+                                                    }
+                                                  : {
+                                                      color: "#7b7f83",
+                                                    }
+                                              }
+                                              // style={
+                                              //   oneChat.messages[-1]
+                                              //     ? { color: "black" }
+                                              //     : { color: "green" }
+                                              // }
+                                            >
+                                              {oneChat.messages ? (
+                                                oneChat.messages[
+                                                  oneChat.messages.length - 1
+                                                ] ? (
+                                                  oneChat.messages[
+                                                    oneChat.messages.length - 1
+                                                  ].img ? (
+                                                    <>
+                                                      <img
+                                                        src={
+                                                          oneChat.messages[
+                                                            oneChat.messages
+                                                              .length - 1
+                                                          ].img
+                                                            ? oneChat.messages[
+                                                                oneChat.messages
+                                                                  .length - 1
+                                                              ].img
+                                                            : "./blank_photo.png"
+                                                        }
+                                                      />
+                                                      Photo
+                                                      {
+                                                        oneChat.messages[
+                                                          oneChat.messages
+                                                            .length - 1
+                                                        ].comentary
+                                                      }
+                                                    </>
+                                                  ) : oneChat.messages[
+                                                      oneChat.messages.length -
+                                                        1
+                                                    ].blob ? (
+                                                    "Voice message"
+                                                  ) : (
+                                                    `${
+                                                      oneChat.messages[
+                                                        oneChat.messages
+                                                          .length - 1
+                                                      ].comentary
+                                                    }`
+                                                  )
+                                                ) : (
+                                                  "Created Succesfully"
+                                                )
+                                              ) : undefined}
+                                            </div>
+                                            <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
+                                              {oneChat.messages ? (
+                                                <div>
+                                                  {oneChat.messages.length}
+                                                </div>
+                                              ) : oneService.pinned ? (
+                                                <img
+                                                  src={"./pinned.png"}
+                                                  alt=""
+                                                />
+                                              ) : undefined}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ) : undefined
+                                  }
+                                )
+                              : undefined
+                            : undefined}
+                        </>
+                      ) : oneChat.group == "chanell" ? (
+                        <>
+                          {allChatsListInUser
+                            ? allChatsListInUser.chanellsList
+                              ? allChatsListInUser.chanellsList.map(
+                                  (oneChanell: any) => {
+                                    return oneChat.findname ==
+                                      oneChanell.findname ? (
+                                      <div
+                                        // key={key++}
+                                        className="userInterfaceChatsColumnOneChat"
+                                        style={
+                                          openedChat.findname ==
+                                          oneChat.findname
+                                            ? {
+                                                backgroundColor: "#3390EC",
+                                                color: "white",
+                                              }
+                                            : {
+                                                backgroundColor: "transparent",
+                                                color: "black",
+                                              }
+                                        }
+                                        onClick={async () => {
+                                          setOnScreen("chat")
+                                          setChatSelected(true)
+                                          async function bgbfbf() {
                                             setOpenedChat({
-                                              type: "service",
+                                              type: "chanell",
                                               findname: oneChat.findname,
                                             })
                                             setMainPageInput(
-                                              "service",
+                                              "chanell",
                                               oneChat.findname
                                             )
-                                          }}
-                                        >
-                                          <div className="userInterfaceChatsColumnOneChatImg">
-                                            <img
-                                              src={oneChat.photoLink}
-                                              alt=""
-                                            />
-                                          </div>
-                                          <div className="userInterfaceChatsColumnOneChatNotImg">
-                                            <div className="userInterfaceChatsColumnOneChatNotImgTopLine">
-                                              <div className="userInterfaceChatsColumnOneChatNotImgName">
-                                                {oneChat.username}
-                                              </div>
-                                              <div className="userInterfaceChatsColumnOneChatNotImgDate">
-                                                {Math.abs(
-                                                  Number(oneChat.lastUpdated) -
-                                                    Number(new Date().getTime())
-                                                ) <= 86400000
-                                                  ? `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    ).toLocaleTimeString()}`
-                                                  : Math.abs(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      ) -
-                                                        Number(
-                                                          new Date().getTime()
-                                                        )
-                                                    ) <= 172800000
-                                                  ? `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    )
-                                                      .toUTCString()
-                                                      .slice(0, 3)}`
-                                                  : new Date().getFullYear() !=
-                                                    new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    ).getFullYear()
-                                                  ? `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    ).toLocaleDateString(
-                                                      "en-GB"
-                                                    )}`
-                                                  : `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    )
-                                                      .toString()
-                                                      .slice(4, 10)}`}
-                                              </div>
-                                            </div>
-                                            <div className="userInterfaceChatsColumnOneChatNotImgBotLine">
-                                              <div
-                                                className="userInterfaceChatsColumnOneChatNotImgLastMsg"
-                                                style={
-                                                  openedChat.findname ==
-                                                  oneChat.findname
-                                                    ? {
-                                                        color: "white",
-                                                      }
-                                                    : {
-                                                        color: "#7b7f83",
-                                                      }
-                                                }
-                                                // style={
-                                                //   oneChat.messages[-1]
-                                                //     ? { color: "black" }
-                                                //     : { color: "green" }
-                                                // }
-                                              >
-                                                {oneChat.messages ? (
-                                                  oneChat.messages[
-                                                    oneChat.messages.length - 1
-                                                  ] ? (
-                                                    oneChat.messages[
-                                                      oneChat.messages.length -
-                                                        1
-                                                    ].img ? (
-                                                      <>
-                                                        <img
-                                                          src={
-                                                            oneChat.messages[
-                                                              oneChat.messages
-                                                                .length - 1
-                                                            ].img
-                                                              ? oneChat
-                                                                  .messages[
-                                                                  oneChat
-                                                                    .messages
-                                                                    .length - 1
-                                                                ].img
-                                                              : "./blank_photo.png"
-                                                          }
-                                                        />
-                                                        Photo
-                                                        {
-                                                          oneChat.messages[
-                                                            oneChat.messages
-                                                              .length - 1
-                                                          ].comentary
-                                                        }
-                                                      </>
-                                                    ) : oneChat.messages[
-                                                        oneChat.messages
-                                                          .length - 1
-                                                      ].blob ? (
-                                                      "Voice message"
-                                                    ) : (
-                                                      `${
-                                                        oneChat.messages[
-                                                          oneChat.messages
-                                                            .length - 1
-                                                        ].comentary
-                                                      }`
-                                                    )
-                                                  ) : (
-                                                    "Created Succesfully"
-                                                  )
-                                                ) : undefined}
-                                              </div>
-                                              <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
-                                                {oneChat.messages ? (
-                                                  <div>
-                                                    {oneChat.messages.length}
-                                                  </div>
-                                                ) : oneService.pinned ? (
-                                                  <img
-                                                    src={"./pinned.png"}
-                                                    alt=""
-                                                  />
-                                                ) : undefined}
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      ) : undefined
-                                    }
-                                  )
-                                : undefined
-                              : undefined}
-                          </>
-                        ) : oneChat.group == "chanell" ? (
-                          <>
-                            {allChatsListInUser
-                              ? allChatsListInUser.chanellsList
-                                ? allChatsListInUser.chanellsList.map(
-                                    (oneChanell: any) => {
-                                      return oneChat.findname ==
-                                        oneChanell.findname ? (
-                                        <div
-                                          // key={key++}
-                                          className="userInterfaceChatsColumnOneChat"
-                                          style={
-                                            openedChat.findname ==
-                                            oneChat.findname
-                                              ? {
-                                                  backgroundColor: "#3390EC",
-                                                  color: "white",
-                                                }
-                                              : {
-                                                  backgroundColor:
-                                                    "transparent",
-                                                  color: "black",
-                                                }
                                           }
-                                          onClick={async () => {
-                                            setChatSelected(true)
-                                            async function bgbfbf() {
-                                              setOpenedChat({
-                                                type: "chanell",
-                                                findname: oneChat.findname,
-                                              })
-                                              setMainPageInput(
-                                                "chanell",
-                                                oneChat.findname
-                                              )
-                                            }
-                                            await bgbfbf()
-                                            let meMsgDiv =
-                                              document.getElementById(
-                                                "userInterfaceChatMainMsgesColumn"
-                                              )
-                                            if (meMsgDiv) {
-                                              let rectmsgDiv =
-                                                meMsgDiv?.getBoundingClientRect()
-                                              let meelem =
-                                                document.querySelectorAll(
-                                                  '[data-lastmsg="thelastMessage"]'
-                                                )[0]
+                                          await bgbfbf()
+                                          let meMsgDiv =
+                                            document.getElementById(
+                                              "userInterfaceChatMainMsgesColumn"
+                                            )
+                                          if (meMsgDiv) {
+                                            let rectmsgDiv =
+                                              meMsgDiv?.getBoundingClientRect()
+                                            let meelem =
+                                              document.querySelectorAll(
+                                                '[data-lastmsg="thelastMessage"]'
+                                              )[0]
 
-                                              if (meelem) {
-                                                // let rect =
-                                                //   meelem.getBoundingClientRect()
-                                                // let toLowDown =
-                                                //   rect?.top - rectmsgDiv?.top
-                                                // meMsgDiv.scrollTop = toLowDown
-                                                meelem.scrollIntoView(false)
-                                              }
+                                            if (meelem) {
+                                              // let rect =
+                                              //   meelem.getBoundingClientRect()
+                                              // let toLowDown =
+                                              //   rect?.top - rectmsgDiv?.top
+                                              // meMsgDiv.scrollTop = toLowDown
+                                              meelem.scrollIntoView(false)
                                             }
-                                          }}
-                                        >
-                                          <div className="userInterfaceChatsColumnOneChatImg">
-                                            <img
-                                              src={oneChat.photoLink}
-                                              alt=""
-                                            />
-                                          </div>
-                                          <div className="userInterfaceChatsColumnOneChatNotImg">
-                                            <div className="userInterfaceChatsColumnOneChatNotImgTopLine">
-                                              <div className="userInterfaceChatsColumnOneChatNotImgName">
-                                                {oneChat.username}
-                                                {oneChanell.muted != "no" ? (
-                                                  <img
-                                                    src="./muttedSpeaker.png"
-                                                    alt=""
-                                                  />
-                                                ) : undefined}
-                                              </div>
-                                              <div className="userInterfaceChatsColumnOneChatNotImgDate">
-                                                {Math.abs(
-                                                  Number(oneChat.lastUpdated) -
-                                                    Number(new Date().getTime())
-                                                ) <= 86400000
-                                                  ? `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    ).toLocaleTimeString()}`
-                                                  : Math.abs(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      ) -
-                                                        Number(
-                                                          new Date().getTime()
-                                                        )
-                                                    ) <= 172800000
-                                                  ? `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    )
-                                                      .toUTCString()
-                                                      .slice(0, 3)}`
-                                                  : new Date().getFullYear() !=
-                                                    new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    ).getFullYear()
-                                                  ? `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    ).toLocaleDateString(
-                                                      "en-GB"
-                                                    )}`
-                                                  : `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    )
-                                                      .toString()
-                                                      .slice(4, 10)}`}
-                                              </div>
+                                          }
+                                        }}
+                                      >
+                                        <div className="userInterfaceChatsColumnOneChatImg">
+                                          <img src={oneChat.photoLink} alt="" />
+                                        </div>
+                                        <div className="userInterfaceChatsColumnOneChatNotImg">
+                                          <div className="userInterfaceChatsColumnOneChatNotImgTopLine">
+                                            <div className="userInterfaceChatsColumnOneChatNotImgName">
+                                              {oneChat.username}
+                                              {oneChanell.muted != "no" ? (
+                                                <img
+                                                  src="./muttedSpeaker.png"
+                                                  alt=""
+                                                />
+                                              ) : undefined}
                                             </div>
-                                            <div className="userInterfaceChatsColumnOneChatNotImgBotLine">
-                                              <div
-                                                className="userInterfaceChatsColumnOneChatNotImgLastMsg"
-                                                style={
-                                                  openedChat.findname ==
-                                                  oneChat.findname
-                                                    ? {
-                                                        color: "white",
-                                                      }
-                                                    : {
-                                                        color: "#7b7f83",
-                                                      }
-                                                }
-                                                // style={
-                                                //   oneChat.messages[-1]
-                                                //     ? { color: "black" }
-                                                //     : { color: "green" }
-                                                // }
-                                              >
-                                                {oneChat.messages ? (
-                                                  oneChat.messages[
-                                                    oneChat.messages.length - 1
-                                                  ] ? (
-                                                    oneChat.messages[
-                                                      oneChat.messages.length -
-                                                        1
-                                                    ].img ? (
-                                                      <>
-                                                        <img
-                                                          src={
-                                                            oneChat.messages[
-                                                              oneChat.messages
-                                                                .length - 1
-                                                            ].img
-                                                              ? oneChat
-                                                                  .messages[
-                                                                  oneChat
-                                                                    .messages
-                                                                    .length - 1
-                                                                ].img
-                                                              : "./blank_photo.png"
-                                                          }
-                                                        />
-                                                        Photo
-                                                        {
-                                                          oneChat.messages[
-                                                            oneChat.messages
-                                                              .length - 1
-                                                          ].comentary
-                                                        }
-                                                      </>
-                                                    ) : oneChat.messages[
-                                                        oneChat.messages
-                                                          .length - 1
-                                                      ].blob ? (
-                                                      "Voice message"
-                                                    ) : (
-                                                      `${
-                                                        oneChat.messages[
-                                                          oneChat.messages
-                                                            .length - 1
-                                                        ].comentary
-                                                      }`
-                                                    )
-                                                  ) : (
-                                                    "Created Succesfully"
+                                            <div className="userInterfaceChatsColumnOneChatNotImgDate">
+                                              {Math.abs(
+                                                Number(oneChat.lastUpdated) -
+                                                  Number(new Date().getTime())
+                                              ) <= 86400000
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).toLocaleTimeString()}`
+                                                : Math.abs(
+                                                    Number(
+                                                      oneChat.lastUpdated
+                                                    ) -
+                                                      Number(
+                                                        new Date().getTime()
+                                                      )
+                                                  ) <= 172800000
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
                                                   )
-                                                ) : undefined}
-                                              </div>
-                                              <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
-                                                {oneChat.messages &&
-                                                oneChanell.lastSeenMsg != "0" &&
-                                                oneChat.messages.length -
-                                                  oneChanell.lastSeenMsg !=
-                                                  0 ? (
-                                                  <div
-                                                    id="notSeenCounterChats"
-                                                    style={
-                                                      openedChat.findname ==
-                                                      oneChat.findname
-                                                        ? {
-                                                            backgroundColor:
-                                                              "white",
-                                                            color: "#3390EC",
-                                                          }
-                                                        : oneChanell.muted ==
-                                                          "no"
-                                                        ? {
-                                                            backgroundColor:
-                                                              "#3390EC",
-                                                            color: "white",
-                                                          }
-                                                        : {
-                                                            backgroundColor:
-                                                              "rgb(162, 171, 178)",
-                                                            color: "white",
-                                                          }
+                                                    .toUTCString()
+                                                    .slice(0, 3)}`
+                                                : new Date().getFullYear() !=
+                                                  new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).getFullYear()
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).toLocaleDateString(
+                                                    "en-GB"
+                                                  )}`
+                                                : `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  )
+                                                    .toString()
+                                                    .slice(4, 10)}`}
+                                            </div>
+                                          </div>
+                                          <div className="userInterfaceChatsColumnOneChatNotImgBotLine">
+                                            <div
+                                              className="userInterfaceChatsColumnOneChatNotImgLastMsg"
+                                              style={
+                                                openedChat.findname ==
+                                                oneChat.findname
+                                                  ? {
+                                                      color: "white",
                                                     }
-                                                  >
-                                                    {oneChat.messages.length -
-                                                      oneChanell.lastSeenMsg}
-                                                  </div>
-                                                ) : oneChanell.pinned ==
-                                                  "yes" ? (
-                                                  <img
-                                                    src={"./pinned.png"}
-                                                    alt=""
-                                                  />
-                                                ) : undefined}
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      ) : undefined
-                                    }
-                                  )
-                                : undefined
-                              : undefined}
-                          </>
-                        ) : oneChat.group == "chat" ? (
-                          <>
-                            {allChatsListInUser
-                              ? allChatsListInUser.chatsList
-                                ? allChatsListInUser.chatsList.map(
-                                    (oneChatChat: any) => {
-                                      return oneChat.findname ==
-                                        oneChatChat.findname ? (
-                                        <div
-                                          // key={key++}
-                                          className="userInterfaceChatsColumnOneChat"
-                                          style={
-                                            openedChat.findname ==
-                                            oneChat.findname
-                                              ? {
-                                                  backgroundColor: "#3390EC",
-                                                  color: "white",
-                                                }
-                                              : {
-                                                  backgroundColor:
-                                                    "transparent",
-                                                  color: "black",
-                                                }
-                                          }
-                                          onClick={async () => {
-                                            setChatSelected(true)
-                                            async function bgbfbf() {
-                                              setOpenedChat({
-                                                type: "chat",
-                                                findname: oneChat.findname,
-                                              })
-                                              setMainPageInput(
-                                                "chat",
-                                                oneChat.findname
-                                              )
-                                            }
-                                            await bgbfbf()
-                                            let meMsgDiv =
-                                              document.getElementById(
-                                                "userInterfaceChatMainMsgesColumn"
-                                              )
-                                            if (meMsgDiv) {
-                                              let rectmsgDiv =
-                                                meMsgDiv?.getBoundingClientRect()
-                                              let meelem =
-                                                document.querySelectorAll(
-                                                  '[data-lastmsg="thelastMessage"]'
-                                                )[0]
-
-                                              if (meelem) {
-                                                // let rect =
-                                                //   meelem.getBoundingClientRect()
-                                                // let toLowDown =
-                                                //   rect?.top - rectmsgDiv?.top
-                                                // meMsgDiv.scrollTop = toLowDown
-                                                meelem.scrollIntoView(false)
+                                                  : {
+                                                      color: "#7b7f83",
+                                                    }
                                               }
-                                            }
-                                          }}
-                                        >
-                                          <div className="userInterfaceChatsColumnOneChatImg">
-                                            <img
-                                              src={oneChatChat.photoLink}
-                                              alt=""
-                                            />
-                                            {onlineList.length ? (
-                                              onlineList.find(
-                                                (o: any) =>
-                                                  o.findname ===
-                                                  oneChatChat.findname.replace(
-                                                    userFindName,
-                                                    ""
+                                              // style={
+                                              //   oneChat.messages[-1]
+                                              //     ? { color: "black" }
+                                              //     : { color: "green" }
+                                              // }
+                                            >
+                                              {oneChat.messages ? (
+                                                oneChat.messages[
+                                                  oneChat.messages.length - 1
+                                                ] ? (
+                                                  oneChat.messages[
+                                                    oneChat.messages.length - 1
+                                                  ].img ? (
+                                                    <>
+                                                      <img
+                                                        src={
+                                                          oneChat.messages[
+                                                            oneChat.messages
+                                                              .length - 1
+                                                          ].img
+                                                            ? oneChat.messages[
+                                                                oneChat.messages
+                                                                  .length - 1
+                                                              ].img
+                                                            : "./blank_photo.png"
+                                                        }
+                                                      />
+                                                      Photo
+                                                      {
+                                                        oneChat.messages[
+                                                          oneChat.messages
+                                                            .length - 1
+                                                        ].comentary
+                                                      }
+                                                    </>
+                                                  ) : oneChat.messages[
+                                                      oneChat.messages.length -
+                                                        1
+                                                    ].blob ? (
+                                                    "Voice message"
+                                                  ) : (
+                                                    `${
+                                                      oneChat.messages[
+                                                        oneChat.messages
+                                                          .length - 1
+                                                      ].comentary
+                                                    }`
                                                   )
-                                              ).online === "online" ? (
+                                                ) : (
+                                                  "Created Succesfully"
+                                                )
+                                              ) : undefined}
+                                            </div>
+                                            <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
+                                              {oneChat.messages &&
+                                              oneChanell.lastSeenMsg != "0" &&
+                                              oneChat.messages.length -
+                                                oneChanell.lastSeenMsg !=
+                                                0 ? (
                                                 <div
-                                                  id="blueOnline"
+                                                  id="notSeenCounterChats"
                                                   style={
-                                                    oneChatChat.findname ===
-                                                    currentChatFindname
+                                                    openedChat.findname ==
+                                                    oneChat.findname
                                                       ? {
                                                           backgroundColor:
                                                             "white",
-                                                          borderColor:
-                                                            "#3390ec",
+                                                          color: "#3390EC",
                                                         }
-                                                      : undefined
+                                                      : oneChanell.muted == "no"
+                                                      ? {
+                                                          backgroundColor:
+                                                            "#3390EC",
+                                                          color: "white",
+                                                        }
+                                                      : {
+                                                          backgroundColor:
+                                                            "rgb(162, 171, 178)",
+                                                          color: "white",
+                                                        }
                                                   }
-                                                ></div>
-                                              ) : undefined
-                                            ) : undefined}
-                                            {/* {onlineList.includes({
+                                                >
+                                                  {oneChat.messages.length -
+                                                    oneChanell.lastSeenMsg}
+                                                </div>
+                                              ) : oneChanell.pinned == "yes" ? (
+                                                <img
+                                                  src={"./pinned.png"}
+                                                  alt=""
+                                                />
+                                              ) : undefined}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ) : undefined
+                                  }
+                                )
+                              : undefined
+                            : undefined}
+                        </>
+                      ) : oneChat.group == "chat" ? (
+                        <>
+                          {allChatsListInUser
+                            ? allChatsListInUser.chatsList
+                              ? allChatsListInUser.chatsList.map(
+                                  (oneChatChat: any) => {
+                                    return oneChat.findname ==
+                                      oneChatChat.findname ? (
+                                      <div
+                                        // key={key++}
+                                        className="userInterfaceChatsColumnOneChat"
+                                        style={
+                                          openedChat.findname ==
+                                          oneChat.findname
+                                            ? {
+                                                backgroundColor: "#3390EC",
+                                                color: "white",
+                                              }
+                                            : {
+                                                backgroundColor: "transparent",
+                                                color: "black",
+                                              }
+                                        }
+                                        onClick={async () => {
+                                          setOnScreen("chat")
+                                          setChatSelected(true)
+                                          async function bgbfbf() {
+                                            setOpenedChat({
+                                              type: "chat",
+                                              findname: oneChat.findname,
+                                            })
+                                            setMainPageInput(
+                                              "chat",
+                                              oneChat.findname
+                                            )
+                                          }
+                                          await bgbfbf()
+                                          let meMsgDiv =
+                                            document.getElementById(
+                                              "userInterfaceChatMainMsgesColumn"
+                                            )
+                                          if (meMsgDiv) {
+                                            let rectmsgDiv =
+                                              meMsgDiv?.getBoundingClientRect()
+                                            let meelem =
+                                              document.querySelectorAll(
+                                                '[data-lastmsg="thelastMessage"]'
+                                              )[0]
+
+                                            if (meelem) {
+                                              // let rect =
+                                              //   meelem.getBoundingClientRect()
+                                              // let toLowDown =
+                                              //   rect?.top - rectmsgDiv?.top
+                                              // meMsgDiv.scrollTop = toLowDown
+                                              meelem.scrollIntoView(false)
+                                            }
+                                          }
+                                        }}
+                                      >
+                                        <div className="userInterfaceChatsColumnOneChatImg">
+                                          <img
+                                            src={oneChatChat.photoLink}
+                                            alt=""
+                                          />
+                                          {onlineList.length ? (
+                                            onlineList.find(
+                                              (o: any) =>
+                                                o.findname ===
+                                                oneChatChat.findname.replace(
+                                                  userFindName,
+                                                  ""
+                                                )
+                                            ).online === "online" ? (
+                                              <div
+                                                id="blueOnline"
+                                                style={
+                                                  oneChatChat.findname ===
+                                                  currentChatFindname
+                                                    ? {
+                                                        backgroundColor:
+                                                          "white",
+                                                        borderColor: "#3390ec",
+                                                      }
+                                                    : undefined
+                                                }
+                                              ></div>
+                                            ) : undefined
+                                          ) : undefined}
+                                          {/* {onlineList.includes({
                                               findname: oneChatChat.findname,
                                               online: "online",
                                             }) ? (
@@ -5396,703 +5377,706 @@ export function UserInterface(this: any) {
                                                 alt=""
                                               />
                                             ) : undefined} */}
-                                          </div>
-                                          <div className="userInterfaceChatsColumnOneChatNotImg">
-                                            <div className="userInterfaceChatsColumnOneChatNotImgTopLine">
-                                              <div className="userInterfaceChatsColumnOneChatNotImgName">
-                                                {oneChatChat.username}
-                                                {oneChatChat.muted != "no" ? (
-                                                  <img
-                                                    src="./muttedSpeaker.png"
-                                                    alt=""
-                                                  />
-                                                ) : undefined}
-                                              </div>
-                                              <div className="userInterfaceChatsColumnOneChatNotImgDate">
-                                                {Math.abs(
-                                                  Number(oneChat.lastUpdated) -
-                                                    Number(new Date().getTime())
-                                                ) <= 86400000
-                                                  ? `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    ).toLocaleTimeString()}`
-                                                  : Math.abs(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      ) -
-                                                        Number(
-                                                          new Date().getTime()
-                                                        )
-                                                    ) <= 172800000
-                                                  ? `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    )
-                                                      .toUTCString()
-                                                      .slice(0, 3)}`
-                                                  : new Date().getFullYear() !=
-                                                    new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    ).getFullYear()
-                                                  ? `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    ).toLocaleDateString(
-                                                      "en-GB"
-                                                    )}`
-                                                  : `${new Date(
-                                                      Number(
-                                                        oneChat.lastUpdated
-                                                      )
-                                                    )
-                                                      .toString()
-                                                      .slice(4, 10)}`}
-                                              </div>
+                                        </div>
+                                        <div className="userInterfaceChatsColumnOneChatNotImg">
+                                          <div className="userInterfaceChatsColumnOneChatNotImgTopLine">
+                                            <div className="userInterfaceChatsColumnOneChatNotImgName">
+                                              {oneChatChat.username}
+                                              {oneChatChat.muted != "no" ? (
+                                                <img
+                                                  src="./muttedSpeaker.png"
+                                                  alt=""
+                                                />
+                                              ) : undefined}
                                             </div>
-                                            <div className="userInterfaceChatsColumnOneChatNotImgBotLine">
-                                              <div
-                                                className="userInterfaceChatsColumnOneChatNotImgLastMsg"
-                                                style={
-                                                  openedChat.findname ==
-                                                  oneChat.findname
-                                                    ? {
-                                                        color: "white",
-                                                      }
-                                                    : {
-                                                        color: "#7b7f83",
-                                                      }
-                                                }
-                                                // style={
-                                                //   oneChat.messages[-1]
-                                                //     ? { color: "black" }
-                                                //     : { color: "green" }
-                                                // }
-                                              >
-                                                {oneChat.messages ? (
+                                            <div className="userInterfaceChatsColumnOneChatNotImgDate">
+                                              {Math.abs(
+                                                Number(oneChat.lastUpdated) -
+                                                  Number(new Date().getTime())
+                                              ) <= 86400000
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).toLocaleTimeString()}`
+                                                : Math.abs(
+                                                    Number(
+                                                      oneChat.lastUpdated
+                                                    ) -
+                                                      Number(
+                                                        new Date().getTime()
+                                                      )
+                                                  ) <= 172800000
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  )
+                                                    .toUTCString()
+                                                    .slice(0, 3)}`
+                                                : new Date().getFullYear() !=
+                                                  new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).getFullYear()
+                                                ? `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  ).toLocaleDateString(
+                                                    "en-GB"
+                                                  )}`
+                                                : `${new Date(
+                                                    Number(oneChat.lastUpdated)
+                                                  )
+                                                    .toString()
+                                                    .slice(4, 10)}`}
+                                            </div>
+                                          </div>
+                                          <div className="userInterfaceChatsColumnOneChatNotImgBotLine">
+                                            <div
+                                              className="userInterfaceChatsColumnOneChatNotImgLastMsg"
+                                              style={
+                                                openedChat.findname ==
+                                                oneChat.findname
+                                                  ? {
+                                                      color: "white",
+                                                    }
+                                                  : {
+                                                      color: "#7b7f83",
+                                                    }
+                                              }
+                                              // style={
+                                              //   oneChat.messages[-1]
+                                              //     ? { color: "black" }
+                                              //     : { color: "green" }
+                                              // }
+                                            >
+                                              {oneChat.messages ? (
+                                                oneChat.messages[
+                                                  oneChat.messages.length - 1
+                                                ] ? (
                                                   oneChat.messages[
                                                     oneChat.messages.length - 1
-                                                  ] ? (
-                                                    oneChat.messages[
-                                                      oneChat.messages.length -
-                                                        1
-                                                    ].img ? (
-                                                      <>
-                                                        <img
-                                                          src={
-                                                            oneChat.messages[
-                                                              oneChat.messages
-                                                                .length - 1
-                                                            ].img
-                                                              ? oneChat
-                                                                  .messages[
-                                                                  oneChat
-                                                                    .messages
-                                                                    .length - 1
-                                                                ].img
-                                                              : "./blank_photo.png"
-                                                          }
-                                                        />
-                                                        Photo
-                                                        {
+                                                  ].img ? (
+                                                    <>
+                                                      <img
+                                                        src={
                                                           oneChat.messages[
                                                             oneChat.messages
                                                               .length - 1
-                                                          ].comentary
+                                                          ].img
+                                                            ? oneChat.messages[
+                                                                oneChat.messages
+                                                                  .length - 1
+                                                              ].img
+                                                            : "./blank_photo.png"
                                                         }
-                                                      </>
-                                                    ) : oneChat.messages[
-                                                        oneChat.messages
-                                                          .length - 1
-                                                      ].blob ? (
-                                                      "Voice message"
-                                                    ) : (
-                                                      `${
+                                                      />
+                                                      Photo
+                                                      {
                                                         oneChat.messages[
                                                           oneChat.messages
                                                             .length - 1
                                                         ].comentary
-                                                      }`
-                                                    )
+                                                      }
+                                                    </>
+                                                  ) : oneChat.messages[
+                                                      oneChat.messages.length -
+                                                        1
+                                                    ].blob ? (
+                                                    "Voice message"
                                                   ) : (
-                                                    "Created Succesfully"
+                                                    `${
+                                                      oneChat.messages[
+                                                        oneChat.messages
+                                                          .length - 1
+                                                      ].comentary
+                                                    }`
                                                   )
-                                                ) : undefined}
-                                              </div>
-                                              <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
-                                                {oneChat.messages &&
+                                                ) : (
+                                                  "Created Succesfully"
+                                                )
+                                              ) : undefined}
+                                            </div>
+                                            <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
+                                              {oneChat.messages &&
+                                              oneChatChat.lastSeenMsg != "0" &&
+                                              oneChat.messages.length -
                                                 oneChatChat.lastSeenMsg !=
-                                                  "0" &&
-                                                oneChat.messages.length -
-                                                  oneChatChat.lastSeenMsg !=
-                                                  0 ? (
-                                                  <div
-                                                    id="notSeenCounterChats"
-                                                    style={
-                                                      openedChat.findname ==
-                                                      oneChat.findname
-                                                        ? {
-                                                            backgroundColor:
-                                                              "white",
-                                                            color: "#3390EC",
-                                                          }
-                                                        : oneChatChat.muted ==
-                                                          "no"
-                                                        ? {
-                                                            backgroundColor:
-                                                              "#3390EC",
-                                                            color: "white",
-                                                          }
-                                                        : {
-                                                            backgroundColor:
-                                                              "rgb(162, 171, 178)",
-                                                            color: "white",
-                                                          }
-                                                    }
-                                                  >
-                                                    {oneChat.messages.length -
-                                                      oneChatChat.lastSeenMsg}
-                                                  </div>
-                                                ) : oneChatChat.pinned ==
-                                                  "yes" ? (
-                                                  <img
-                                                    src={"./pinned.png"}
-                                                    alt=""
-                                                  />
-                                                ) : undefined}
-                                              </div>
+                                                0 ? (
+                                                <div
+                                                  id="notSeenCounterChats"
+                                                  style={
+                                                    openedChat.findname ==
+                                                    oneChat.findname
+                                                      ? {
+                                                          backgroundColor:
+                                                            "white",
+                                                          color: "#3390EC",
+                                                        }
+                                                      : oneChatChat.muted ==
+                                                        "no"
+                                                      ? {
+                                                          backgroundColor:
+                                                            "#3390EC",
+                                                          color: "white",
+                                                        }
+                                                      : {
+                                                          backgroundColor:
+                                                            "rgb(162, 171, 178)",
+                                                          color: "white",
+                                                        }
+                                                  }
+                                                >
+                                                  {oneChat.messages.length -
+                                                    oneChatChat.lastSeenMsg}
+                                                </div>
+                                              ) : oneChatChat.pinned ==
+                                                "yes" ? (
+                                                <img
+                                                  src={"./pinned.png"}
+                                                  alt=""
+                                                />
+                                              ) : undefined}
                                             </div>
                                           </div>
                                         </div>
-                                      ) : undefined
-                                    }
-                                  )
-                                : undefined
-                              : undefined}
-                          </>
-                        ) : // <div
-                        //   key={key++}
-                        //   className="userInterfaceChatsColumnOneChat"
-                        //   style={
-                        //     openedChat.findname == oneChat.findname
-                        //       ? {
-                        //           backgroundColor: "#3390EC",
-                        //           color: "white",
-                        //         }
-                        //       : {
-                        //           backgroundColor: "transparent",
-                        //           color: "black",
-                        //         }
-                        //   }
-                        //   onClick={() => {
-                        //     setOpenedChat({
-                        //       type: "chanell",
-                        //       findname: oneChat.findname,
-                        //     })
-                        //     setMainPageInput("chanell", oneChat.findname)
-                        //   }}
-                        // >
-                        //   <div className="userInterfaceChatsColumnOneChatImg">
-                        //     <img src={oneChat.photoLink} alt="" />
-                        //   </div>
-                        //   <div className="userInterfaceChatsColumnOneChatNotImg">
-                        //     <div className="userInterfaceChatsColumnOneChatNotImgTopLine">
-                        //       <div className="userInterfaceChatsColumnOneChatNotImgName">
-                        //         {oneChat.username}
-                        //       </div>
-                        //       <div className="userInterfaceChatsColumnOneChatNotImgDate">
-                        //         {Math.abs(
-                        //           Number(oneChat.lastUpdated) -
-                        //             Number(new Date().getTime())
-                        //         ) <= 86400000
-                        //           ? `${new Date(
-                        //               Number(oneChat.lastUpdated)
-                        //             ).toLocaleTimeString()}`
-                        //           : Math.abs(
-                        //               Number(oneChat.lastUpdated) -
-                        //                 Number(new Date().getTime())
-                        //             ) <= 172800000
-                        //           ? `${new Date(Number(oneChat.lastUpdated))
-                        //               .toUTCString()
-                        //               .slice(0, 3)}`
-                        //           : new Date().getFullYear() !=
-                        //             new Date(
-                        //               Number(oneChat.lastUpdated)
-                        //             ).getFullYear()
-                        //           ? `${new Date(
-                        //               Number(oneChat.lastUpdated)
-                        //             ).toLocaleDateString("en-GB")}`
-                        //           : `${new Date(Number(oneChat.lastUpdated))
-                        //               .toString()
-                        //               .slice(4, 10)}`}
-                        //       </div>
-                        //     </div>
-                        //     <div className="userInterfaceChatsColumnOneChatNotImgBotLine">
-                        //       <div
-                        //         className="userInterfaceChatsColumnOneChatNotImgLastMsg"
-                        //         // style={
-                        //         //   oneChat.messages[
-                        //         //     oneChat.messages.length - 1
-                        //         //   ]
-                        //         //     ? { color: "black" }
-                        //         //     : { color: "green" }
-                        //         // }
-                        //       >
-                        //         {oneChat.messages ? (
-                        //           oneChat.messages[
-                        //             oneChat.messages.length - 1
-                        //           ] ? (
-                        //             oneChat.messages[
-                        //               oneChat.messages.length - 1
-                        //             ].img ? (
-                        //               <>
-                        //                 <img
-                        //                   src={
-                        //                     oneChat.messages[
-                        //                       oneChat.messages.length - 1
-                        //                     ].img
-                        //                       ? oneChat.messages[
-                        //                           oneChat.messages.length - 1
-                        //                         ].img
-                        //                       : "./blank_photo.png"
-                        //                   }
-                        //                 />
+                                      </div>
+                                    ) : undefined
+                                  }
+                                )
+                              : undefined
+                            : undefined}
+                        </>
+                      ) : // <div
+                      //   key={key++}
+                      //   className="userInterfaceChatsColumnOneChat"
+                      //   style={
+                      //     openedChat.findname == oneChat.findname
+                      //       ? {
+                      //           backgroundColor: "#3390EC",
+                      //           color: "white",
+                      //         }
+                      //       : {
+                      //           backgroundColor: "transparent",
+                      //           color: "black",
+                      //         }
+                      //   }
+                      //   onClick={() => {
+                      //     setOpenedChat({
+                      //       type: "chanell",
+                      //       findname: oneChat.findname,
+                      //     })
+                      //     setMainPageInput("chanell", oneChat.findname)
+                      //   }}
+                      // >
+                      //   <div className="userInterfaceChatsColumnOneChatImg">
+                      //     <img src={oneChat.photoLink} alt="" />
+                      //   </div>
+                      //   <div className="userInterfaceChatsColumnOneChatNotImg">
+                      //     <div className="userInterfaceChatsColumnOneChatNotImgTopLine">
+                      //       <div className="userInterfaceChatsColumnOneChatNotImgName">
+                      //         {oneChat.username}
+                      //       </div>
+                      //       <div className="userInterfaceChatsColumnOneChatNotImgDate">
+                      //         {Math.abs(
+                      //           Number(oneChat.lastUpdated) -
+                      //             Number(new Date().getTime())
+                      //         ) <= 86400000
+                      //           ? `${new Date(
+                      //               Number(oneChat.lastUpdated)
+                      //             ).toLocaleTimeString()}`
+                      //           : Math.abs(
+                      //               Number(oneChat.lastUpdated) -
+                      //                 Number(new Date().getTime())
+                      //             ) <= 172800000
+                      //           ? `${new Date(Number(oneChat.lastUpdated))
+                      //               .toUTCString()
+                      //               .slice(0, 3)}`
+                      //           : new Date().getFullYear() !=
+                      //             new Date(
+                      //               Number(oneChat.lastUpdated)
+                      //             ).getFullYear()
+                      //           ? `${new Date(
+                      //               Number(oneChat.lastUpdated)
+                      //             ).toLocaleDateString("en-GB")}`
+                      //           : `${new Date(Number(oneChat.lastUpdated))
+                      //               .toString()
+                      //               .slice(4, 10)}`}
+                      //       </div>
+                      //     </div>
+                      //     <div className="userInterfaceChatsColumnOneChatNotImgBotLine">
+                      //       <div
+                      //         className="userInterfaceChatsColumnOneChatNotImgLastMsg"
+                      //         // style={
+                      //         //   oneChat.messages[
+                      //         //     oneChat.messages.length - 1
+                      //         //   ]
+                      //         //     ? { color: "black" }
+                      //         //     : { color: "green" }
+                      //         // }
+                      //       >
+                      //         {oneChat.messages ? (
+                      //           oneChat.messages[
+                      //             oneChat.messages.length - 1
+                      //           ] ? (
+                      //             oneChat.messages[
+                      //               oneChat.messages.length - 1
+                      //             ].img ? (
+                      //               <>
+                      //                 <img
+                      //                   src={
+                      //                     oneChat.messages[
+                      //                       oneChat.messages.length - 1
+                      //                     ].img
+                      //                       ? oneChat.messages[
+                      //                           oneChat.messages.length - 1
+                      //                         ].img
+                      //                       : "./blank_photo.png"
+                      //                   }
+                      //                 />
 
-                        //                 {
-                        //                   oneChat.messages[
-                        //                     oneChat.messages.length - 1
-                        //                   ].comentary
-                        //                 }
-                        //               </>
-                        //             ) : (
-                        //               `${
-                        //                 oneChat.messages[
-                        //                   oneChat.messages.length - 1
-                        //                 ].comentary
-                        //               }`
-                        //             )
-                        //           ) : (
-                        //             "Created Succesfully"
-                        //           )
-                        //         ) : undefined}
-                        //       </div>
-                        //       <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
-                        //         PindOrMsgCount
-                        //       </div>
-                        //     </div>
-                        //   </div>
-                        // </div>
-                        undefined
-                      })
-                    : undefined}
-                </div>
+                      //                 {
+                      //                   oneChat.messages[
+                      //                     oneChat.messages.length - 1
+                      //                   ].comentary
+                      //                 }
+                      //               </>
+                      //             ) : (
+                      //               `${
+                      //                 oneChat.messages[
+                      //                   oneChat.messages.length - 1
+                      //                 ].comentary
+                      //               }`
+                      //             )
+                      //           ) : (
+                      //             "Created Succesfully"
+                      //           )
+                      //         ) : undefined}
+                      //       </div>
+                      //       <div className="userInterfaceChatsColumnOneChatNotImgPindOrMsgCount">
+                      //         PindOrMsgCount
+                      //       </div>
+                      //     </div>
+                      //   </div>
+                      // </div>
+                      undefined
+                    })
+                  : undefined}
               </div>
+            </div>
 
-              <div id="columnForOther">
-                <div
-                  className={`userSettingsEdit ${
-                    userSettingsEdit ? "toleft" : "back"
-                  }`}
-                >
-                  <form action="">
-                    <div id="userSettingsEditHead">
-                      <input
-                        type="reset"
-                        value=" "
-                        onClick={() => {
-                          setUserSettingsEdit(false)
-                          setUserSettings(true)
-                        }}
-                      />
-                      <img src={"./icons8-arrow-left-50.png"} alt="" />
-                      <p>Edit Profile</p>
-                    </div>
-                    <div id="userSettingsEditImg">
-                      <img
-                        id="userSettingsEditImgOrigin"
-                        src="./defaultUser.png"
-                        alt=""
-                      />
-                      <div id="userSettingsEditImgNotOrigin">
-                        <img src="./backlessCamera.png" alt="" />
-                      </div>
-                    </div>
-                    <div id="userSettingsEditInputs">
-                      <div>
-                        <input
-                          type="text"
-                          placeholder=""
-                          defaultValue={currentUserName}
-                          maxLength={10}
-                        />
-                        <h2>Name</h2>
-                      </div>
-                      <div>
-                        <input
-                          type="text"
-                          placeholder=""
-                          defaultValue={currentUserLastName}
-                          maxLength={10}
-                        />
-                        <h2>Last Name</h2>
-                      </div>
-                      <div>
-                        <input
-                          type="text"
-                          placeholder=""
-                          defaultValue={currentUserBio}
-                          maxLength={30}
-                        />
-                        <h2>Bio (optional)</h2>
-                      </div>
-                      <p>
-                        Any details such as age, occupation or city. Example: 23
-                        y.o. designer from San Francisco
-                      </p>
-                      <h1>Username</h1>
-                      <div>
-                        <input
-                          type="text"
-                          placeholder=""
-                          defaultValue={userFindName}
-                          maxLength={10}
-                        />
-                        <h2>Username (optional)</h2>
-                      </div>
-                      <p>
-                        You can choose a username on <b>Telegram</b>. If you do,
-                        people will be able to find you by this username and
-                        contact you without needing your phone number.
-                        <p>
-                          You can use a-z, 0-9 and underscores. Minimum length
-                          is 5 characters.
-                        </p>
-                      </p>
-                    </div>
-                  </form>
+            {/* <div id="columnForOther"> */}
+            <div
+              className={`userSettingsEdit ${
+                userSettingsEdit ? "toleft" : "back"
+              }`}
+            >
+              <form action="">
+                <div id="userSettingsEditHead">
+                  <input
+                    type="reset"
+                    value=" "
+                    onClick={() => {
+                      setUserSettingsEdit(false)
+                      setUserSettings(true)
+                    }}
+                  />
+                  <img src={"./icons8-arrow-left-50.png"} alt="" />
+                  <p>Edit Profile</p>
                 </div>
-                <div
-                  className={`userSettings ${
-                    userSettings
-                      ? "toleft"
-                      : userSettingsEdit
-                      ? "toHardLeft"
-                      : "back"
-                  }`}
-                >
-                  <div id="userSettingsHead">
-                    <div
-                      id="userSettingsHeadArrow"
-                      onClick={() => {
-                        setUserSettings(false)
-                      }}
-                    >
-                      <img src={"./icons8-arrow-left-50.png"} alt="" />
-                    </div>
-                    <p>Settings</p>
-                    <img
-                      src={"./icons8-arrow-left-50.png"}
-                      alt=""
-                      onClick={() => {
-                        setUserSettingsEdit(true)
-                        setUserSettings(false)
-                      }}
-                    />
-                    <img src={"./icons8-arrow-left-50.png"} alt="" />
+                <div id="userSettingsEditImg">
+                  <img
+                    id="userSettingsEditImgOrigin"
+                    src="./defaultUser.png"
+                    alt=""
+                  />
+                  <div id="userSettingsEditImgNotOrigin">
+                    <img src="./backlessCamera.png" alt="" />
                   </div>
-                  <div id="userSettingsImg">
-                    <img src="./defaultUser.png" alt="" />
-                  </div>
-                  <div id="otherSettingsStuff"></div>
                 </div>
-                <div
-                  className={`createNewChanell ${
-                    createNewChanell ? "toleft" : "back"
-                  }`}
-                >
-                  <div id="createNewChanellHead">
-                    <div
-                      id="createNewChanellHeadArrow"
-                      onClick={() => {
-                        setCreateNewChanell(false)
-                      }}
-                    >
-                      <img src={"./icons8-arrow-left-50.png"} alt="" />
-                    </div>
-                    <p>New Chanell</p>
-                  </div>
-                  <div id="createNewChanellImgDiv">
-                    <input
-                      id="chanellImgInput"
-                      type="file"
-                      onChange={(event) => {
-                        onImageChoose(event)
-                      }}
-                    />
-                    <img
-                      onClick={() => {
-                        let myinput = document.getElementById("chanellImgInput")
-                        if (myinput != null) {
-                          myinput.click()
-                        }
-                      }}
-                      id="createNewChanellImgDivImg"
-                      src={chanellImgUrl ? chanellImgUrl : "./blank_photo.png"}
-                      alt=""
-                    />
-                  </div>
-                  <div id="createNewChanellNameInput">
+                <div id="userSettingsEditInputs">
+                  <div>
                     <input
                       type="text"
-                      placeholder="Chanell name"
-                      onChange={(event) => {
-                        setChanellName(event.target.value)
-                      }}
+                      placeholder=""
+                      defaultValue={currentUserName}
+                      maxLength={10}
                     />
+                    <h2>Name</h2>
                   </div>
-                  <div id="createNewChanellDiscriptionsInput">
+                  <div>
                     <input
                       type="text"
-                      placeholder="Discriptions (optional)"
-                      onChange={(event) => {
-                        setChanellDiscription(event.target.value)
-                      }}
+                      placeholder=""
+                      defaultValue={currentUserLastName}
+                      maxLength={10}
                     />
+                    <h2>Last Name</h2>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder=""
+                      defaultValue={currentUserBio}
+                      maxLength={30}
+                    />
+                    <h2>Bio (optional)</h2>
                   </div>
                   <p>
-                    {" "}
-                    You can provide an optional description for your chanell.
+                    Any details such as age, occupation or city. Example: 23
+                    y.o. designer from San Francisco
                   </p>
-                  <div
-                    id={`${
-                      chanellName != "" ? "createNewChanellForward" : "hide"
-                    }`}
-                    onClick={() => {
-                      createChanell()
-                    }}
-                  >
-                    <img src={"./icons8-arrow-right-64.png"} alt="" />
+                  <h1>Username</h1>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder=""
+                      defaultValue={userFindName}
+                      maxLength={10}
+                    />
+                    <h2>Username (optional)</h2>
                   </div>
+                  <p>
+                    You can choose a username on <b>Telegram</b>. If you do,
+                    people will be able to find you by this username and contact
+                    you without needing your phone number.
+                    <p>
+                      You can use a-z, 0-9 and underscores. Minimum length is 5
+                      characters.
+                    </p>
+                  </p>
                 </div>
+              </form>
+            </div>
+            <div
+              className={`userSettings ${
+                userSettings
+                  ? "toleft"
+                  : userSettingsEdit
+                  ? "toHardLeft"
+                  : "back"
+              }`}
+            >
+              <div id="userSettingsHead">
                 <div
-                  className={`createNewGroup ${
-                    createNewGroup ? "toleft" : "back"
-                  }`}
-                ></div>
+                  id="userSettingsHeadArrow"
+                  onClick={() => {
+                    setUserSettings(false)
+                  }}
+                >
+                  <img src={"./icons8-arrow-left-50.png"} alt="" />
+                </div>
+                <p>Settings</p>
+                <img
+                  src={"./icons8-arrow-left-50.png"}
+                  alt=""
+                  onClick={() => {
+                    setUserSettingsEdit(true)
+                    setUserSettings(false)
+                  }}
+                />
+                <img src={"./icons8-arrow-left-50.png"} alt="" />
+              </div>
+              <div id="userSettingsImg">
+                <img src="./defaultUser.png" alt="" />
+              </div>
+              <div id="otherSettingsStuff"></div>
+            </div>
+            <div
+              className={`createNewChanell ${
+                createNewChanell ? "toleft" : "back"
+              }`}
+            >
+              <div id="createNewChanellHead">
                 <div
-                  className={`createNewPrivateChat ${
-                    createNewPrivateChat ? "toleft" : "back"
-                  }`}
-                ></div>
+                  id="createNewChanellHeadArrow"
+                  onClick={() => {
+                    setCreateNewChanell(false)
+                  }}
+                >
+                  <img src={"./icons8-arrow-left-50.png"} alt="" />
+                </div>
+                <p>New Chanell</p>
+              </div>
+              <div id="createNewChanellImgDiv">
+                <input
+                  id="chanellImgInput"
+                  type="file"
+                  onChange={(event) => {
+                    onImageChoose(event)
+                  }}
+                />
+                <img
+                  onClick={() => {
+                    let myinput = document.getElementById("chanellImgInput")
+                    if (myinput != null) {
+                      myinput.click()
+                    }
+                  }}
+                  id="createNewChanellImgDivImg"
+                  src={chanellImgUrl ? chanellImgUrl : "./blank_photo.png"}
+                  alt=""
+                />
+              </div>
+              <div id="createNewChanellNameInput">
+                <input
+                  type="text"
+                  placeholder="Chanell name"
+                  onChange={(event) => {
+                    setChanellName(event.target.value)
+                  }}
+                />
+              </div>
+              <div id="createNewChanellDiscriptionsInput">
+                <input
+                  type="text"
+                  placeholder="Discriptions (optional)"
+                  onChange={(event) => {
+                    setChanellDiscription(event.target.value)
+                  }}
+                />
+              </div>
+              <p> You can provide an optional description for your chanell.</p>
+              <div
+                id={`${chanellName != "" ? "createNewChanellForward" : "hide"}`}
+                onClick={() => {
+                  createChanell()
+                }}
+              >
+                <img src={"./icons8-arrow-right-64.png"} alt="" />
               </div>
             </div>
             <div
-              id={
-                createNewChanell || createNewGroup || createNewPrivateChat
-                  ? "hide"
-                  : "createButton"
-              }
+              className={`createNewGroup ${createNewGroup ? "toleft" : "back"}`}
+            ></div>
+            <div
+              className={`createNewPrivateChat ${
+                createNewPrivateChat ? "toleft" : "back"
+              }`}
+            ></div>
+            {/* </div> */}
+          </div>
+          <div
+            id={
+              createNewChanell || createNewGroup || createNewPrivateChat
+                ? "hide"
+                : "createButton"
+            }
+            onClick={() => {
+              setShowCreateOptions(!showcreateoptions)
+            }}
+          >
+            <img src={"./pencil-svgrepo-com.svg"} alt="" />
+          </div>
+          <div className={showcreateoptions ? "createOptions" : "hide"}>
+            <div
+              className="option"
               onClick={() => {
+                setPageJustLoaded(false)
+                setCreateNewChanell(true)
                 setShowCreateOptions(!showcreateoptions)
               }}
             >
-              <img src={"./pencil-svgrepo-com.svg"} alt="" />
+              <img src={"./icons8-speaker-50.png"} alt="" /> New Chanell
             </div>
-            <div className={showcreateoptions ? "createOptions" : "hide"}>
-              <div
-                className="option"
-                onClick={() => {
-                  setPageJustLoaded(false)
-                  setCreateNewChanell(true)
-                  setShowCreateOptions(!showcreateoptions)
-                }}
-              >
-                <img src={"./icons8-speaker-50.png"} alt="" /> New Chanell
-              </div>
-              <div
-                className="option"
-                onClick={() => {
-                  setCreateNewGroup(true)
-                  setShowCreateOptions(!showcreateoptions)
-                }}
-              >
-                <img src={"./icons8-business-group-32.png"} alt="" /> New Group
-              </div>
-              <div
-                className="option"
-                onClick={() => {
-                  setCreateNewPrivateChat(true)
-                  setShowCreateOptions(!showcreateoptions)
-                }}
-              >
-                <img src={"./icons8-man-50.png"} alt="" /> New Private Chat
-              </div>
+            <div
+              className="option"
+              onClick={() => {
+                setCreateNewGroup(true)
+                setShowCreateOptions(!showcreateoptions)
+              }}
+            >
+              <img src={"./icons8-business-group-32.png"} alt="" /> New Group
+            </div>
+            <div
+              className="option"
+              onClick={() => {
+                setCreateNewPrivateChat(true)
+                setShowCreateOptions(!showcreateoptions)
+              }}
+            >
+              <img src={"./icons8-man-50.png"} alt="" /> New Private Chat
             </div>
           </div>
-          <div id="userInterfaceChat">
-            <div
-              id="userInterfaceChatUnderDiv"
-              // className={
-              //   showDiscription
-              //     ? "shrink-for-info userInterfaceChatUnderDiv"
-              //     : "back-for-info userInterfaceChatUnderDiv"
-              // }
-              style={
-                showDiscription
-                  ? { width: "100%" }
-                  : { width: "calc(100% + 420px)" }
-              }
-            >
-              <div id="userInterfaceChatMainPart" onScroll={() => {}}>
+        </div>
+        <div
+          className={`userInterfaceChat ${
+            onScreen === "chatsList" ? "rightChatRight" : ""
+          }`}
+          // style={
+          //   onScreen === "chatsList"
+          //     ? {
+          //         transform: "translate(0, 0)",
+          //       }
+          //     : {
+          //         transform: "translate(-100%, 0)",
+          //       }
+          // }
+        >
+          <div
+            id="userInterfaceChatUnderDiv"
+            // className={
+            //   showDiscription
+            //     ? "shrink-for-info userInterfaceChatUnderDiv"
+            //     : "back-for-info userInterfaceChatUnderDiv"
+            // }
+            // style={
+            //   showDiscription
+            //     ? { width: "100%" }
+            //     : { width: "calc(100% + 420px)" }
+            // }
+          >
+            <div id="userInterfaceChatMainPart">
+              <div
+                id="userInterfaceChatHead"
+                style={
+                  currentChatType ? { display: "flex" } : { display: "none" }
+                }
+              >
                 <div
-                  id="userInterfaceChatHead"
-                  style={
-                    currentChatType ? { display: "flex" } : { display: "none" }
-                  }
+                  id="userInterfaceChatHeadSmallDiv"
+                  onClick={() => {
+                    setShowDiscription(true)
+                  }}
                 >
-                  <div
-                    id="userInterfaceChatHeadSmallDiv"
-                    onClick={() => {
-                      setShowDiscription(true)
-                    }}
-                  >
-                    <div id="userInterfaceChatHeadImg">
-                      <img src={currentChatImgSrc} alt="" />
+                  <div id="userInterfaceChatHeadImg">
+                    <img src={currentChatImgSrc} alt="" />
+                  </div>
+                  <div id="userInterfaceChatHeadNameColumn">
+                    <div id="userInterfaceChatHeadNameColumnName">
+                      {currentChatName}
                     </div>
-                    <div id="userInterfaceChatHeadNameColumn">
-                      <div id="userInterfaceChatHeadNameColumnName">
-                        {currentChatName}
-                      </div>
-                      <div id="userInterfaceChatHeadNameColumnLastSeen">
-                        {currentChatType === "chanell" ? (
-                          `${currentChatSubs} subscribers`
-                        ) : currentChatType === "chat" ? (
-                          // onlineList.includes({
-                          //   findname: currentChatFindname.replace(
-                          //     userFindName,
-                          //     ""
-                          //   ),
-                          //   online: "online",
-                          // })
-                          onlineList.find(
-                            (o: any) =>
-                              o.findname ===
-                              currentChatFindname.replace(userFindName, "")
-                          ).online === "online" ? (
-                            <>
-                              {" "}
-                              <img src="./online.png" alt="" /> online{" "}
-                            </>
-                          ) : (
-                            `last seen ${
-                              Math.abs(
-                                Number(
-                                  onlineList.find(
-                                    (o: any) =>
-                                      o.findname ===
-                                      currentChatFindname.replace(
-                                        userFindName,
-                                        ""
-                                      )
-                                  ).online
-                                ) - Number(new Date().getTime())
-                              ) <= 86400000
-                                ? `${new Date(
-                                    Number(
-                                      onlineList.find(
-                                        (o: any) =>
-                                          o.findname ===
-                                          currentChatFindname.replace(
-                                            userFindName,
-                                            ""
-                                          )
-                                      ).online
-                                    )
-                                  ).toLocaleTimeString()}`
-                                : Math.abs(
-                                    Number(
-                                      onlineList.find(
-                                        (o: any) =>
-                                          o.findname ===
-                                          currentChatFindname.replace(
-                                            userFindName,
-                                            ""
-                                          )
-                                      ).online
-                                    ) - Number(new Date().getTime())
-                                  ) <= 172800000
-                                ? `${new Date(
-                                    Number(
-                                      onlineList.find(
-                                        (o: any) =>
-                                          o.findname ===
-                                          currentChatFindname.replace(
-                                            userFindName,
-                                            ""
-                                          )
-                                      ).online
-                                    )
-                                  )
-                                    .toUTCString()
-                                    .slice(0, 3)}`
-                                : new Date().getFullYear() !=
-                                  new Date(
-                                    Number(
-                                      onlineList.find(
-                                        (o: any) =>
-                                          o.findname ===
-                                          currentChatFindname.replace(
-                                            userFindName,
-                                            ""
-                                          )
-                                      ).online
-                                    )
-                                  ).getFullYear()
-                                ? `${new Date(
-                                    Number(
-                                      onlineList.find(
-                                        (o: any) =>
-                                          o.findname ===
-                                          currentChatFindname.replace(
-                                            userFindName,
-                                            ""
-                                          )
-                                      ).online
-                                    )
-                                  ).toLocaleDateString("en-GB")}`
-                                : `${new Date(
-                                    Number(
-                                      onlineList.find(
-                                        (o: any) =>
-                                          o.findname ===
-                                          currentChatFindname.replace(
-                                            userFindName,
-                                            ""
-                                          )
-                                      ).online
-                                    )
-                                  )
-                                    .toString()
-                                    .slice(4, 10)}`
-                            }`
-                          )
+                    <div id="userInterfaceChatHeadNameColumnLastSeen">
+                      {currentChatType === "chanell" ? (
+                        `${currentChatSubs} subscribers`
+                      ) : currentChatType === "chat" ? (
+                        // onlineList.includes({
+                        //   findname: currentChatFindname.replace(
+                        //     userFindName,
+                        //     ""
+                        //   ),
+                        //   online: "online",
+                        // })
+                        onlineList.find(
+                          (o: any) =>
+                            o.findname ===
+                            currentChatFindname.replace(userFindName, "")
+                        ).online === "online" ? (
+                          <>
+                            {" "}
+                            <img src="./online.png" alt="" /> online{" "}
+                          </>
                         ) : (
-                          "Bot or participants or subs and online or last seen or service notification"
-                        )}
-                      </div>
+                          `last seen ${
+                            Math.abs(
+                              Number(
+                                onlineList.find(
+                                  (o: any) =>
+                                    o.findname ===
+                                    currentChatFindname.replace(
+                                      userFindName,
+                                      ""
+                                    )
+                                ).online
+                              ) - Number(new Date().getTime())
+                            ) <= 86400000
+                              ? `${new Date(
+                                  Number(
+                                    onlineList.find(
+                                      (o: any) =>
+                                        o.findname ===
+                                        currentChatFindname.replace(
+                                          userFindName,
+                                          ""
+                                        )
+                                    ).online
+                                  )
+                                ).toLocaleTimeString()}`
+                              : Math.abs(
+                                  Number(
+                                    onlineList.find(
+                                      (o: any) =>
+                                        o.findname ===
+                                        currentChatFindname.replace(
+                                          userFindName,
+                                          ""
+                                        )
+                                    ).online
+                                  ) - Number(new Date().getTime())
+                                ) <= 172800000
+                              ? `${new Date(
+                                  Number(
+                                    onlineList.find(
+                                      (o: any) =>
+                                        o.findname ===
+                                        currentChatFindname.replace(
+                                          userFindName,
+                                          ""
+                                        )
+                                    ).online
+                                  )
+                                )
+                                  .toUTCString()
+                                  .slice(0, 3)}`
+                              : new Date().getFullYear() !=
+                                new Date(
+                                  Number(
+                                    onlineList.find(
+                                      (o: any) =>
+                                        o.findname ===
+                                        currentChatFindname.replace(
+                                          userFindName,
+                                          ""
+                                        )
+                                    ).online
+                                  )
+                                ).getFullYear()
+                              ? `${new Date(
+                                  Number(
+                                    onlineList.find(
+                                      (o: any) =>
+                                        o.findname ===
+                                        currentChatFindname.replace(
+                                          userFindName,
+                                          ""
+                                        )
+                                    ).online
+                                  )
+                                ).toLocaleDateString("en-GB")}`
+                              : `${new Date(
+                                  Number(
+                                    onlineList.find(
+                                      (o: any) =>
+                                        o.findname ===
+                                        currentChatFindname.replace(
+                                          userFindName,
+                                          ""
+                                        )
+                                    ).online
+                                  )
+                                )
+                                  .toString()
+                                  .slice(4, 10)}`
+                          }`
+                        )
+                      ) : (
+                        "Bot or participants or subs and online or last seen or service notification"
+                      )}
                     </div>
                   </div>
-                  {/* <div id="userInterfaceChatHeadCall">Call</div> */}
-                  {/* <div id="userInterfaceChatHeadHidePinned">HidePinned</div> */}
-                  {/* <div id="userInterfaceChatHeadOnePinned">OnePinned</div> */}
+                </div>
+                <div
+                  id="smallScreenArrow"
+                  onClick={() => {
+                    if (onScreen === "chatsList") {
+                      setOnScreen("chats")
+                    } else {
+                      setOnScreen("chatsList")
+                    }
+                  }}
+                >
+                  <img src="./icons8-arrow-left-50.png" alt="" />
+                </div>
+
+                <div id="headerAllButDesignationsOptions">
                   {currentChatPinnedList.length ? (
                     <div
-                      id="userInterfaceChatHeadAllPinned"
+                      className="userInterfaceChatHeadAllPinned allPinnedShowOnBig"
                       onClick={() => {
                         setUseScroll(false)
                         if (currentPinnedMsgNumber === 0) {
@@ -6182,7 +6166,7 @@ export function UserInterface(this: any) {
                     >
                       {/* <div className="center">
                         <div className="center2">
-                          <div className="mover"></div>
+                        <div className="mover"></div>
                         </div>
                       </div> */}
                       <div className="userInterfaceChatHeadAllPinnedLine">
@@ -6266,8 +6250,14 @@ export function UserInterface(this: any) {
                           })}
                         </div>
                       </div>
+                      <div id="pinnedAllbutton">
+                        <img src="./settings.png" alt="" />
+                      </div>
                     </div>
                   ) : undefined}
+                  {/* <div id="userInterfaceChatHeadCall">Call</div> */}
+                  {/* <div id="userInterfaceChatHeadHidePinned">HidePinned</div> */}
+                  {/* <div id="userInterfaceChatHeadOnePinned">OnePinned</div> */}
 
                   <div id="userInterfaceChatHeadAllPinnedButton">PinButt</div>
                   <div
@@ -6294,97 +6284,253 @@ export function UserInterface(this: any) {
                     <img src={"./settings.png"} alt="" />
                   </div>
                 </div>
-                <div id="userInterfaceChatMainBackground">
-                  <div
-                    style={
-                      // currentChatFindname
-                      chatSelected && currentChatMsgsList && !notAtBottom
-                        ? { display: "flex" }
-                        : { display: "none" }
-                    }
-                    id="toBottom"
-                    onClick={async (e) => {
-                      e.stopPropagation()
-                      await scrollOnFunc()
-                      toScrolldown()
-                    }}
-                  >
-                    <img src={"./icons8-arrow-down-50.png"} alt="" />
-                    <div
-                      id="toBottomNumber"
-                      style={
-                        currentUnreadNumber === 0 || !currentUnreadNumber
-                          ? { display: "none" }
-                          : { display: "flex" }
+              </div>
+              {currentChatPinnedList.length ? (
+                <div
+                  className="userInterfaceChatHeadAllPinned allPinnedShowOnSmall"
+                  onClick={() => {
+                    setUseScroll(false)
+                    if (currentPinnedMsgNumber === 0) {
+                      for (
+                        let index = 0;
+                        index < currentChatMsgsList.length;
+                        index++
+                      ) {
+                        if (
+                          currentChatMsgsList[index].time ===
+                          currentChatPinnedList[
+                            currentChatPinnedList.length - 1
+                          ].time
+                        ) {
+                          let f = document.querySelectorAll(
+                            `[data-msgkey="data-msgkey${index}"]`
+                          )[0] as HTMLDivElement
+                          f.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                            inline: "center",
+                          })
+
+                          f.classList.add("blinkBackground")
+                          setTimeout(function () {
+                            f.classList.remove("blinkBackground")
+                          }, 1000)
+                          break
+                        }
                       }
-                    >
-                      {" "}
-                      {currentUnreadNumber}
+                    } else {
+                      for (
+                        let index = 0;
+                        index < currentChatMsgsList.length;
+                        index++
+                      ) {
+                        if (
+                          currentChatMsgsList[index].time ===
+                          currentChatPinnedList[currentPinnedMsgNumber - 1].time
+                        ) {
+                          let f = document.querySelectorAll(
+                            `[data-msgkey="data-msgkey${index}"]`
+                          )[0] as HTMLDivElement
+                          f.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                            // block: "center",
+                            inline: "center",
+                          })
+
+                          // let msgElement = document.querySelectorAll(
+                          //   `[data-msgkey="data-msgkey${index}"]`
+                          // )[0] as HTMLElement
+
+                          // let scrolledDiv = document.querySelectorAll(
+                          //   `[data-msgkey="data-msgkey${index}"]`
+                          // )[0].parentElement as HTMLElement
+                          // let msgTop =
+                          //   msgElement.getBoundingClientRect().top
+                          // let scrolledDivCurrentPos = scrolledDiv.scrollTop
+
+                          // myRef.current.scrollTop =
+                          // myRef.current.scrollHeight - myRef.current.clientHeight + 100
+
+                          // різниця між курент позішином діва а також бажаним (102 по топу), ця різниця застосовується
+                          // до скролдіва і його позицію скрол топа міняє на знач цієї різниці.
+                          // console.log(msgElement)
+                          // console.log(msgTop)
+                          // console.log(scrolledDiv)
+                          // console.log(scrolledDivCurrentPos)
+
+                          f.classList.add("blinkBackground")
+                          setTimeout(function () {
+                            f.classList.remove("blinkBackground")
+                          }, 1000)
+                          break
+                        }
+                      }
+                    }
+                    setCurrentPinnedMsgNumber(
+                      currentPinnedMsgNumber === 0
+                        ? currentChatPinnedList.length - 1
+                        : currentPinnedMsgNumber - 1
+                    )
+                  }}
+                >
+                  {/* <div className="center">
+                        <div className="center2">
+                        <div className="mover"></div>
+                        </div>
+                      </div> */}
+                  <div className="userInterfaceChatHeadAllPinnedLine">
+                    <div id="circlesWrap">
+                      {currentChatPinnedList.map((oneMsg) => {
+                        return (
+                          <div
+                            className={`blueSquare `}
+                            // ${
+                            //   currentPinnedMsgNumber === 0
+                            //     ? "center"
+                            //     : oneMsg.index > currentPinnedMsgNumber
+                            //     ? "pinnedBottom"
+                            //     : "pinnedUp transparent"
+                            // }`}
+                            style={{
+                              transform: `translateY(${
+                                currentChatPinnedList.length ===
+                                currentPinnedMsgNumber + 1
+                                  ? "0"
+                                  : currentPinnedMsgNumber <= 3
+                                  ? (currentChatPinnedList.length - 4) * 9
+                                  : (currentChatPinnedList.length -
+                                      currentPinnedMsgNumber -
+                                      1) *
+                                    9
+                              }px)`,
+                            }}
+                            // ${
+                            //   oneMsg.index == currentPinnedMsgNumber
+                            //     ? "blue"
+                            //     : "notBlue"
+                            // }`}
+                          ></div>
+                        )
+                      })}
+                    </div>
+                    <div id="moverWrap">
+                      <div
+                        className={`mover`}
+                        style={{
+                          transform: `translateY(-${
+                            currentPinnedMsgNumber >= 3
+                              ? "0"
+                              : (3 - currentPinnedMsgNumber) * 9
+                          }px)`,
+                        }}
+                      ></div>
                     </div>
                   </div>
+                  <div id="userInterfaceChatHeadAllPinnedDiv">
+                    <div id="userInterfaceChatHeadAllPinnedDivText">
+                      Pinned Message
+                      {currentPinnedMsgNumber == currentChatPinnedList.length
+                        ? `#${currentPinnedMsgNumber + 1}`
+                        : `#${currentPinnedMsgNumber + 1}`}
+                    </div>
+                    <div id="userInterfaceChatHeadAllPinnedList">
+                      {currentChatPinnedList.map((oneMsg) => {
+                        return (
+                          <div
+                            className={`onePinnedMsg 
+                                ${
+                                  oneMsg.index === currentPinnedMsgNumber
+                                    ? "pinnedBack"
+                                    : oneMsg.index > currentPinnedMsgNumber
+                                    ? "pinnedBottom"
+                                    : "pinnedUp transparent"
+                                }`}
+                          >
+                            {oneMsg.photoLink ? (
+                              <>
+                                <img src={oneMsg.photoLink} alt="" />
+                                Photo
+                              </>
+                            ) : undefined}
+                            {oneMsg.comentary}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                  <div id="pinnedAllbutton">
+                    <img src="./settings.png" alt="" />
+                  </div>
+                </div>
+              ) : undefined}
+              <div id="userInterfaceChatMainBackground">
+                <div
+                  style={
+                    // currentChatFindname
+                    chatSelected && currentChatMsgsList && !notAtBottom
+                      ? { display: "flex" }
+                      : { display: "none" }
+                  }
+                  id="toBottom"
+                  onClick={async (e) => {
+                    e.stopPropagation()
+                    await scrollOnFunc()
+                    toScrolldown()
+                  }}
+                >
+                  <img src={"./icons8-arrow-down-50.png"} alt="" />
                   <div
-                    id="userInterfaceChatMainMsgesColumn"
-                    ref={myRef}
-                    onWheel={() => {
-                      setUseScroll(true)
-                    }}
-                    onScroll={async () => {
-                      await scrollOnFunc()
-                      checkIfAtBottom()
-                      unreadNumberFunc()
-                      if (
-                        msgMenuTargets &&
-                        msgMenuSelectPressed &&
-                        msgMenuTargets.length
-                      ) {
-                      } else {
-                        setMsgMenuCoords({ top: "", left: "" })
-                        setMsgMenu(false)
-                        setMsgMenuTargets([])
-                        setMsgMenuListener(false)
-                      }
-                    }}
+                    id="toBottomNumber"
+                    style={
+                      currentUnreadNumber === 0 || !currentUnreadNumber
+                        ? { display: "none" }
+                        : { display: "flex" }
+                    }
                   >
-                    <div
-                      id="msgContextMenu"
-                      style={
-                        msgMenu
-                          ? userStatus == "admin"
-                            ? Number(msgMenuCoords.top) > 62 &&
-                              Number(msgMenuCoords.left) > 83
-                              ? {
-                                  display: "flex",
-                                  top: `calc(65% - 1%)`,
-                                  left: `calc(83% - 2%)`,
-                                }
-                              : Number(msgMenuCoords.top) > 62
-                              ? {
-                                  display: "flex",
-                                  top: `calc(65% - 1%)`,
-                                  left: `calc(${msgMenuCoords.left}% - 1%)`,
-                                }
-                              : Number(msgMenuCoords.left) > 83
-                              ? {
-                                  display: "flex",
-                                  top: `calc(${msgMenuCoords.top}% - 5%)`,
-                                  left: `calc(83% - 2%)`,
-                                }
-                              : {
-                                  display: "flex",
-                                  top: `calc(${msgMenuCoords.top}% - 5%)`,
-                                  left: `calc(${msgMenuCoords.left}% - 1%)`,
-                                }
-                            : Number(msgMenuCoords.top) > 70 &&
-                              Number(msgMenuCoords.left) > 83
+                    {" "}
+                    {currentUnreadNumber}
+                  </div>
+                </div>
+                <div
+                  id="userInterfaceChatMainMsgesColumn"
+                  ref={myRef}
+                  onWheel={() => {
+                    setUseScroll(true)
+                  }}
+                  onScroll={async () => {
+                    await scrollOnFunc()
+                    checkIfAtBottom()
+                    unreadNumberFunc()
+                    if (
+                      msgMenuTargets &&
+                      msgMenuSelectPressed &&
+                      msgMenuTargets.length
+                    ) {
+                    } else {
+                      setMsgMenuCoords({ top: "", left: "" })
+                      setMsgMenu(false)
+                      setMsgMenuTargets([])
+                      setMsgMenuListener(false)
+                    }
+                  }}
+                >
+                  <div
+                    id="msgContextMenu"
+                    style={
+                      msgMenu
+                        ? userStatus == "admin"
+                          ? Number(msgMenuCoords.top) > 62 &&
+                            Number(msgMenuCoords.left) > 83
                             ? {
                                 display: "flex",
-                                top: `calc(73% - 1%)`,
+                                top: `calc(65% - 1%)`,
                                 left: `calc(83% - 2%)`,
                               }
                             : Number(msgMenuCoords.top) > 62
                             ? {
                                 display: "flex",
-                                top: `calc(73% - 1%)`,
+                                top: `calc(65% - 1%)`,
                                 left: `calc(${msgMenuCoords.left}% - 1%)`,
                               }
                             : Number(msgMenuCoords.left) > 83
@@ -6398,471 +6544,489 @@ export function UserInterface(this: any) {
                                 top: `calc(${msgMenuCoords.top}% - 5%)`,
                                 left: `calc(${msgMenuCoords.left}% - 1%)`,
                               }
-                          : { display: "none" }
-                      }
-                    >
-                      <div id="msgContextMenuEmotions">
-                        {smileGroups.map((smileGroup) => {
-                          let theNumber = 0
-                          {
-                            if (smileGroup.name == "Frequently Used") {
-                              return (
-                                <div id="msgContextMenuEmotionsWrapper">
-                                  {smileGroup.smiles.map((unoSmile) => {
-                                    {
-                                      if (theNumber <= 7) {
-                                        return (
-                                          <div
-                                            id="contextMenuTheSmile"
-                                            onClick={() => {
-                                              let smileInfo: smileMsgType = {
-                                                type: "changeSmile",
-                                                name: unoSmile.name,
-                                                smile: unoSmile.symbol,
-                                              }
-                                              universalChatManipulationFunction(
-                                                smileInfo,
-                                                "changeSmile"
-                                              )
-                                            }}
-                                          >
-                                            {unoSmile.symbol}
-                                          </div>
-                                        )
-                                      }
-                                      theNumber++
+                          : Number(msgMenuCoords.top) > 70 &&
+                            Number(msgMenuCoords.left) > 83
+                          ? {
+                              display: "flex",
+                              top: `calc(73% - 1%)`,
+                              left: `calc(83% - 2%)`,
+                            }
+                          : Number(msgMenuCoords.top) > 62
+                          ? {
+                              display: "flex",
+                              top: `calc(73% - 1%)`,
+                              left: `calc(${msgMenuCoords.left}% - 1%)`,
+                            }
+                          : Number(msgMenuCoords.left) > 83
+                          ? {
+                              display: "flex",
+                              top: `calc(${msgMenuCoords.top}% - 5%)`,
+                              left: `calc(83% - 2%)`,
+                            }
+                          : {
+                              display: "flex",
+                              top: `calc(${msgMenuCoords.top}% - 5%)`,
+                              left: `calc(${msgMenuCoords.left}% - 1%)`,
+                            }
+                        : { display: "none" }
+                    }
+                  >
+                    <div id="msgContextMenuEmotions">
+                      {smileGroups.map((smileGroup) => {
+                        let theNumber = 0
+                        {
+                          if (smileGroup.name == "Frequently Used") {
+                            return (
+                              <div id="msgContextMenuEmotionsWrapper">
+                                {smileGroup.smiles.map((unoSmile) => {
+                                  {
+                                    if (theNumber <= 7) {
+                                      return (
+                                        <div
+                                          id="contextMenuTheSmile"
+                                          onClick={() => {
+                                            let smileInfo: smileMsgType = {
+                                              type: "changeSmile",
+                                              name: unoSmile.name,
+                                              smile: unoSmile.symbol,
+                                            }
+                                            universalChatManipulationFunction(
+                                              smileInfo,
+                                              "changeSmile"
+                                            )
+                                          }}
+                                        >
+                                          {unoSmile.symbol}
+                                        </div>
+                                      )
                                     }
-                                  })}
+                                    theNumber++
+                                  }
+                                })}
+                              </div>
+                            )
+                          }
+                        }
+                      })}
+                      <img src="./icons8-down-50.png" alt="" />
+                    </div>
+                    <div id="msgContextMenuOptions">
+                      {userStatus == "admin" ? (
+                        <>
+                          <div>
+                            <img src="./icons8-reply-50.png" alt="" />
+                            Reply
+                          </div>
+                          <div
+                            onClick={() => {
+                              if (msgMenuTargets && msgMenuTargets[0]) {
+                                let text: any
+                                for (
+                                  let index = 0;
+                                  index <
+                                  msgMenuTargets[0].children[0].children.length;
+                                  index++
+                                ) {
+                                  const element =
+                                    msgMenuTargets[0].children[0].children[
+                                      index
+                                    ]
+                                  if (element.id == "comentary") {
+                                    text =
+                                      msgMenuTargets[0].children[0].children[
+                                        index
+                                      ].children[0].innerHTML
+                                  }
+                                }
+                                setCurrentEditText(text)
+                                setCurrentEditingState(true)
+                                setCurrentEditTextInput(text)
+                                setMsgMenu(false)
+                                setMsgMenuCoords({ top: "", left: "" })
+                                setMsgMenuListener(false)
+                                setCurrentEditTarget(msgMenuTargets[0])
+                              }
+                            }}
+                          >
+                            <img src="./icons8-edit-50.png" alt="" />
+                            Edit
+                          </div>
+                          <div
+                            onClick={async () => {
+                              if (msgMenuTargets && msgMenuTargets[0]) {
+                                let text: any
+                                for (
+                                  let index = 0;
+                                  index <
+                                  msgMenuTargets[0].children[0].children.length;
+                                  index++
+                                ) {
+                                  const element =
+                                    msgMenuTargets[0].children[0].children[
+                                      index
+                                    ]
+                                  if (element.id == "comentary") {
+                                    text =
+                                      msgMenuTargets[0].children[0].children[
+                                        index
+                                      ].children[0].innerHTML
+                                  }
+                                }
+                                if (text) {
+                                  await navigator.clipboard.writeText(text)
+                                }
+                              }
+                              setMsgMenu(false)
+                              setMsgMenuCoords({ left: "", top: "" })
+                              setMsgMenuListener(false)
+                            }}
+                          >
+                            <img src="./icons8-copy-50.png" alt="" />
+                            Copy
+                          </div>
+                          <div
+                            onClick={() => {
+                              if (msgMenuTargets && msgMenuTargets[0]) {
+                                universalChatManipulationFunction(
+                                  {
+                                    type: "nomsg",
+                                  },
+                                  "pin"
+                                )
+                              }
+
+                              setMsgMenu(false)
+                              setMsgMenuCoords({ left: "", top: "" })
+                              setMsgMenuListener(false)
+                            }}
+                          >
+                            <img src="./icons8-pin-50.png" alt="" />
+                            Pin
+                          </div>
+                          <div>
+                            <img src="./icons8-forward-50.png" alt="" />
+                            Forward
+                          </div>
+
+                          <div
+                            onClick={async (event) => {
+                              if (msgMenuTargets) {
+                                if (msgMenuTargets[0]) {
+                                  msgMenuTargets[0].style.backgroundColor =
+                                    "rgb(112, 117, 121, 0.8)"
+                                }
+                                setMsgMenuSelectPressed(true)
+                                setMsgMenu(false)
+                                setMsgMenuCoords({ left: "", top: "" })
+                                setMsgMenuListener(false)
+                              }
+                            }}
+                          >
+                            <img src="./select.png" alt="" />
+                            Select
+                          </div>
+                          <div style={{ color: "red" }}>
+                            <img
+                              src="./icons8-trash-can-layout-for-a-indication-to-throw-trash-24.png"
+                              alt=""
+                            />
+                            Delete
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div>
+                            <img src="./icons8-reply-50.png" alt="" />
+                            Reply
+                          </div>
+                          <div
+                            onClick={async () => {
+                              if (msgMenuTargets && msgMenuTargets[0]) {
+                                let text: any
+                                for (
+                                  let index = 0;
+                                  index <
+                                  msgMenuTargets[0].children[0].children.length;
+                                  index++
+                                ) {
+                                  const element =
+                                    msgMenuTargets[0].children[0].children[
+                                      index
+                                    ]
+                                  if (element.id == "comentary") {
+                                    text =
+                                      msgMenuTargets[0].children[0].children[
+                                        index
+                                      ].children[0].innerHTML
+                                  }
+                                }
+                                if (text) {
+                                  await navigator.clipboard.writeText(text)
+                                }
+                              }
+                              setMsgMenu(false)
+                              setMsgMenuCoords({ left: "", top: "" })
+                              setMsgMenuListener(false)
+                            }}
+                          >
+                            <img src="./icons8-copy-50.png" alt="" />
+                            Copy
+                          </div>
+                          <div>
+                            <img src="./icons8-forward-50.png" alt="" />
+                            Forward
+                          </div>
+                          <div
+                            onClick={async (event) => {
+                              if (msgMenuTargets) {
+                                if (msgMenuTargets[0]) {
+                                  msgMenuTargets[0].style.backgroundColor =
+                                    "rgb(112, 117, 121, 0.8)"
+                                }
+                                setMsgMenuSelectPressed(true)
+                                setMsgMenu(false)
+                                setMsgMenuCoords({ left: "", top: "" })
+                                setMsgMenuListener(false)
+                              }
+                            }}
+                          >
+                            <img src="./select.png" alt="" />
+                            Select
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  {currentChatMsgsList?.length ? (
+                    currentChatMsgsList.map((item) => {
+                      valToEvalLastMsg = false
+                      if (allChatsListInUser) {
+                        if (allChatsListInUser.chanellsList) {
+                          for (
+                            let i = 0;
+                            i < allChatsListInUser.chanellsList.length;
+                            i++
+                          ) {
+                            if (
+                              allChatsListInUser?.chanellsList[i].findname ==
+                              currentChatFindname
+                            ) {
+                              let msgNumber = Number(
+                                allChatsListInUser?.chanellsList[i].lastSeenMsg
+                              )
+                              if (currentMappedListKey == msgNumber - 1) {
+                                valToEvalLastMsg = true
+                                break
+                              }
+
+                              if (currentMappedListKey > msgNumber - 1) {
+                                valToEvalNotSeen = true
+                              } else {
+                                valToEvalNotSeen = false
+                              }
+                            } else {
+                            }
+                          }
+                        }
+                        if (allChatsListInUser.chatsList) {
+                          for (
+                            let i = 0;
+                            i < allChatsListInUser.chatsList.length;
+                            i++
+                          ) {
+                            if (
+                              allChatsListInUser?.chatsList[i].findname ==
+                              currentChatFindname
+                            ) {
+                              let msgNumber = Number(
+                                allChatsListInUser?.chatsList[i].lastSeenMsg
+                              )
+                              if (currentMappedListKey == msgNumber - 1) {
+                                valToEvalLastMsg = true
+                                break
+                              }
+
+                              if (currentMappedListKey > msgNumber - 1) {
+                                valToEvalNotSeen = true
+                              } else {
+                                valToEvalNotSeen = false
+                              }
+                            } else {
+                            }
+                          }
+                        }
+                      }
+
+                      if (
+                        currentChatMsgsList.length - 1 ==
+                        currentMappedListKey
+                      ) {
+                        // currentMappedListKey = 0
+                      } else {
+                        currentMappedListKey++
+                      }
+
+                      return (
+                        <>
+                          {timeForCorrectMsgTime == "0" ? (
+                            <div id="msgGlobalTime">Created Successfully</div>
+                          ) : timeForCorrectMsgTime != "0" ? (
+                            new Date(Number(item.time)).toDateString() !=
+                            new Date(
+                              Number(timeForCorrectMsgTime)
+                            ).toDateString() ? (
+                              new Date().getFullYear() ==
+                              new Date(Number(item.time)).getFullYear() ? (
+                                <div id="msgGlobalTime">
+                                  {new Date(Number(item.time))
+                                    .toDateString()
+                                    .split(" ")[1] +
+                                    " " +
+                                    new Date(Number(item.time))
+                                      .toDateString()
+                                      .split(" ")[2]}
+                                </div>
+                              ) : (
+                                <div id="msgGlobalTime">
+                                  {new Date(Number(item.time))
+                                    .toDateString()
+                                    .split(" ")[1] +
+                                    " " +
+                                    new Date(Number(item.time))
+                                      .toDateString()
+                                      .split(" ")[2] +
+                                    " " +
+                                    new Date(Number(item.time))
+                                      .toDateString()
+                                      .split(" ")[3]}
                                 </div>
                               )
+                            ) : undefined
+                          ) : undefined}
+
+                          <div
+                            data-lastmsg={
+                              valToEvalLastMsg ? "thelastMessage" : "none"
                             }
-                          }
-                        })}
-                        <img src="./icons8-down-50.png" alt="" />
-                      </div>
-                      <div id="msgContextMenuOptions">
-                        {userStatus == "admin" ? (
-                          <>
-                            <div>
-                              <img src="./icons8-reply-50.png" alt="" />
-                              Reply
-                            </div>
-                            <div
-                              onClick={() => {
-                                if (msgMenuTargets && msgMenuTargets[0]) {
-                                  let text: any
-                                  for (
-                                    let index = 0;
-                                    index <
-                                    msgMenuTargets[0].children[0].children
-                                      .length;
-                                    index++
-                                  ) {
-                                    const element =
-                                      msgMenuTargets[0].children[0].children[
-                                        index
-                                      ]
-                                    if (element.id == "comentary") {
-                                      text =
-                                        msgMenuTargets[0].children[0].children[
-                                          index
-                                        ].children[0].innerHTML
-                                    }
-                                  }
-                                  setCurrentEditText(text)
-                                  setCurrentEditingState(true)
-                                  setCurrentEditTextInput(text)
-                                  setMsgMenu(false)
-                                  setMsgMenuCoords({ top: "", left: "" })
-                                  setMsgMenuListener(false)
-                                  setCurrentEditTarget(msgMenuTargets[0])
-                                }
-                              }}
-                            >
-                              <img src="./icons8-edit-50.png" alt="" />
-                              Edit
-                            </div>
-                            <div
-                              onClick={async () => {
-                                if (msgMenuTargets && msgMenuTargets[0]) {
-                                  let text: any
-                                  for (
-                                    let index = 0;
-                                    index <
-                                    msgMenuTargets[0].children[0].children
-                                      .length;
-                                    index++
-                                  ) {
-                                    const element =
-                                      msgMenuTargets[0].children[0].children[
-                                        index
-                                      ]
-                                    if (element.id == "comentary") {
-                                      text =
-                                        msgMenuTargets[0].children[0].children[
-                                          index
-                                        ].children[0].innerHTML
-                                    }
-                                  }
-                                  if (text) {
-                                    await navigator.clipboard.writeText(text)
-                                  }
-                                }
-                                setMsgMenu(false)
-                                setMsgMenuCoords({ left: "", top: "" })
-                                setMsgMenuListener(false)
-                              }}
-                            >
-                              <img src="./icons8-copy-50.png" alt="" />
-                              Copy
-                            </div>
-                            <div
-                              onClick={() => {
-                                if (msgMenuTargets && msgMenuTargets[0]) {
-                                  universalChatManipulationFunction(
-                                    {
-                                      type: "nomsg",
-                                    },
-                                    "pin"
-                                  )
-                                }
-
-                                setMsgMenu(false)
-                                setMsgMenuCoords({ left: "", top: "" })
-                                setMsgMenuListener(false)
-                              }}
-                            >
-                              <img src="./icons8-pin-50.png" alt="" />
-                              Pin
-                            </div>
-                            <div>
-                              <img src="./icons8-forward-50.png" alt="" />
-                              Forward
-                            </div>
-
-                            <div
-                              onClick={async (event) => {
+                            data-notseen={valToEvalNotSeen ? "notseen" : "none"}
+                            id="msg"
+                            key={`msgkey${key++}`}
+                            data-msgkey={`data-msgkey${key}`}
+                            onClick={(event) => {
+                              event.preventDefault()
+                              let target = event.target as HTMLDivElement
+                              if (msgMenuSelectPressed) {
                                 if (msgMenuTargets) {
-                                  if (msgMenuTargets[0]) {
-                                    msgMenuTargets[0].style.backgroundColor =
-                                      "rgb(112, 117, 121, 0.8)"
-                                  }
-                                  setMsgMenuSelectPressed(true)
-                                  setMsgMenu(false)
-                                  setMsgMenuCoords({ left: "", top: "" })
-                                  setMsgMenuListener(false)
-                                }
-                              }}
-                            >
-                              <img src="./select.png" alt="" />
-                              Select
-                            </div>
-                            <div style={{ color: "red" }}>
-                              <img
-                                src="./icons8-trash-can-layout-for-a-indication-to-throw-trash-24.png"
-                                alt=""
-                              />
-                              Delete
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <div>
-                              <img src="./icons8-reply-50.png" alt="" />
-                              Reply
-                            </div>
-                            <div
-                              onClick={async () => {
-                                if (msgMenuTargets && msgMenuTargets[0]) {
-                                  let text: any
                                   for (
-                                    let index = 0;
-                                    index <
-                                    msgMenuTargets[0].children[0].children
-                                      .length;
-                                    index++
+                                    let i = 0;
+                                    i < msgMenuTargets.length;
+                                    i++
                                   ) {
-                                    const element =
-                                      msgMenuTargets[0].children[0].children[
-                                        index
+                                    if (target != msgMenuTargets[i]) {
+                                      continue
+                                    } else {
+                                      let notUndefTarget = msgMenuTargets[i]
+                                      if (notUndefTarget) {
+                                        notUndefTarget.style.backgroundColor =
+                                          "transparent"
+                                      }
+                                      let oldmsgContextMenu = [
+                                        ...msgMenuTargets,
                                       ]
-                                    if (element.id == "comentary") {
-                                      text =
-                                        msgMenuTargets[0].children[0].children[
-                                          index
-                                        ].children[0].innerHTML
-                                    }
-                                  }
-                                  if (text) {
-                                    await navigator.clipboard.writeText(text)
-                                  }
-                                }
-                                setMsgMenu(false)
-                                setMsgMenuCoords({ left: "", top: "" })
-                                setMsgMenuListener(false)
-                              }}
-                            >
-                              <img src="./icons8-copy-50.png" alt="" />
-                              Copy
-                            </div>
-                            <div>
-                              <img src="./icons8-forward-50.png" alt="" />
-                              Forward
-                            </div>
-                            <div
-                              onClick={async (event) => {
-                                if (msgMenuTargets) {
-                                  if (msgMenuTargets[0]) {
-                                    msgMenuTargets[0].style.backgroundColor =
-                                      "rgb(112, 117, 121, 0.8)"
-                                  }
-                                  setMsgMenuSelectPressed(true)
-                                  setMsgMenu(false)
-                                  setMsgMenuCoords({ left: "", top: "" })
-                                  setMsgMenuListener(false)
-                                }
-                              }}
-                            >
-                              <img src="./select.png" alt="" />
-                              Select
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    </div>
+                                      if (msgMenuTargets.length == 1) {
+                                        setMsgMenuTargets([])
+                                        setMsgMenuSelectPressed(false)
+                                        return
+                                      }
 
-                    {currentChatMsgsList?.length ? (
-                      currentChatMsgsList.map((item) => {
-                        valToEvalLastMsg = false
-                        if (allChatsListInUser) {
-                          if (allChatsListInUser.chanellsList) {
-                            for (
-                              let i = 0;
-                              i < allChatsListInUser.chanellsList.length;
-                              i++
-                            ) {
-                              if (
-                                allChatsListInUser?.chanellsList[i].findname ==
-                                currentChatFindname
-                              ) {
-                                let msgNumber = Number(
-                                  allChatsListInUser?.chanellsList[i]
-                                    .lastSeenMsg
-                                )
-                                if (currentMappedListKey == msgNumber - 1) {
-                                  valToEvalLastMsg = true
-                                  break
-                                }
-
-                                if (currentMappedListKey > msgNumber - 1) {
-                                  valToEvalNotSeen = true
-                                } else {
-                                  valToEvalNotSeen = false
-                                }
-                              } else {
-                              }
-                            }
-                          }
-                          if (allChatsListInUser.chatsList) {
-                            for (
-                              let i = 0;
-                              i < allChatsListInUser.chatsList.length;
-                              i++
-                            ) {
-                              if (
-                                allChatsListInUser?.chatsList[i].findname ==
-                                currentChatFindname
-                              ) {
-                                let msgNumber = Number(
-                                  allChatsListInUser?.chatsList[i].lastSeenMsg
-                                )
-                                if (currentMappedListKey == msgNumber - 1) {
-                                  valToEvalLastMsg = true
-                                  break
-                                }
-
-                                if (currentMappedListKey > msgNumber - 1) {
-                                  valToEvalNotSeen = true
-                                } else {
-                                  valToEvalNotSeen = false
-                                }
-                              } else {
-                              }
-                            }
-                          }
-                        }
-
-                        if (
-                          currentChatMsgsList.length - 1 ==
-                          currentMappedListKey
-                        ) {
-                          // currentMappedListKey = 0
-                        } else {
-                          currentMappedListKey++
-                        }
-
-                        return (
-                          <>
-                            {timeForCorrectMsgTime == "0" ? (
-                              <div id="msgGlobalTime">Created Successfully</div>
-                            ) : timeForCorrectMsgTime != "0" ? (
-                              new Date(Number(item.time)).toDateString() !=
-                              new Date(
-                                Number(timeForCorrectMsgTime)
-                              ).toDateString() ? (
-                                new Date().getFullYear() ==
-                                new Date(Number(item.time)).getFullYear() ? (
-                                  <div id="msgGlobalTime">
-                                    {new Date(Number(item.time))
-                                      .toDateString()
-                                      .split(" ")[1] +
-                                      " " +
-                                      new Date(Number(item.time))
-                                        .toDateString()
-                                        .split(" ")[2]}
-                                  </div>
-                                ) : (
-                                  <div id="msgGlobalTime">
-                                    {new Date(Number(item.time))
-                                      .toDateString()
-                                      .split(" ")[1] +
-                                      " " +
-                                      new Date(Number(item.time))
-                                        .toDateString()
-                                        .split(" ")[2] +
-                                      " " +
-                                      new Date(Number(item.time))
-                                        .toDateString()
-                                        .split(" ")[3]}
-                                  </div>
-                                )
-                              ) : undefined
-                            ) : undefined}
-
-                            <div
-                              data-lastmsg={
-                                valToEvalLastMsg ? "thelastMessage" : "none"
-                              }
-                              data-notseen={
-                                valToEvalNotSeen ? "notseen" : "none"
-                              }
-                              id="msg"
-                              key={`msgkey${key++}`}
-                              data-msgkey={`data-msgkey${key}`}
-                              onClick={(event) => {
-                                event.preventDefault()
-                                let target = event.target as HTMLDivElement
-                                if (msgMenuSelectPressed) {
-                                  if (msgMenuTargets) {
-                                    for (
-                                      let i = 0;
-                                      i < msgMenuTargets.length;
-                                      i++
-                                    ) {
-                                      if (target != msgMenuTargets[i]) {
-                                        continue
+                                      if (i == 0) {
+                                        oldmsgContextMenu.shift()
+                                        setMsgMenuTargets(oldmsgContextMenu)
+                                        return
                                       } else {
-                                        let notUndefTarget = msgMenuTargets[i]
-                                        if (notUndefTarget) {
-                                          notUndefTarget.style.backgroundColor =
-                                            "transparent"
-                                        }
-                                        let oldmsgContextMenu = [
-                                          ...msgMenuTargets,
-                                        ]
-                                        if (msgMenuTargets.length == 1) {
-                                          setMsgMenuTargets([])
-                                          setMsgMenuSelectPressed(false)
-                                          return
-                                        }
-
-                                        if (i == 0) {
-                                          oldmsgContextMenu.shift()
+                                        if (
+                                          i ==
+                                          msgContextMenu.target.length - 1
+                                        ) {
+                                          oldmsgContextMenu.pop()
                                           setMsgMenuTargets(oldmsgContextMenu)
                                           return
                                         } else {
-                                          if (
-                                            i ==
-                                            msgContextMenu.target.length - 1
-                                          ) {
-                                            oldmsgContextMenu.pop()
-                                            setMsgMenuTargets(oldmsgContextMenu)
-                                            return
-                                          } else {
-                                            let oldTarget = oldmsgContextMenu
-                                              .slice(0, i)
-                                              .concat(
-                                                oldmsgContextMenu.slice(i + 1)
-                                              )
-                                            oldmsgContextMenu = oldTarget
-                                            setMsgMenuTargets(oldmsgContextMenu)
-                                            return
-                                          }
+                                          let oldTarget = oldmsgContextMenu
+                                            .slice(0, i)
+                                            .concat(
+                                              oldmsgContextMenu.slice(i + 1)
+                                            )
+                                          oldmsgContextMenu = oldTarget
+                                          setMsgMenuTargets(oldmsgContextMenu)
+                                          return
                                         }
                                       }
                                     }
-                                    setMsgMenuSelectPressed(true)
-                                    let aaaa = [...msgMenuTargets]
-                                    aaaa.push(target)
-                                    setMsgMenuTargets(aaaa)
-                                    target.style.backgroundColor =
-                                      "rgb(112, 117, 121, 0.8)"
+                                  }
+                                  setMsgMenuSelectPressed(true)
+                                  let aaaa = [...msgMenuTargets]
+                                  aaaa.push(target)
+                                  setMsgMenuTargets(aaaa)
+                                  target.style.backgroundColor =
+                                    "rgb(112, 117, 121, 0.8)"
+                                }
+                              }
+                            }}
+                            onContextMenu={(event) => {
+                              event.preventDefault()
+                              let target = event.target as HTMLDivElement
+                              if (msgMenuTargets) {
+                                if (msgMenuTargets[0]) {
+                                  if (!currentEditingState) {
+                                    return
                                   }
                                 }
-                              }}
-                              onContextMenu={(event) => {
-                                event.preventDefault()
-                                let target = event.target as HTMLDivElement
-                                if (msgMenuTargets) {
-                                  if (msgMenuTargets[0]) {
-                                    if (!currentEditingState) {
-                                      return
-                                    }
-                                  }
-                                }
-                                let vw = window.innerWidth + 840
-                                let vh = window.innerHeight + 100
-                                setMsgMenuCoords({
-                                  top: String((event.pageY / vh) * 100),
-                                  left: String((event.pageX / vw) * 100),
-                                })
-                                setMsgMenu(true)
-                                // if(!currentEditingState){
-                                setMsgMenuTargets([target])
-                                // }
-                                setMsgMenuListener(true)
-                              }}
-                              // className={
-                              //   currentChatMsgsList.length - 1 ==
-                              //   currentMappedListKey
-                              //     ? "trackMe"
-                              //     : undefined
+                              }
+                              let vw = window.innerWidth + 840
+                              let vh = window.innerHeight + 100
+                              setMsgMenuCoords({
+                                top: String((event.pageY / vh) * 100),
+                                left: String((event.pageX / vw) * 100),
+                              })
+                              setMsgMenu(true)
+                              // if(!currentEditingState){
+                              setMsgMenuTargets([target])
                               // }
-                              // className={key % 2 ? "rightmsg" : "leftmsg"}
+                              setMsgMenuListener(true)
+                            }}
+                            // className={
+                            //   currentChatMsgsList.length - 1 ==
+                            //   currentMappedListKey
+                            //     ? "trackMe"
+                            //     : undefined
+                            // }
+                            // className={key % 2 ? "rightmsg" : "leftmsg"}
+                          >
+                            <div
+                              id="surroundDiv"
+                              className={
+                                msgMenuSelectPressed &&
+                                msgMenuTargets &&
+                                msgMenuTargets.length
+                                  ? "toright-msg"
+                                  : "back-msg"
+                              }
+                              // style={ ? {}: {display: "flex"}}
                             >
-                              <div
-                                id="surroundDiv"
-                                className={
-                                  msgMenuSelectPressed &&
-                                  msgMenuTargets &&
-                                  msgMenuTargets.length
-                                    ? "toright-msg"
-                                    : "back-msg"
-                                }
-                                // style={ ? {}: {display: "flex"}}
-                              >
-                                {item.type == "blob" ? (
-                                  <div id="audioMsgDiv">
-                                    <audio
-                                      data-keepplaying
-                                      onEnded={(event) => {
-                                        setTheAudio(undefined)
-                                        let target =
-                                          event.target as HTMLAudioElement
-                                        if (target.parentElement) {
-                                          target.parentElement.children[2].children[1].children[0].innerHTML = `${Math.trunc(
-                                            Number(item.blobTime) / 60
-                                          )} :
+                              {item.type == "blob" ? (
+                                <div id="audioMsgDiv">
+                                  <audio
+                                    data-keepplaying
+                                    onEnded={(event) => {
+                                      setTheAudio(undefined)
+                                      let target =
+                                        event.target as HTMLAudioElement
+                                      if (target.parentElement) {
+                                        target.parentElement.children[2].children[1].children[0].innerHTML = `${Math.trunc(
+                                          Number(item.blobTime) / 60
+                                        )} :
                                             ${
                                               Math.trunc(
                                                 Number(item.blobTime) % 60
@@ -6875,27 +7039,27 @@ export function UserInterface(this: any) {
                                                     Number(item.blobTime) % 60
                                                   )
                                             }`
-                                        }
-                                      }}
-                                      onTimeUpdate={(event) => {
-                                        let target =
-                                          event.target as HTMLAudioElement
-                                        if (target.parentElement) {
-                                          if (target.currentTime != 0) {
-                                            target.parentElement.children[2].children[1].children[0].innerHTML = `${Math.trunc(
-                                              target.currentTime / 60
-                                            )} : ${
-                                              Math.trunc(
-                                                target.currentTime % 60
-                                              ) < 10
-                                                ? "0" +
-                                                  Math.trunc(
-                                                    target.currentTime % 60
-                                                  )
-                                                : Math.trunc(
-                                                    target.currentTime % 60
-                                                  )
-                                            }  /  
+                                      }
+                                    }}
+                                    onTimeUpdate={(event) => {
+                                      let target =
+                                        event.target as HTMLAudioElement
+                                      if (target.parentElement) {
+                                        if (target.currentTime != 0) {
+                                          target.parentElement.children[2].children[1].children[0].innerHTML = `${Math.trunc(
+                                            target.currentTime / 60
+                                          )} : ${
+                                            Math.trunc(
+                                              target.currentTime % 60
+                                            ) < 10
+                                              ? "0" +
+                                                Math.trunc(
+                                                  target.currentTime % 60
+                                                )
+                                              : Math.trunc(
+                                                  target.currentTime % 60
+                                                )
+                                          }  /  
                                             ${Math.trunc(
                                               Number(item.blobTime) / 60
                                             )} :
@@ -6911,8 +7075,8 @@ export function UserInterface(this: any) {
                                                     Number(item.blobTime) % 60
                                                   )
                                             }`
-                                          } else {
-                                            target.parentElement.children[2].children[1].children[0].innerHTML = `
+                                        } else {
+                                          target.parentElement.children[2].children[1].children[0].innerHTML = `
                                               ${Math.trunc(
                                                 Number(item.blobTime) / 60
                                               )} :
@@ -6928,93 +7092,90 @@ export function UserInterface(this: any) {
                                                       Number(item.blobTime) % 60
                                                     )
                                               }`
-                                          }
                                         }
-                                      }}
-                                      src={
-                                        item.blob
-                                        //   URL.createObjectURL(
-                                        //   // new Blob([item.blob], {
-                                        //   //   type: "audio/webm",
-                                        //   // })
-                                        //   new Blob(
-                                        //     // @ts-ignore
-                                        //     [item.blob],
-                                        //     {
-                                        //       type: "audio/mp3",
-                                        //     }
-                                        //   )
-                                        //   // b64toBlob(item.blob, "audio/webm")
-                                        // )
                                       }
-                                    ></audio>
-                                    <div
-                                      id="audioButton"
-                                      onClick={(event) => {
-                                        // new Audio(
-                                        //   URL.createObjectURL(item.blob)
-                                        // ).play()
-                                        let theAudioNow = (
-                                          event.target as HTMLDivElement
-                                        ).parentElement?.parentElement
-                                          ?.children[0] as HTMLAudioElement
-                                        setTheAudio(theAudioNow)
-                                        if (
-                                          theAudio &&
-                                          theAudio == theAudioNow
-                                        ) {
-                                          if (theAudio.paused) {
-                                            theAudio.play()
-                                          } else {
-                                            theAudio.pause()
-                                          }
+                                    }}
+                                    src={
+                                      item.blob
+                                      //   URL.createObjectURL(
+                                      //   // new Blob([item.blob], {
+                                      //   //   type: "audio/webm",
+                                      //   // })
+                                      //   new Blob(
+                                      //     // @ts-ignore
+                                      //     [item.blob],
+                                      //     {
+                                      //       type: "audio/mp3",
+                                      //     }
+                                      //   )
+                                      //   // b64toBlob(item.blob, "audio/webm")
+                                      // )
+                                    }
+                                  ></audio>
+                                  <div
+                                    id="audioButton"
+                                    onClick={(event) => {
+                                      // new Audio(
+                                      //   URL.createObjectURL(item.blob)
+                                      // ).play()
+                                      let theAudioNow = (
+                                        event.target as HTMLDivElement
+                                      ).parentElement?.parentElement
+                                        ?.children[0] as HTMLAudioElement
+                                      setTheAudio(theAudioNow)
+                                      if (theAudio && theAudio == theAudioNow) {
+                                        if (theAudio.paused) {
+                                          theAudio.play()
                                         } else {
-                                          if (theAudioNow) {
-                                            if (theAudioNow.paused) {
-                                              theAudioNow.play()
-                                              // theAudioNow.addEventListener(
-                                              //   "canplay",
-                                              //   function handler(e) {
-                                              //     theAudioNow.play()
-                                              //     console.log("play2")
-                                              //     e.currentTarget?.removeEventListener(
-                                              //       e.type,
-                                              //       handler
-                                              //     )
-                                              //   }
-                                              // )
-                                            } else {
-                                              theAudioNow.pause()
-                                            }
+                                          theAudio.pause()
+                                        }
+                                      } else {
+                                        if (theAudioNow) {
+                                          if (theAudioNow.paused) {
+                                            theAudioNow.play()
+                                            // theAudioNow.addEventListener(
+                                            //   "canplay",
+                                            //   function handler(e) {
+                                            //     theAudioNow.play()
+                                            //     console.log("play2")
+                                            //     e.currentTarget?.removeEventListener(
+                                            //       e.type,
+                                            //       handler
+                                            //     )
+                                            //   }
+                                            // )
+                                          } else {
+                                            theAudioNow.pause()
                                           }
                                         }
-                                        //  else if () {
-                                        //   theAudio.pause();
-                                        //   theAudio.currentTime = 0;
-                                        // }
-                                        // else {
-                                        //   return false;
-                                        // }
-                                      }}
-                                    >
-                                      <img src="./audioForward.png" alt="" />
-                                    </div>
-                                    <div id="notAudioButton">
-                                      <div id="audioProgress">
-                                        {/* <MyVisual /> */}
-                                        {item.blobWave.map((height: any) => {
-                                          return (
-                                            <div
-                                              id="oneAudioRect"
-                                              style={{
-                                                height: `${height}px`,
-                                              }}
-                                            >
-                                              {" "}
-                                            </div>
-                                          )
-                                        })}
-                                        {/* <AudioVisualizer
+                                      }
+                                      //  else if () {
+                                      //   theAudio.pause();
+                                      //   theAudio.currentTime = 0;
+                                      // }
+                                      // else {
+                                      //   return false;
+                                      // }
+                                    }}
+                                  >
+                                    <img src="./audioForward.png" alt="" />
+                                  </div>
+                                  <div id="notAudioButton">
+                                    <div id="audioProgress">
+                                      {/* <MyVisual /> */}
+                                      {item.blobWave.map((height: any) => {
+                                        return (
+                                          <div
+                                            id="oneAudioRect"
+                                            style={{
+                                              height: `${height}px`,
+                                            }}
+                                          >
+                                            {" "}
+                                          </div>
+                                        )
+                                      })}
+                                      {/* <AudioVisualizer
                                             blob={item.blob}
                                             width={205}
                                             height={50}
@@ -7028,914 +7189,225 @@ export function UserInterface(this: any) {
                                             //     : URL.createObjectURL(item.blob)
                                             // }
                                           /> */}
-                                        {/* {item.blobWave} */}
-                                      </div>
-                                      <div id="audioTimeWraper">
-                                        <div id="audioTime">
-                                          {item.blobTime}
+                                      {/* {item.blobWave} */}
+                                    </div>
+                                    <div id="audioTimeWraper">
+                                      <div id="audioTime">{item.blobTime}</div>
+                                      {item.comentary ? (
+                                        <></>
+                                      ) : (
+                                        <div
+                                          id="time"
+                                          data-msgtime={
+                                            (timeForCorrectMsgTime = item.time)
+                                          }
+                                        >
+                                          {new Date(
+                                            Number(item.time)
+                                          ).toLocaleTimeString([], {
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                          })}
                                         </div>
-                                        {item.comentary ? (
-                                          <></>
-                                        ) : (
-                                          <div
-                                            id="time"
-                                            data-msgtime={
-                                              (timeForCorrectMsgTime =
-                                                item.time)
-                                            }
-                                          >
-                                            {new Date(
-                                              Number(item.time)
-                                            ).toLocaleTimeString([], {
-                                              hour: "2-digit",
-                                              minute: "2-digit",
-                                            })}
-                                          </div>
-                                        )}
-                                      </div>
+                                      )}
                                     </div>
                                   </div>
-                                ) : item.img ? (
-                                  <div id="msgImgWithCommentary">
-                                    <img src={item.img} alt="" />
-                                    {item.comentary ? undefined : (
-                                      <div
-                                        id="time"
-                                        data-msgtime={
-                                          (timeForCorrectMsgTime = item.time)
-                                        }
-                                      >
-                                        {new Date(
-                                          Number(item.time)
-                                        ).toLocaleTimeString([], {
-                                          hour: "2-digit",
-                                          minute: "2-digit",
-                                        })}
-                                      </div>
-                                    )}{" "}
-                                  </div>
-                                ) : (
-                                  <></>
-                                )}
-                                {item.comentary ? (
-                                  <div id="comentary">
-                                    <p>{item.comentary}</p>
-                                    {!item.emotions.length &&
-                                    currentChatMsgsList[key].comentary &&
-                                    getTextWidth(
-                                      currentChatMsgsList[key].comentary,
-                                      "16px open sans"
-                                    ) <= 429 ? (
-                                      <div
-                                        id="time"
-                                        data-msgtime={
-                                          (timeForCorrectMsgTime = item.time)
-                                        }
-                                      >
-                                        {item.pinned ? (
-                                          <img
-                                            src="./icons8-pin-50.png"
-                                            alt=""
-                                          />
-                                        ) : undefined}
-                                        {new Date(
-                                          Number(item.time)
-                                        ).toLocaleTimeString([], {
-                                          hour: "2-digit",
-                                          minute: "2-digit",
-                                        })}
-                                      </div>
-                                    ) : undefined}
-                                  </div>
-                                ) : undefined}
-                                {item.emotions.length ? (
-                                  <div id="emotions">
-                                    {item.emotions
-                                      ? item.emotions.map((emotion) => {
-                                          return (
-                                            <div
-                                              id="oneemo"
-                                              style={
-                                                emotion.users.includes(
-                                                  userFindName
-                                                )
-                                                  ? {
-                                                      backgroundColor:
-                                                        "#3390ec",
-                                                      color: "white",
-                                                    }
-                                                  : { display: "flex" }
-                                              }
-                                              // key={key++} CHAGE "KEY" TO SOME OTHER WORD OR EMOTIONS WONT WORK
-                                            >
-                                              <p>{emotion.smile}</p>
-                                              <p>{emotion.count}</p>
-                                            </div>
-                                          )
-                                        })
-                                      : undefined}
-                                    {item.emotions.length ||
-                                    getTextWidth(
-                                      currentChatMsgsList[key].comentary,
-                                      "16px open sans"
-                                    ) > 429 ? (
-                                      <div
-                                        id="time"
-                                        data-msgtime={
-                                          (timeForCorrectMsgTime = item.time)
-                                        }
-                                      >
-                                        {item.pinned ? (
-                                          <img
-                                            src="./icons8-pin-50.png"
-                                            alt=""
-                                          />
-                                        ) : undefined}
-                                        {new Date(
-                                          Number(item.time)
-                                        ).toLocaleTimeString([], {
-                                          hour: "2-digit",
-                                          minute: "2-digit",
-                                        })}
-                                      </div>
-                                    ) : undefined}
-                                  </div>
-                                ) : getTextWidth(
+                                </div>
+                              ) : item.img ? (
+                                <div id="msgImgWithCommentary">
+                                  <img src={item.img} alt="" />
+                                  {item.comentary ? undefined : (
+                                    <div
+                                      id="time"
+                                      data-msgtime={
+                                        (timeForCorrectMsgTime = item.time)
+                                      }
+                                    >
+                                      {new Date(
+                                        Number(item.time)
+                                      ).toLocaleTimeString([], {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                      })}
+                                    </div>
+                                  )}{" "}
+                                </div>
+                              ) : (
+                                <></>
+                              )}
+                              {item.comentary ? (
+                                <div id="comentary">
+                                  <p>{item.comentary}</p>
+                                  {!item.emotions.length &&
+                                  currentChatMsgsList[key].comentary &&
+                                  getTextWidth(
+                                    currentChatMsgsList[key].comentary,
+                                    "16px open sans"
+                                  ) <= 429 ? (
+                                    <div
+                                      id="time"
+                                      data-msgtime={
+                                        (timeForCorrectMsgTime = item.time)
+                                      }
+                                    >
+                                      {item.pinned ? (
+                                        <img src="./icons8-pin-50.png" alt="" />
+                                      ) : undefined}
+                                      {new Date(
+                                        Number(item.time)
+                                      ).toLocaleTimeString([], {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                      })}
+                                    </div>
+                                  ) : undefined}
+                                </div>
+                              ) : undefined}
+                              {item.emotions.length ? (
+                                <div id="emotions">
+                                  {item.emotions
+                                    ? item.emotions.map((emotion) => {
+                                        return (
+                                          <div
+                                            id="oneemo"
+                                            style={
+                                              emotion.users.includes(
+                                                userFindName
+                                              )
+                                                ? {
+                                                    backgroundColor: "#3390ec",
+                                                    color: "white",
+                                                  }
+                                                : { display: "flex" }
+                                            }
+                                            // key={key++} CHAGE "KEY" TO SOME OTHER WORD OR EMOTIONS WONT WORK
+                                          >
+                                            <p>{emotion.smile}</p>
+                                            <p>{emotion.count}</p>
+                                          </div>
+                                        )
+                                      })
+                                    : undefined}
+                                  {item.emotions.length ||
+                                  getTextWidth(
                                     currentChatMsgsList[key].comentary,
                                     "16px open sans"
                                   ) > 429 ? (
-                                  <div
-                                    id="time"
-                                    data-msgtime={
-                                      (timeForCorrectMsgTime = item.time)
-                                    }
-                                  >
-                                    {item.pinned ? (
-                                      <img src="./icons8-pin-50.png" alt="" />
-                                    ) : undefined}
-                                    {new Date(
-                                      Number(item.time)
-                                    ).toLocaleTimeString([], {
-                                      hour: "2-digit",
-                                      minute: "2-digit",
-                                    })}
-                                  </div>
-                                ) : undefined}
-                              </div>
-                            </div>
-                          </>
-                        )
-                      })
-                    ) : currentChatType ? (
-                      <div id="noMessagesYet">
-                        No Messages Yet
-                        <img src="" alt="" />
-                      </div>
-                    ) : undefined}
-                  </div>
-                  {msgMenuSelectPressed &&
-                  msgMenuTargets &&
-                  msgMenuTargets.length ? (
-                    <div id="userInterfaceChatMainInputBarOnSelectReplacement">
-                      <div id="userInterfaceChatMainInputBarOnSelectReplacementLine">
-                        <div className="wide">
-                          <img src="./icons8-close-50.png" alt="" />
-                          <p>
-                            {msgMenuTargets.length}{" "}
-                            {msgMenuTargets.length == 1
-                              ? "message"
-                              : "messages"}
-                          </p>
-                        </div>
-                        <div>
-                          <img src="./icons8-forward-50.png" alt="" />
-                          <p>Forward</p>
-                        </div>
-                        <div
-                          className="red-text"
-                          onClick={() => {
-                            universalChatManipulationFunction(
-                              { type: "nomsg" },
-                              "delete"
-                            )
-                          }}
-                        >
-                          <img
-                            src="./icons8-trash-can-layout-for-a-indication-to-throw-trash-24.png"
-                            alt=""
-                          />
-                          <p>Delete</p>
-                        </div>
-                      </div>
-                    </div>
-                  ) : currentEditingState ? (
-                    <div
-                      id="userInterfaceChatMainInputBar"
-                      className="h-120"
-                      style={
-                        userStatus == "admin"
-                          ? { display: "flex" }
-                          : { display: "none" }
-                      }
-                    >
-                      <div id="userInterfaceChatMainInputBarDevider">
-                        <div id="editReference">
-                          <img src="./icons8-edit-50.png" alt="" />
-                          <div>
-                            <p>Editing</p>
-                            <p>{currentEditText}</p>
-                          </div>
-                          <img
-                            src="./icons8-close-50.png"
-                            alt=""
-                            onClick={() => {
-                              setCurrentEditText("")
-                              setCurrentEditingState(false)
-                              setCurrentEditTextInput("")
-                              setMsgMenuTargets([])
-                              setCurrentEditTarget(undefined)
-                            }}
-                          />
-                        </div>
-
-                        <div id="userInterfaceChatMainInputLineEdit">
-                          <div id="userInterfaceChatMainInputSmile">
-                            {" "}
-                            <img
-                              onMouseEnter={() => {
-                                setSmileBarMouseEnter(true)
-                              }}
-                              onClick={() => {
-                                if (smileBarClick) {
-                                  setSmileBarMouseEnter(false)
-                                  setSmileBarClick(!smileBarClick)
-                                } else {
-                                  setSmileBarClick(!smileBarClick)
-                                }
-                              }}
-                              onMouseLeave={() => {
-                                setSmileBarMouseEnter(false)
-                              }}
-                              src={
-                                smileBarClick || smileBarMouseEnter
-                                  ? `./inputSmileBlue.png`
-                                  : `./inputSmile.png`
-                              }
-                            />
-                            {smileBarClick || smileBarMouseEnter ? (
-                              <div id="userInterfaceChatMainInputSmileMainScreen">
-                                <div id="smilesGroupsDiv">
-                                  {smileGroups.map((smileGroup) => {
-                                    return (
-                                      <img src={smileGroup.mainSmile} alt="" />
-                                    )
+                                    <div
+                                      id="time"
+                                      data-msgtime={
+                                        (timeForCorrectMsgTime = item.time)
+                                      }
+                                    >
+                                      {item.pinned ? (
+                                        <img src="./icons8-pin-50.png" alt="" />
+                                      ) : undefined}
+                                      {new Date(
+                                        Number(item.time)
+                                      ).toLocaleTimeString([], {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                      })}
+                                    </div>
+                                  ) : undefined}
+                                </div>
+                              ) : getTextWidth(
+                                  currentChatMsgsList[key].comentary,
+                                  "16px open sans"
+                                ) > 429 ? (
+                                <div
+                                  id="time"
+                                  data-msgtime={
+                                    (timeForCorrectMsgTime = item.time)
+                                  }
+                                >
+                                  {item.pinned ? (
+                                    <img src="./icons8-pin-50.png" alt="" />
+                                  ) : undefined}
+                                  {new Date(
+                                    Number(item.time)
+                                  ).toLocaleTimeString([], {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
                                   })}
                                 </div>
-                                <div id="smilesSearchDiv">some search</div>
-                                {smileGroups.map((smileGroup) => {
-                                  return (
-                                    <div id="smilesWholeGroupDiv">
-                                      <div id="smilesGroupNameDiv">
-                                        {smileGroup.name}
-                                      </div>
-                                      <div id="smilesGroupSmilesDiv">
-                                        {smileGroup.smiles.map((unoSmile) => {
-                                          return (
-                                            <div
-                                              id="theSmile"
-                                              onClick={() => {
-                                                let text =
-                                                  currentEditTextInput +
-                                                  `${unoSmile.symbol}`
-                                                setCurrentEditTextInput(text)
-                                                document
-                                                  .getElementById(
-                                                    "userInterfaceChatMainInputTextInputEdit"
-                                                  )
-                                                  ?.focus()
-                                              }}
-                                            >
-                                              {unoSmile.symbol}
-                                            </div>
-                                          )
-                                        })}
-                                      </div>
-                                    </div>
-                                  )
-                                })}
-                              </div>
-                            ) : undefined}
+                              ) : undefined}
+                            </div>
                           </div>
-                          <div id="userInterfaceChatMainInputTextEdit">
-                            <input
-                              id="userInterfaceChatMainInputTextInputEdit"
-                              type="text"
-                              value={currentEditTextInput}
-                              onChange={(event) => {
-                                let target = event.target as HTMLInputElement
-                                setCurrentEditTextInput(target.value)
-                              }}
-                              onKeyDown={async (event) => {
-                                let target = event.target as HTMLInputElement
-                                if (event.key == "Enter") {
-                                  if (!target.value) {
-                                    return
-                                  }
-
-                                  let mainInfo: editMsgType = {
-                                    type: "edit",
-                                    msgObjToEdit: {
-                                      currentEditTarget: currentEditTarget,
-                                      currentEditTextInput:
-                                        currentEditTextInput,
-                                    },
-                                  }
-                                  await universalChatManipulationFunction(
-                                    mainInfo,
-                                    "edit"
-                                  )
-                                }
-                              }}
-                              placeholder="Message"
-                            />
-                          </div>
-
-                          <div id="userInterfaceChatMainInputFileEdit">
-                            <input
-                              type="file"
-                              id="fileUploadInput"
-                              // onChange={async (event) => {
-                              //   await onImageChooseForInput(event)
-                              //   setDisplaySend(true)
-                              // }}
-                            />
-                            <label htmlFor="fileUploadInput">
-                              <img src={`./fileInput.png`} />
-                            </label>
-                          </div>
-                        </div>
+                        </>
+                      )
+                    })
+                  ) : currentChatType ? (
+                    <div id="noMessagesYet">
+                      No Messages Yet
+                      <img src="" alt="" />
+                    </div>
+                  ) : undefined}
+                </div>
+                {msgMenuSelectPressed &&
+                msgMenuTargets &&
+                msgMenuTargets.length ? (
+                  <div id="userInterfaceChatMainInputBarOnSelectReplacement">
+                    <div id="userInterfaceChatMainInputBarOnSelectReplacementLine">
+                      <div className="wide">
+                        <img src="./icons8-close-50.png" alt="" />
+                        <p>
+                          {msgMenuTargets.length}{" "}
+                          {msgMenuTargets.length == 1 ? "message" : "messages"}
+                        </p>
                       </div>
-
+                      <div>
+                        <img src="./icons8-forward-50.png" alt="" />
+                        <p>Forward</p>
+                      </div>
                       <div
-                        id="userInterfaceChatMainInputVoice"
-                        onClick={async (event) => {
-                          event.preventDefault()
-                          let mainInfo: editMsgType = {
-                            type: "edit",
-                            msgObjToEdit: {
-                              currentEditTarget: currentEditTarget,
-                              currentEditTextInput: currentEditTextInput,
-                            },
-                          }
-                          await universalChatManipulationFunction(
-                            mainInfo,
-                            "edit"
+                        className="red-text"
+                        onClick={() => {
+                          universalChatManipulationFunction(
+                            { type: "nomsg" },
+                            "delete"
                           )
                         }}
                       >
-                        <img src={`./select.png`} />
-                      </div>
-
-                      {/* const [inputImgUrl, setInputImgUrl] = useState("")
-                    const [inputImg, setInputImg] = useState<File | null>(null)
-                    const [showInputImg, setShowInputImg] = useState(false) */}
-
-                      {inputImgType == "image" ? (
-                        <div
-                          id="inputImgShowBackground"
-                          style={
-                            displaySend
-                              ? { display: "flex" }
-                              : { display: "none" }
-                          }
-                        >
-                          <div id="inputImgDisplay">
-                            <div id="inputImgDisplayTop">
-                              <div id="imgInputClose">
-                                <img
-                                  src={"./icons8-close-50.png"}
-                                  alt=""
-                                  onClick={() => {
-                                    setDisplaySend(false)
-                                  }}
-                                />
-                              </div>
-                              <p>Send Photo</p>
-                              <img
-                                id="imgInputSetting"
-                                src={"./settings.png"}
-                                alt=""
-                              />
-                            </div>
-                            <div id="inputImgimg">
-                              {" "}
-                              <img
-                                src={
-                                  inputImgUrl
-                                    ? inputImgUrl
-                                    : "./blank_photo.png"
-                                }
-                                alt=""
-                              />
-                            </div>
-                            <div id="inputImgDisplayBottom">
-                              <input
-                                type="text"
-                                id="fileUploadCommentaryInput"
-                                placeholder="Add a caption..."
-                                value={currentChatComentary}
-                                onChange={(event) => {
-                                  let target = event.target as HTMLInputElement
-                                  setCurrentChatComentary(target.value)
-                                }}
-                                onKeyDown={async (event) => {
-                                  let target = event.target as HTMLInputElement
-                                  if (event.key == "Enter") {
-                                    if (!target.value) {
-                                      return
-                                    }
-                                    let mainInfo =
-                                      await createMsgObjectForFiles()
-                                    universalChatManipulationFunction(
-                                      mainInfo,
-                                      "add"
-                                    )
-                                    setCurrentChatComentary("")
-                                    setDisplaySend(false)
-                                  }
-                                }}
-                              />
-                              <div
-                                id="inputImgSend"
-                                onClick={async () => {
-                                  let mainInfo = await createMsgObjectForFiles()
-                                  universalChatManipulationFunction(
-                                    mainInfo,
-                                    "add"
-                                  )
-
-                                  setCurrentChatComentary("")
-                                  setDisplaySend(false)
-                                }}
-                              >
-                                SEND
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div
-                          id="inputImgShowBackground"
-                          style={
-                            displaySend
-                              ? { display: "flex" }
-                              : { display: "none" }
-                          }
-                        >
-                          <div id="inputImgDisplay">
-                            <div id="inputImgDisplayTop">
-                              <div id="imgInputClose">
-                                <img
-                                  src={"./icons8-close-50.png"}
-                                  alt=""
-                                  onClick={() => {
-                                    setDisplaySend(false)
-                                  }}
-                                />
-                              </div>
-                              <p>Send File</p>
-                              <img
-                                id="imgInputSetting"
-                                src={"./settings.png"}
-                                alt=""
-                              />
-                            </div>
-                            <div id="inputImgimg">
-                              {" "}
-                              <img src={"./icons8-file-48.png"} alt="" />
-                              <p>
-                                {inputImgType}
-                                {inputImgName}
-                                {inputImgSize}
-                              </p>
-                            </div>
-                            <div id="inputImgDisplayBottom">
-                              <input
-                                type="text"
-                                placeholder="Add a caption..."
-                                value={currentChatComentary}
-                                onChange={(event) => {
-                                  let target = event.target as HTMLInputElement
-                                  setCurrentChatComentary(target.value)
-                                }}
-                                onKeyDown={async (event) => {
-                                  let target = event.target as HTMLInputElement
-                                  if (event.key == "Enter") {
-                                    if (!target.value) {
-                                      return
-                                    }
-                                    let mainInfo =
-                                      await createMsgObjectForFiles()
-                                    universalChatManipulationFunction(
-                                      mainInfo,
-                                      "add"
-                                    )
-                                    setCurrentChatComentary("")
-                                    setDisplaySend(false)
-                                  }
-                                }}
-                              />
-                              <div id="inputImgSend">SEND</div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ) : isRecording ? (
-                    <div
-                      id="userInterfaceChatMainInputBarRecord"
-                      className="h-60"
-                      style={
-                        userStatus == "admin"
-                          ? { display: "flex" }
-                          : { display: "none" }
-                      }
-                    >
-                      <div id="userInterfaceChatMainInputLineRecord">
-                        <div id="userInterfaceChatMainInputTextRecord">
-                          <input
-                            id="userInterfaceChatMainInputTextInput"
-                            type="text"
-                            value={currentChatComentary}
-                            onChange={(event) => {
-                              let target = event.target as HTMLInputElement
-                              setCurrentChatComentary(target.value)
-                            }}
-                            onKeyDown={async (event) => {
-                              let target = event.target as HTMLInputElement
-                            }}
-                            placeholder="Message"
-                          />
-                        </div>
-                        <div id="recordTimer">
-                          {/* <p>{time}</p> */}
-                          <p>{"111111"}</p>
-                          <div id="flashingRed"></div>{" "}
-                        </div>
-                      </div>
-                      <div
-                        id="stopRecord"
-                        onClick={() => {
-                          if (
-                            microphonePermissionState === "granted" &&
-                            isRecording
-                          ) {
-                            handleClickStopRecord("stop")
-                          }
-                        }}
-                      >
                         <img
-                          src={`./icons8-trash-can-layout-for-a-indication-to-throw-trash-24.png`}
+                          src="./icons8-trash-can-layout-for-a-indication-to-throw-trash-24.png"
+                          alt=""
+                        />
+                        <p>Delete</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : currentEditingState ? (
+                  <div
+                    id="userInterfaceChatMainInputBar"
+                    className="h-120"
+                    style={
+                      userStatus == "admin"
+                        ? { display: "flex" }
+                        : { display: "none" }
+                    }
+                  >
+                    <div id="userInterfaceChatMainInputBarDevider">
+                      <div id="editReference">
+                        <img src="./icons8-edit-50.png" alt="" />
+                        <div>
+                          <p>Editing</p>
+                          <p>{currentEditText}</p>
+                        </div>
+                        <img
+                          src="./icons8-close-50.png"
+                          alt=""
+                          onClick={() => {
+                            setCurrentEditText("")
+                            setCurrentEditingState(false)
+                            setCurrentEditTextInput("")
+                            setMsgMenuTargets([])
+                            setCurrentEditTarget(undefined)
+                          }}
                         />
                       </div>
-                      <div
-                        id="userInterfaceChatMainInputVoiceApprove"
-                        onClick={() => {
-                          handleClickStopRecord("go")
-                        }}
-                      >
-                        <img src={`./icons8-arrow-right-64.png`} />
-                      </div>
 
-                      {/* const [inputImgUrl, setInputImgUrl] = useState("")
-                const [inputImg, setInputImg] = useState<File | null>(null)
-                    const [showInputImg, setShowInputImg] = useState(false) */}
-                      {mutedTableOpen ? (
-                        <div id="inputImgShowBackground">
-                          <div id="notificationSetDiv">
-                            <div id="notificationSetDivHeader">
-                              <img src={currentChatImgSrc} alt="" />{" "}
-                              Notifications
-                            </div>
-
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("3600000")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "3600000"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              For 1 Hour
-                            </div>
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("14400000")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "14400000"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              For 4 Hour
-                            </div>
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("28800000")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "28800000"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              For 8 Hour
-                            </div>
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("86400000")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "86400000"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              For 1 Day
-                            </div>
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("259200000")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "259200000"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              For 3 Days
-                            </div>
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("permanent")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "permanent"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              Forever
-                            </div>
-                            <div id="notificationSetDivFooter">
-                              <p
-                                onClick={() => {
-                                  setMutedTableOpen(false)
-                                }}
-                              >
-                                CANCEL
-                              </p>
-                              <p
-                                onClick={() => {
-                                  let info: {
-                                    type: "mute"
-                                    time: string
-                                  } = {
-                                    type: "mute",
-                                    time: notificationInterval,
-                                  }
-                                  universalChatManipulationFunction(
-                                    info,
-                                    "mute"
-                                  )
-                                  setMutedTableOpen(false)
-                                }}
-                              >
-                                MUTE
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      ) : undefined}
-                      {inputImgType == "image" ? (
-                        <div
-                          id="inputImgShowBackground"
-                          style={
-                            displaySend
-                              ? { display: "flex" }
-                              : { display: "none" }
-                          }
-                        >
-                          <div id="inputImgDisplay">
-                            <div id="inputImgDisplayTop">
-                              <div id="imgInputClose">
-                                <img
-                                  src={"./icons8-close-50.png"}
-                                  alt=""
-                                  onClick={() => {
-                                    setDisplaySend(false)
-                                  }}
-                                />
-                              </div>
-                              <p>Send Photo</p>
-                              <img
-                                id="imgInputSetting"
-                                src={"./settings.png"}
-                                alt=""
-                              />
-                            </div>
-                            <div id="inputImgimg">
-                              {" "}
-                              <img
-                                src={
-                                  inputImgUrl
-                                    ? inputImgUrl
-                                    : "./blank_photo.png"
-                                }
-                                alt=""
-                              />
-                            </div>
-                            <div id="inputImgDisplayBottom">
-                              <input
-                                type="text"
-                                id="fileUploadCommentaryInput"
-                                placeholder="Add a caption..."
-                                value={currentChatComentary}
-                                onChange={(event) => {
-                                  let target = event.target as HTMLInputElement
-                                  setCurrentChatComentary(target.value)
-                                }}
-                                onKeyDown={async (event) => {
-                                  let target = event.target as HTMLInputElement
-                                  if (event.key == "Enter") {
-                                    if (!target.value) {
-                                      return
-                                    }
-                                    let mainInfo =
-                                      await createMsgObjectForFiles()
-                                    universalChatManipulationFunction(
-                                      mainInfo,
-                                      "add"
-                                    )
-                                    setCurrentChatComentary("")
-                                    setDisplaySend(false)
-                                  }
-                                }}
-                              />
-                              <div
-                                id="inputImgSend"
-                                onClick={async () => {
-                                  let mainInfo = await createMsgObjectForFiles()
-                                  universalChatManipulationFunction(
-                                    mainInfo,
-                                    "add"
-                                  )
-
-                                  setCurrentChatComentary("")
-                                  setDisplaySend(false)
-                                }}
-                              >
-                                SEND
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div
-                          id="inputImgShowBackground"
-                          style={
-                            displaySend
-                              ? { display: "flex" }
-                              : { display: "none" }
-                          }
-                        >
-                          <div id="inputImgDisplay">
-                            <div id="inputImgDisplayTop">
-                              <div id="imgInputClose">
-                                <img
-                                  src={"./icons8-close-50.png"}
-                                  alt=""
-                                  onClick={() => {
-                                    setDisplaySend(false)
-                                  }}
-                                />
-                              </div>
-                              <p>Send File</p>
-                              <img
-                                id="imgInputSetting"
-                                src={"./settings.png"}
-                                alt=""
-                              />
-                            </div>
-                            <div id="inputImgimg">
-                              {" "}
-                              <img src={"./icons8-file-48.png"} alt="" />
-                              <p>
-                                {inputImgType}
-                                {inputImgName}
-                                {inputImgSize}
-                              </p>
-                            </div>
-                            <div id="inputImgDisplayBottom">
-                              <input
-                                type="text"
-                                placeholder="Add a caption..."
-                                value={currentChatComentary}
-                                onChange={(event) => {
-                                  let target = event.target as HTMLInputElement
-                                  setCurrentChatComentary(target.value)
-                                }}
-                                onKeyDown={async (event) => {
-                                  let target = event.target as HTMLInputElement
-                                  if (event.key == "Enter") {
-                                    if (!target.value) {
-                                      return
-                                    }
-                                    let mainInfo =
-                                      await createMsgObjectForFiles()
-                                    universalChatManipulationFunction(
-                                      mainInfo,
-                                      "add"
-                                    )
-                                    setCurrentChatComentary("")
-                                    setDisplaySend(false)
-                                  }
-                                }}
-                              />
-                              <div id="inputImgSend">SEND</div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div
-                      id="userInterfaceChatMainInputBar"
-                      className="h-60"
-                      style={
-                        userStatus == "admin"
-                          ? { display: "flex" }
-                          : { display: "none" }
-                      }
-                    >
-                      <div id="userInterfaceChatMainInputLine">
+                      <div id="userInterfaceChatMainInputLineEdit">
                         <div id="userInterfaceChatMainInputSmile">
                           {" "}
                           <img
@@ -7982,12 +7454,12 @@ export function UserInterface(this: any) {
                                             id="theSmile"
                                             onClick={() => {
                                               let text =
-                                                currentChatComentary +
+                                                currentEditTextInput +
                                                 `${unoSmile.symbol}`
-                                              setCurrentChatComentary(text)
+                                              setCurrentEditTextInput(text)
                                               document
                                                 .getElementById(
-                                                  "userInterfaceChatMainInputTextInput"
+                                                  "userInterfaceChatMainInputTextInputEdit"
                                                 )
                                                 ?.focus()
                                             }}
@@ -8003,14 +7475,14 @@ export function UserInterface(this: any) {
                             </div>
                           ) : undefined}
                         </div>
-                        <div id="userInterfaceChatMainInputText">
+                        <div id="userInterfaceChatMainInputTextEdit">
                           <input
-                            id="userInterfaceChatMainInputTextInput"
+                            id="userInterfaceChatMainInputTextInputEdit"
                             type="text"
-                            value={currentChatComentary}
+                            value={currentEditTextInput}
                             onChange={(event) => {
                               let target = event.target as HTMLInputElement
-                              setCurrentChatComentary(target.value)
+                              setCurrentEditTextInput(target.value)
                             }}
                             onKeyDown={async (event) => {
                               let target = event.target as HTMLInputElement
@@ -8019,496 +7491,1152 @@ export function UserInterface(this: any) {
                                   return
                                 }
 
-                                let mainInfo: addMsgType = {
-                                  type: "add",
-                                  img: "",
-                                  comentary: target.value,
-                                  emotions: [],
-                                  time: String(new Date().getTime()),
-                                  pinned: false,
-                                  author: userFindName,
+                                let mainInfo: editMsgType = {
+                                  type: "edit",
+                                  msgObjToEdit: {
+                                    currentEditTarget: currentEditTarget,
+                                    currentEditTextInput: currentEditTextInput,
+                                  },
                                 }
-
                                 await universalChatManipulationFunction(
                                   mainInfo,
-                                  "add"
+                                  "edit"
                                 )
                               }
                             }}
                             placeholder="Message"
                           />
                         </div>
-                        <div id="userInterfaceChatMainInputFile">
+
+                        <div id="userInterfaceChatMainInputFileEdit">
                           <input
                             type="file"
                             id="fileUploadInput"
-                            onChange={async (event) => {
-                              await onImageChooseForInput(event)
-                              setDisplaySend(true)
-                            }}
+                            // onChange={async (event) => {
+                            //   await onImageChooseForInput(event)
+                            //   setDisplaySend(true)
+                            // }}
                           />
                           <label htmlFor="fileUploadInput">
                             <img src={`./fileInput.png`} />
                           </label>
                         </div>
                       </div>
-                      <div
-                        id="userInterfaceChatMainInputVoice"
-                        onClick={() => {
-                          if (
-                            microphonePermissionState === "granted" &&
-                            !isRecording
-                          ) {
-                            handleClickStartRecord()
-                          }
-                        }}
-                        // onClick={() => {
-                        //   setCurrentChatMsgsList((prevItems) => [
-                        //     ...prevItems,
-                        //     {
-                        //       img: "https://res.cloudinary.com/dy9emuyvs/image/upload/v1691776582/uddsi7lqdr2dw6xc23cv.png",
-                        //       comentary: "fat",
-                        //       emotions: [
-                        //         { name: "laughface", count: 1 },
-                        //         { name: "angryface", count: 3 },
-                        //       ],
-                        //     },
-                        //   ])
-                        // }}
-                      >
-                        <img src={`./microphone.png`} />
-                      </div>
-                      {/* <AudioRecorder
-                        onRecordingComplete={addAudioElement}
-                        downloadOnSavePress={false}
-                        downloadFileExtension="mp3"
-                        // classes={}
-                      /> */}
-                      {/* <div id="givePermission">
-                        <audio src={getAudioRef()} controls></audio>
-                      </div> */}
-                      {/* const [inputImgUrl, setInputImgUrl] = useState("")
-                  const [inputImg, setInputImg] = useState<File | null>(null)
-                      const [showInputImg, setShowInputImg] = useState(false) */}
-                      {mutedTableOpen ? (
-                        <div id="inputImgShowBackground">
-                          <div id="notificationSetDiv">
-                            <div id="notificationSetDivHeader">
-                              <img src={currentChatImgSrc} alt="" />{" "}
-                              Notifications
-                            </div>
+                    </div>
 
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("3600000")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "3600000"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              For 1 Hour
-                            </div>
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("14400000")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "14400000"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              For 4 Hour
-                            </div>
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("28800000")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "28800000"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              For 8 Hour
-                            </div>
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("86400000")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "86400000"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              For 1 Day
-                            </div>
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("259200000")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "259200000"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              For 3 Days
-                            </div>
-                            <div
-                              id="notificationSetDivTimer"
-                              onClick={() => {
-                                setNotificationInterval("permanent")
-                              }}
-                            >
-                              <div
-                                id="notificationSetDivCircle"
-                                style={
-                                  notificationInterval == "permanent"
-                                    ? {
-                                        backgroundColor: "#3390ec",
-                                        borderColor: "#3390ec",
-                                      }
-                                    : { display: "flex" }
-                                }
-                              >
-                                <div></div>
-                              </div>
-                              Forever
-                            </div>
-                            <div id="notificationSetDivFooter">
-                              <p
+                    <div
+                      id="userInterfaceChatMainInputVoice"
+                      onClick={async (event) => {
+                        event.preventDefault()
+                        let mainInfo: editMsgType = {
+                          type: "edit",
+                          msgObjToEdit: {
+                            currentEditTarget: currentEditTarget,
+                            currentEditTextInput: currentEditTextInput,
+                          },
+                        }
+                        await universalChatManipulationFunction(
+                          mainInfo,
+                          "edit"
+                        )
+                      }}
+                    >
+                      <img src={`./select.png`} />
+                    </div>
+
+                    {/* const [inputImgUrl, setInputImgUrl] = useState("")
+                    const [inputImg, setInputImg] = useState<File | null>(null)
+                    const [showInputImg, setShowInputImg] = useState(false) */}
+
+                    {inputImgType == "image" ? (
+                      <div
+                        id="inputImgShowBackground"
+                        style={
+                          displaySend
+                            ? { display: "flex" }
+                            : { display: "none" }
+                        }
+                      >
+                        <div id="inputImgDisplay">
+                          <div id="inputImgDisplayTop">
+                            <div id="imgInputClose">
+                              <img
+                                src={"./icons8-close-50.png"}
+                                alt=""
                                 onClick={() => {
-                                  setMutedTableOpen(false)
+                                  setDisplaySend(false)
                                 }}
-                              >
-                                CANCEL
-                              </p>
-                              <p
-                                onClick={() => {
-                                  let info: {
-                                    type: "mute"
-                                    time: string
-                                  } = {
-                                    type: "mute",
-                                    time: notificationInterval,
-                                  }
-                                  universalChatManipulationFunction(
-                                    info,
-                                    "mute"
-                                  )
-                                  setMutedTableOpen(false)
-                                }}
-                              >
-                                MUTE
-                              </p>
+                              />
                             </div>
+                            <p>Send Photo</p>
+                            <img
+                              id="imgInputSetting"
+                              src={"./settings.png"}
+                              alt=""
+                            />
                           </div>
-                        </div>
-                      ) : undefined}
-                      {inputImgType == "image" ? (
-                        <div
-                          id="inputImgShowBackground"
-                          style={
-                            displaySend
-                              ? { display: "flex" }
-                              : { display: "none" }
-                          }
-                        >
-                          <div id="inputImgDisplay">
-                            <div id="inputImgDisplayTop">
-                              <div id="imgInputClose">
-                                <img
-                                  src={"./icons8-close-50.png"}
-                                  alt=""
-                                  onClick={() => {
-                                    setDisplaySend(false)
-                                  }}
-                                />
-                              </div>
-                              <p>Send Photo</p>
-                              <img
-                                id="imgInputSetting"
-                                src={"./settings.png"}
-                                alt=""
-                              />
-                            </div>
-                            <div id="inputImgimg">
-                              {" "}
-                              <img
-                                src={
-                                  inputImgUrl
-                                    ? inputImgUrl
-                                    : "./blank_photo.png"
-                                }
-                                alt=""
-                              />
-                            </div>
-                            <div id="inputImgDisplayBottom">
-                              <input
-                                type="text"
-                                id="fileUploadCommentaryInput"
-                                placeholder="Add a caption..."
-                                value={currentChatComentary}
-                                onChange={(event) => {
-                                  let target = event.target as HTMLInputElement
-                                  setCurrentChatComentary(target.value)
-                                }}
-                                onKeyDown={async (event) => {
-                                  let target = event.target as HTMLInputElement
-                                  if (event.key == "Enter") {
-                                    if (!target.value) {
-                                      return
-                                    }
-                                    let mainInfo =
-                                      await createMsgObjectForFiles()
-                                    universalChatManipulationFunction(
-                                      mainInfo,
-                                      "add"
-                                    )
-                                    setCurrentChatComentary("")
-                                    setDisplaySend(false)
+                          <div id="inputImgimg">
+                            {" "}
+                            <img
+                              src={
+                                inputImgUrl ? inputImgUrl : "./blank_photo.png"
+                              }
+                              alt=""
+                            />
+                          </div>
+                          <div id="inputImgDisplayBottom">
+                            <input
+                              type="text"
+                              id="fileUploadCommentaryInput"
+                              placeholder="Add a caption..."
+                              value={currentChatComentary}
+                              onChange={(event) => {
+                                let target = event.target as HTMLInputElement
+                                setCurrentChatComentary(target.value)
+                              }}
+                              onKeyDown={async (event) => {
+                                let target = event.target as HTMLInputElement
+                                if (event.key == "Enter") {
+                                  if (!target.value) {
+                                    return
                                   }
-                                }}
-                              />
-                              <div
-                                id="inputImgSend"
-                                onClick={async () => {
                                   let mainInfo = await createMsgObjectForFiles()
                                   universalChatManipulationFunction(
                                     mainInfo,
                                     "add"
                                   )
-
                                   setCurrentChatComentary("")
                                   setDisplaySend(false)
-                                }}
-                              >
-                                SEND
-                              </div>
+                                }
+                              }}
+                            />
+                            <div
+                              id="inputImgSend"
+                              onClick={async () => {
+                                let mainInfo = await createMsgObjectForFiles()
+                                universalChatManipulationFunction(
+                                  mainInfo,
+                                  "add"
+                                )
+
+                                setCurrentChatComentary("")
+                                setDisplaySend(false)
+                              }}
+                            >
+                              SEND
                             </div>
                           </div>
-                        </div>
-                      ) : (
-                        <div
-                          id="inputImgShowBackground"
-                          style={
-                            displaySend
-                              ? { display: "flex" }
-                              : { display: "none" }
-                          }
-                        >
-                          <div id="inputImgDisplay">
-                            <div id="inputImgDisplayTop">
-                              <div id="imgInputClose">
-                                <img
-                                  src={"./icons8-close-50.png"}
-                                  alt=""
-                                  onClick={() => {
-                                    setDisplaySend(false)
-                                  }}
-                                />
-                              </div>
-                              <p>Send File</p>
-                              <img
-                                id="imgInputSetting"
-                                src={"./settings.png"}
-                                alt=""
-                              />
-                            </div>
-                            <div id="inputImgimg">
-                              {" "}
-                              <img src={"./icons8-file-48.png"} alt="" />
-                              <p>
-                                {inputImgType}
-                                {inputImgName}
-                                {inputImgSize}
-                              </p>
-                            </div>
-                            <div id="inputImgDisplayBottom">
-                              <input
-                                type="text"
-                                placeholder="Add a caption..."
-                                value={currentChatComentary}
-                                onChange={(event) => {
-                                  let target = event.target as HTMLInputElement
-                                  setCurrentChatComentary(target.value)
-                                }}
-                                onKeyDown={async (event) => {
-                                  let target = event.target as HTMLInputElement
-                                  if (event.key == "Enter") {
-                                    if (!target.value) {
-                                      return
-                                    }
-                                    let mainInfo =
-                                      await createMsgObjectForFiles()
-                                    universalChatManipulationFunction(
-                                      mainInfo,
-                                      "add"
-                                    )
-                                    setCurrentChatComentary("")
-                                    setDisplaySend(false)
-                                  }
-                                }}
-                              />
-                              <div id="inputImgSend">SEND</div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div
-                id="userInterfaceChatInfo"
-                // style={
-                //   showDiscription ? { display: "flex" } : { display: "none" }
-                // }
-              >
-                <div id="userInterfaceChatInfoHeader">
-                  <div className="wide">
-                    <img
-                      src="./icons8-close-50.png"
-                      alt=""
-                      onClick={() => {
-                        setShowDiscription(false)
-                      }}
-                    />
-                    <p>{`${
-                      currentChatType == "chat" ? "user" : currentChatType
-                    } Info`}</p>
-                  </div>
-                  <img src="././icons8-edit-50.png" alt="" />
-                </div>
-                <div id="userInterfaceChatInfoPhoto">
-                  <img src={currentChatImgSrc} alt="" />
-                  <h1>{currentChatName}</h1>
-                  {currentChatType == "chat" ? (
-                    <p>{
-                      // ${currentChatLastSeen}
-                      `currentChatLastSeen`
-                    }</p>
-                  ) : (
-                    <p>{`${currentChatSubs} subscribers`}</p>
-                  )}
-                </div>
-                <div id="userInterfaceChatInfoOptions">
-                  {currentChatType == "chat" ? (
-                    currentChatKnownPhone ? (
-                      <div id="commonOption">
-                        <img src="" alt="" />
-                        <div>
-                          <h1>{currentChatKnownPhone}</h1>
-                          <p>Phone</p>
                         </div>
                       </div>
-                    ) : undefined
-                  ) : undefined}
-                  {currentChatType == "chat" ? (
+                    ) : (
+                      <div
+                        id="inputImgShowBackground"
+                        style={
+                          displaySend
+                            ? { display: "flex" }
+                            : { display: "none" }
+                        }
+                      >
+                        <div id="inputImgDisplay">
+                          <div id="inputImgDisplayTop">
+                            <div id="imgInputClose">
+                              <img
+                                src={"./icons8-close-50.png"}
+                                alt=""
+                                onClick={() => {
+                                  setDisplaySend(false)
+                                }}
+                              />
+                            </div>
+                            <p>Send File</p>
+                            <img
+                              id="imgInputSetting"
+                              src={"./settings.png"}
+                              alt=""
+                            />
+                          </div>
+                          <div id="inputImgimg">
+                            {" "}
+                            <img src={"./icons8-file-48.png"} alt="" />
+                            <p>
+                              {inputImgType}
+                              {inputImgName}
+                              {inputImgSize}
+                            </p>
+                          </div>
+                          <div id="inputImgDisplayBottom">
+                            <input
+                              type="text"
+                              placeholder="Add a caption..."
+                              value={currentChatComentary}
+                              onChange={(event) => {
+                                let target = event.target as HTMLInputElement
+                                setCurrentChatComentary(target.value)
+                              }}
+                              onKeyDown={async (event) => {
+                                let target = event.target as HTMLInputElement
+                                if (event.key == "Enter") {
+                                  if (!target.value) {
+                                    return
+                                  }
+                                  let mainInfo = await createMsgObjectForFiles()
+                                  universalChatManipulationFunction(
+                                    mainInfo,
+                                    "add"
+                                  )
+                                  setCurrentChatComentary("")
+                                  setDisplaySend(false)
+                                }
+                              }}
+                            />
+                            <div id="inputImgSend">SEND</div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : isRecording ? (
+                  <div
+                    id="userInterfaceChatMainInputBarRecord"
+                    className="h-60"
+                    style={
+                      userStatus == "admin"
+                        ? { display: "flex" }
+                        : { display: "none" }
+                    }
+                  >
+                    <div id="userInterfaceChatMainInputLineRecord">
+                      <div id="userInterfaceChatMainInputTextRecord">
+                        <input
+                          id="userInterfaceChatMainInputTextInput"
+                          type="text"
+                          value={currentChatComentary}
+                          onChange={(event) => {
+                            let target = event.target as HTMLInputElement
+                            setCurrentChatComentary(target.value)
+                          }}
+                          onKeyDown={async (event) => {
+                            let target = event.target as HTMLInputElement
+                          }}
+                          placeholder="Message"
+                        />
+                      </div>
+                      <div id="recordTimer">
+                        {/* <p>{time}</p> */}
+                        <p>{"111111"}</p>
+                        <div id="flashingRed"></div>{" "}
+                      </div>
+                    </div>
+                    <div
+                      id="stopRecord"
+                      onClick={() => {
+                        if (
+                          microphonePermissionState === "granted" &&
+                          isRecording
+                        ) {
+                          handleClickStopRecord("stop")
+                        }
+                      }}
+                    >
+                      <img
+                        src={`./icons8-trash-can-layout-for-a-indication-to-throw-trash-24.png`}
+                      />
+                    </div>
+                    <div
+                      id="userInterfaceChatMainInputVoiceApprove"
+                      onClick={() => {
+                        handleClickStopRecord("go")
+                      }}
+                    >
+                      <img src={`./icons8-arrow-right-64.png`} />
+                    </div>
+
+                    {/* const [inputImgUrl, setInputImgUrl] = useState("")
+                const [inputImg, setInputImg] = useState<File | null>(null)
+                    const [showInputImg, setShowInputImg] = useState(false) */}
+                    {mutedTableOpen ? (
+                      <div id="inputImgShowBackground">
+                        <div id="notificationSetDiv">
+                          <div id="notificationSetDivHeader">
+                            <img src={currentChatImgSrc} alt="" /> Notifications
+                          </div>
+
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("3600000")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "3600000"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            For 1 Hour
+                          </div>
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("14400000")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "14400000"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            For 4 Hour
+                          </div>
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("28800000")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "28800000"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            For 8 Hour
+                          </div>
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("86400000")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "86400000"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            For 1 Day
+                          </div>
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("259200000")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "259200000"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            For 3 Days
+                          </div>
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("permanent")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "permanent"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            Forever
+                          </div>
+                          <div id="notificationSetDivFooter">
+                            <p
+                              onClick={() => {
+                                setMutedTableOpen(false)
+                              }}
+                            >
+                              CANCEL
+                            </p>
+                            <p
+                              onClick={() => {
+                                let info: {
+                                  type: "mute"
+                                  time: string
+                                } = {
+                                  type: "mute",
+                                  time: notificationInterval,
+                                }
+                                universalChatManipulationFunction(info, "mute")
+                                setMutedTableOpen(false)
+                              }}
+                            >
+                              MUTE
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : undefined}
+                    {inputImgType == "image" ? (
+                      <div
+                        id="inputImgShowBackground"
+                        style={
+                          displaySend
+                            ? { display: "flex" }
+                            : { display: "none" }
+                        }
+                      >
+                        <div id="inputImgDisplay">
+                          <div id="inputImgDisplayTop">
+                            <div id="imgInputClose">
+                              <img
+                                src={"./icons8-close-50.png"}
+                                alt=""
+                                onClick={() => {
+                                  setDisplaySend(false)
+                                }}
+                              />
+                            </div>
+                            <p>Send Photo</p>
+                            <img
+                              id="imgInputSetting"
+                              src={"./settings.png"}
+                              alt=""
+                            />
+                          </div>
+                          <div id="inputImgimg">
+                            {" "}
+                            <img
+                              src={
+                                inputImgUrl ? inputImgUrl : "./blank_photo.png"
+                              }
+                              alt=""
+                            />
+                          </div>
+                          <div id="inputImgDisplayBottom">
+                            <input
+                              type="text"
+                              id="fileUploadCommentaryInput"
+                              placeholder="Add a caption..."
+                              value={currentChatComentary}
+                              onChange={(event) => {
+                                let target = event.target as HTMLInputElement
+                                setCurrentChatComentary(target.value)
+                              }}
+                              onKeyDown={async (event) => {
+                                let target = event.target as HTMLInputElement
+                                if (event.key == "Enter") {
+                                  if (!target.value) {
+                                    return
+                                  }
+                                  let mainInfo = await createMsgObjectForFiles()
+                                  universalChatManipulationFunction(
+                                    mainInfo,
+                                    "add"
+                                  )
+                                  setCurrentChatComentary("")
+                                  setDisplaySend(false)
+                                }
+                              }}
+                            />
+                            <div
+                              id="inputImgSend"
+                              onClick={async () => {
+                                let mainInfo = await createMsgObjectForFiles()
+                                universalChatManipulationFunction(
+                                  mainInfo,
+                                  "add"
+                                )
+
+                                setCurrentChatComentary("")
+                                setDisplaySend(false)
+                              }}
+                            >
+                              SEND
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        id="inputImgShowBackground"
+                        style={
+                          displaySend
+                            ? { display: "flex" }
+                            : { display: "none" }
+                        }
+                      >
+                        <div id="inputImgDisplay">
+                          <div id="inputImgDisplayTop">
+                            <div id="imgInputClose">
+                              <img
+                                src={"./icons8-close-50.png"}
+                                alt=""
+                                onClick={() => {
+                                  setDisplaySend(false)
+                                }}
+                              />
+                            </div>
+                            <p>Send File</p>
+                            <img
+                              id="imgInputSetting"
+                              src={"./settings.png"}
+                              alt=""
+                            />
+                          </div>
+                          <div id="inputImgimg">
+                            {" "}
+                            <img src={"./icons8-file-48.png"} alt="" />
+                            <p>
+                              {inputImgType}
+                              {inputImgName}
+                              {inputImgSize}
+                            </p>
+                          </div>
+                          <div id="inputImgDisplayBottom">
+                            <input
+                              type="text"
+                              placeholder="Add a caption..."
+                              value={currentChatComentary}
+                              onChange={(event) => {
+                                let target = event.target as HTMLInputElement
+                                setCurrentChatComentary(target.value)
+                              }}
+                              onKeyDown={async (event) => {
+                                let target = event.target as HTMLInputElement
+                                if (event.key == "Enter") {
+                                  if (!target.value) {
+                                    return
+                                  }
+                                  let mainInfo = await createMsgObjectForFiles()
+                                  universalChatManipulationFunction(
+                                    mainInfo,
+                                    "add"
+                                  )
+                                  setCurrentChatComentary("")
+                                  setDisplaySend(false)
+                                }
+                              }}
+                            />
+                            <div id="inputImgSend">SEND</div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div
+                    id="userInterfaceChatMainInputBar"
+                    className="h-60"
+                    style={
+                      userStatus == "admin"
+                        ? { display: "flex" }
+                        : { display: "none" }
+                    }
+                  >
+                    <div id="userInterfaceChatMainInputLine">
+                      <div id="userInterfaceChatMainInputSmile">
+                        {" "}
+                        <img
+                          onMouseEnter={() => {
+                            setSmileBarMouseEnter(true)
+                          }}
+                          onClick={() => {
+                            if (smileBarClick) {
+                              setSmileBarMouseEnter(false)
+                              setSmileBarClick(!smileBarClick)
+                            } else {
+                              setSmileBarClick(!smileBarClick)
+                            }
+                          }}
+                          onMouseLeave={() => {
+                            setSmileBarMouseEnter(false)
+                          }}
+                          src={
+                            smileBarClick || smileBarMouseEnter
+                              ? `./inputSmileBlue.png`
+                              : `./inputSmile.png`
+                          }
+                        />
+                        {smileBarClick || smileBarMouseEnter ? (
+                          <div id="userInterfaceChatMainInputSmileMainScreen">
+                            <div id="smilesGroupsDiv">
+                              {smileGroups.map((smileGroup) => {
+                                return <img src={smileGroup.mainSmile} alt="" />
+                              })}
+                            </div>
+                            <div id="smilesSearchDiv">some search</div>
+                            {smileGroups.map((smileGroup) => {
+                              return (
+                                <div id="smilesWholeGroupDiv">
+                                  <div id="smilesGroupNameDiv">
+                                    {smileGroup.name}
+                                  </div>
+                                  <div id="smilesGroupSmilesDiv">
+                                    {smileGroup.smiles.map((unoSmile) => {
+                                      return (
+                                        <div
+                                          id="theSmile"
+                                          onClick={() => {
+                                            let text =
+                                              currentChatComentary +
+                                              `${unoSmile.symbol}`
+                                            setCurrentChatComentary(text)
+                                            document
+                                              .getElementById(
+                                                "userInterfaceChatMainInputTextInput"
+                                              )
+                                              ?.focus()
+                                          }}
+                                        >
+                                          {unoSmile.symbol}
+                                        </div>
+                                      )
+                                    })}
+                                  </div>
+                                </div>
+                              )
+                            })}
+                          </div>
+                        ) : undefined}
+                      </div>
+                      <div id="userInterfaceChatMainInputText">
+                        <input
+                          id="userInterfaceChatMainInputTextInput"
+                          type="text"
+                          value={currentChatComentary}
+                          onChange={(event) => {
+                            let target = event.target as HTMLInputElement
+                            setCurrentChatComentary(target.value)
+                          }}
+                          onKeyDown={async (event) => {
+                            let target = event.target as HTMLInputElement
+                            if (event.key == "Enter") {
+                              if (!target.value) {
+                                return
+                              }
+
+                              let mainInfo: addMsgType = {
+                                type: "add",
+                                img: "",
+                                comentary: target.value,
+                                emotions: [],
+                                time: String(new Date().getTime()),
+                                pinned: false,
+                                author: userFindName,
+                              }
+
+                              await universalChatManipulationFunction(
+                                mainInfo,
+                                "add"
+                              )
+                            }
+                          }}
+                          placeholder="Message"
+                        />
+                      </div>
+                      <div id="userInterfaceChatMainInputFile">
+                        <input
+                          type="file"
+                          id="fileUploadInput"
+                          onChange={async (event) => {
+                            await onImageChooseForInput(event)
+                            setDisplaySend(true)
+                          }}
+                        />
+                        <label htmlFor="fileUploadInput">
+                          <img src={`./fileInput.png`} />
+                        </label>
+                      </div>
+                    </div>
+                    <div
+                      id="userInterfaceChatMainInputVoice"
+                      onClick={() => {
+                        if (
+                          microphonePermissionState === "granted" &&
+                          !isRecording
+                        ) {
+                          handleClickStartRecord()
+                        }
+                      }}
+                      // onClick={() => {
+                      //   setCurrentChatMsgsList((prevItems) => [
+                      //     ...prevItems,
+                      //     {
+                      //       img: "https://res.cloudinary.com/dy9emuyvs/image/upload/v1691776582/uddsi7lqdr2dw6xc23cv.png",
+                      //       comentary: "fat",
+                      //       emotions: [
+                      //         { name: "laughface", count: 1 },
+                      //         { name: "angryface", count: 3 },
+                      //       ],
+                      //     },
+                      //   ])
+                      // }}
+                    >
+                      <img src={`./microphone.png`} />
+                    </div>
+                    {/* <AudioRecorder
+                        onRecordingComplete={addAudioElement}
+                        downloadOnSavePress={false}
+                        downloadFileExtension="mp3"
+                        // classes={}
+                      /> */}
+                    {/* <div id="givePermission">
+                        <audio src={getAudioRef()} controls></audio>
+                      </div> */}
+                    {/* const [inputImgUrl, setInputImgUrl] = useState("")
+                  const [inputImg, setInputImg] = useState<File | null>(null)
+                      const [showInputImg, setShowInputImg] = useState(false) */}
+                    {mutedTableOpen ? (
+                      <div id="inputImgShowBackground">
+                        <div id="notificationSetDiv">
+                          <div id="notificationSetDivHeader">
+                            <img src={currentChatImgSrc} alt="" /> Notifications
+                          </div>
+
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("3600000")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "3600000"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            For 1 Hour
+                          </div>
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("14400000")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "14400000"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            For 4 Hour
+                          </div>
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("28800000")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "28800000"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            For 8 Hour
+                          </div>
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("86400000")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "86400000"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            For 1 Day
+                          </div>
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("259200000")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "259200000"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            For 3 Days
+                          </div>
+                          <div
+                            id="notificationSetDivTimer"
+                            onClick={() => {
+                              setNotificationInterval("permanent")
+                            }}
+                          >
+                            <div
+                              id="notificationSetDivCircle"
+                              style={
+                                notificationInterval == "permanent"
+                                  ? {
+                                      backgroundColor: "#3390ec",
+                                      borderColor: "#3390ec",
+                                    }
+                                  : { display: "flex" }
+                              }
+                            >
+                              <div></div>
+                            </div>
+                            Forever
+                          </div>
+                          <div id="notificationSetDivFooter">
+                            <p
+                              onClick={() => {
+                                setMutedTableOpen(false)
+                              }}
+                            >
+                              CANCEL
+                            </p>
+                            <p
+                              onClick={() => {
+                                let info: {
+                                  type: "mute"
+                                  time: string
+                                } = {
+                                  type: "mute",
+                                  time: notificationInterval,
+                                }
+                                universalChatManipulationFunction(info, "mute")
+                                setMutedTableOpen(false)
+                              }}
+                            >
+                              MUTE
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : undefined}
+                    {inputImgType == "image" ? (
+                      <div
+                        id="inputImgShowBackground"
+                        style={
+                          displaySend
+                            ? { display: "flex" }
+                            : { display: "none" }
+                        }
+                      >
+                        <div id="inputImgDisplay">
+                          <div id="inputImgDisplayTop">
+                            <div id="imgInputClose">
+                              <img
+                                src={"./icons8-close-50.png"}
+                                alt=""
+                                onClick={() => {
+                                  setDisplaySend(false)
+                                }}
+                              />
+                            </div>
+                            <p>Send Photo</p>
+                            <img
+                              id="imgInputSetting"
+                              src={"./settings.png"}
+                              alt=""
+                            />
+                          </div>
+                          <div id="inputImgimg">
+                            {" "}
+                            <img
+                              src={
+                                inputImgUrl ? inputImgUrl : "./blank_photo.png"
+                              }
+                              alt=""
+                            />
+                          </div>
+                          <div id="inputImgDisplayBottom">
+                            <input
+                              type="text"
+                              id="fileUploadCommentaryInput"
+                              placeholder="Add a caption..."
+                              value={currentChatComentary}
+                              onChange={(event) => {
+                                let target = event.target as HTMLInputElement
+                                setCurrentChatComentary(target.value)
+                              }}
+                              onKeyDown={async (event) => {
+                                let target = event.target as HTMLInputElement
+                                if (event.key == "Enter") {
+                                  if (!target.value) {
+                                    return
+                                  }
+                                  let mainInfo = await createMsgObjectForFiles()
+                                  universalChatManipulationFunction(
+                                    mainInfo,
+                                    "add"
+                                  )
+                                  setCurrentChatComentary("")
+                                  setDisplaySend(false)
+                                }
+                              }}
+                            />
+                            <div
+                              id="inputImgSend"
+                              onClick={async () => {
+                                let mainInfo = await createMsgObjectForFiles()
+                                universalChatManipulationFunction(
+                                  mainInfo,
+                                  "add"
+                                )
+
+                                setCurrentChatComentary("")
+                                setDisplaySend(false)
+                              }}
+                            >
+                              SEND
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        id="inputImgShowBackground"
+                        style={
+                          displaySend
+                            ? { display: "flex" }
+                            : { display: "none" }
+                        }
+                      >
+                        <div id="inputImgDisplay">
+                          <div id="inputImgDisplayTop">
+                            <div id="imgInputClose">
+                              <img
+                                src={"./icons8-close-50.png"}
+                                alt=""
+                                onClick={() => {
+                                  setDisplaySend(false)
+                                }}
+                              />
+                            </div>
+                            <p>Send File</p>
+                            <img
+                              id="imgInputSetting"
+                              src={"./settings.png"}
+                              alt=""
+                            />
+                          </div>
+                          <div id="inputImgimg">
+                            {" "}
+                            <img src={"./icons8-file-48.png"} alt="" />
+                            <p>
+                              {inputImgType}
+                              {inputImgName}
+                              {inputImgSize}
+                            </p>
+                          </div>
+                          <div id="inputImgDisplayBottom">
+                            <input
+                              type="text"
+                              placeholder="Add a caption..."
+                              value={currentChatComentary}
+                              onChange={(event) => {
+                                let target = event.target as HTMLInputElement
+                                setCurrentChatComentary(target.value)
+                              }}
+                              onKeyDown={async (event) => {
+                                let target = event.target as HTMLInputElement
+                                if (event.key == "Enter") {
+                                  if (!target.value) {
+                                    return
+                                  }
+                                  let mainInfo = await createMsgObjectForFiles()
+                                  universalChatManipulationFunction(
+                                    mainInfo,
+                                    "add"
+                                  )
+                                  setCurrentChatComentary("")
+                                  setDisplaySend(false)
+                                }
+                              }}
+                            />
+                            <div id="inputImgSend">SEND</div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div
+              id="userInterfaceChatInfo"
+              className={`${
+                showDiscription ? "backDiscription" : "rightDiscription"
+              }`}
+            >
+              <div id="userInterfaceChatInfoHeader">
+                <div className="wide">
+                  <img
+                    src="./icons8-close-50.png"
+                    alt=""
+                    onClick={() => {
+                      setShowDiscription(false)
+                      console.log(showDiscription)
+                    }}
+                  />
+                  <p>{`${
+                    currentChatType == "chat" ? "user" : currentChatType
+                  } Info`}</p>
+                </div>
+                <img src="././icons8-edit-50.png" alt="" />
+              </div>
+              <div id="userInterfaceChatInfoPhoto">
+                <img src={currentChatImgSrc} alt="" />
+                <h1>{currentChatName}</h1>
+                {currentChatType == "chat" ? (
+                  <p>{
+                    // ${currentChatLastSeen}
+                    `currentChatLastSeen`
+                  }</p>
+                ) : (
+                  <p>{`${currentChatSubs} subscribers`}</p>
+                )}
+              </div>
+              <div id="userInterfaceChatInfoOptions">
+                {currentChatType == "chat" ? (
+                  currentChatKnownPhone ? (
                     <div id="commonOption">
                       <img src="" alt="" />
                       <div>
-                        <h1>{currentChatUserName}</h1>
-                        <p>Username</p>
+                        <h1>{currentChatKnownPhone}</h1>
+                        <p>Phone</p>
                       </div>
                     </div>
-                  ) : undefined}
-                  {currentChatType == "chat" ? (
-                    currentChatBio ? (
-                      <div id="commonOption">
-                        <img src="" alt="" />
-                        <div>
-                          <h1>{currentChatBio}</h1>
-                          <p>Bio</p>
-                        </div>
-                      </div>
-                    ) : undefined
-                  ) : undefined}
-                  {currentChatType == "chanell" ? (
-                    <>
-                      <div id="commonOption">
-                        <img src="" alt="" />
-                        <div>
-                          <h1>{currentChatDiscription}</h1>
-                          <p>Info</p>
-                        </div>
-                      </div>
-                      <div id="commonOption">
-                        <img src="" alt="" />
-                        <div>
-                          <a
-                            href={`${process.env.REACT_APP_MAIN_DOMAIN}/addTo/${currentChatLink}/${currentChatType}`}
-                          >
-                            {`${process.env.REACT_APP_MAIN_DOMAIN}/addTo/${currentChatLink}/${currentChatType}`}
-                          </a>
-                          <p>Link</p>
-                        </div>
-                      </div>
-                    </>
-                  ) : undefined}
-                  <div id="unCommonOption">
-                    <div>
-                      <img src="" alt="" />
-                      <h1>Notifications</h1>
-                    </div>
+                  ) : undefined
+                ) : undefined}
+                {currentChatType == "chat" ? (
+                  <div id="commonOption">
                     <img src="" alt="" />
+                    <div>
+                      <h1>{currentChatUserName}</h1>
+                      <p>Username</p>
+                    </div>
                   </div>
-                  <div id="userInterfaceChatInfoLinks">all Links</div>
+                ) : undefined}
+                {currentChatType == "chat" ? (
+                  currentChatBio ? (
+                    <div id="commonOption">
+                      <img src="" alt="" />
+                      <div>
+                        <h1>{currentChatBio}</h1>
+                        <p>Bio</p>
+                      </div>
+                    </div>
+                  ) : undefined
+                ) : undefined}
+                {currentChatType == "chanell" ? (
+                  <>
+                    <div id="commonOption">
+                      <img src="" alt="" />
+                      <div>
+                        <h1>{currentChatDiscription}</h1>
+                        <p>Info</p>
+                      </div>
+                    </div>
+                    <div id="commonOption">
+                      <img src="" alt="" />
+                      <div>
+                        <a
+                          href={`${process.env.REACT_APP_MAIN_DOMAIN}/addTo/${currentChatLink}/${currentChatType}`}
+                        >
+                          {`${process.env.REACT_APP_MAIN_DOMAIN}/addTo/${currentChatLink}/${currentChatType}`}
+                        </a>
+                        <p>Link</p>
+                      </div>
+                    </div>
+                  </>
+                ) : undefined}
+                <div id="unCommonOption">
+                  <div>
+                    <img src="" alt="" />
+                    <h1>Notifications</h1>
+                  </div>
+                  <img src="" alt="" />
                 </div>
+                <div id="userInterfaceChatInfoLinks">all Links</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {/* </div> */}
     </>
   )
 }

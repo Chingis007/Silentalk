@@ -174,8 +174,24 @@ body {
   transition: 0.3s;
 }
 
-#root {
+body {
   height: 100vh;
+  width: 100%;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .toright-msg {
@@ -227,7 +243,7 @@ body {
 }
 
 .toleft {
-  transition: 0.3s;
+  opacity: 1;
   transform: translate(-100%, 0);
 }
 
@@ -237,19 +253,13 @@ body {
 }
 
 .back {
-  transition: 0.3s;
+  opacity: 0;
   transform: translate(0, 0);
 }
 
 .toright {
   transition: 0.5s;
   transform: translate(100%, 0);
-}
-
-body {
-  margin: 0;
-  height: 100%;
-  overflow: hidden;
 }
 
 .hide {
@@ -584,7 +594,24 @@ body {
     gap: 25px;
   }
 }
+.leftChatLeft {
+  transform: translate(-100%, 0);
+}
+
+.rightChatRight {
+  transform: translate(100%, 0);
+}
+
+.rightDiscription {
+  transform: translate(100%, 0);
+}
+
+.backDiscription {
+  transform: translate(0, 0);
+}
+
 #userInterfaceBorder {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -605,40 +632,36 @@ body {
   border: 1px solid black;
   border-radius: 5px;
 }
-#userInterfaceBorder #userInterfaceMain {
-  display: flex;
-  justify-content: start;
-  align-items: start;
-  width: 87.7%;
-  height: 100vh;
-  border: 1px solid rgb(223, 225, 229);
-  overflow: hidden;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn {
+#userInterfaceBorder #userInterfaceChatsColumn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s;
   display: flex;
   justify-content: start;
   align-items: start;
   flex-direction: column;
-  width: 25%;
+  width: 100%;
   height: 100%;
   overflow: hidden;
   border-left: 1px solid rgb(223, 225, 229);
   border-right: 1px solid rgb(223, 225, 229);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn {
-  width: 200%;
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn {
+  position: relative;
+  width: 100%;
   display: flex;
   flex-direction: row;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
   position: relative;
   overflow: hidden;
   height: 100vh;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu {
   z-index: 6;
   position: absolute;
   top: 0;
@@ -649,7 +672,7 @@ body {
   height: 100vh;
   overflow: hidden;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu #userMenuMenu {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu #userMenuMenu {
   z-index: 7;
   display: flex;
   flex-direction: column;
@@ -661,7 +684,7 @@ body {
   padding: 5px;
   border-radius: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu #userMenuMenu #userMenuMenuDiv {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu #userMenuMenu #userMenuMenuDiv {
   width: 100%;
   display: flex;
   justify-content: start;
@@ -680,17 +703,17 @@ body {
      -moz-user-select: none;
           user-select: none;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu #userMenuMenu #userMenuMenuDiv img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu #userMenuMenu #userMenuMenuDiv img {
   width: 15px;
   height: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu #userMenuMenu #userMenuMenuDiv p {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu #userMenuMenu #userMenuMenuDiv p {
   padding: 0;
   margin: 0;
   height: -moz-fit-content;
   height: fit-content;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu #userMenuMenu #userMenuMenuFooter {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userMenu #userMenuMenu #userMenuMenuFooter {
   margin-top: 14px;
   display: flex;
   width: 100%;
@@ -700,27 +723,27 @@ body {
   color: #7b7f83;
   font-size: 14px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead {
   display: flex;
   align-items: center;
   flex-direction: row;
   width: 100%;
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSettings {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSettings {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 50px;
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSettings img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSettings img {
   width: 27px;
   height: 23px;
   cursor: pointer;
   padding: 5px 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSearch {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSearch {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -736,21 +759,21 @@ body {
   gap: 10px;
   transition: 0.2s;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSearch img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSearch img {
   width: 20px;
   height: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSearch input {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSearch input {
   all: unset;
   border: none;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSearch:has(input:focus) {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSearch:has(input:focus) {
   border: 2px solid rgb(51, 144, 236);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSearch:has(input:focus) img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn #userInterfaceChatsColumnHead #userInterfaceChatsColumnHeadSearch:has(input:focus) img {
   content: url("/public/icons8-search-50.png");
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch {
   position: absolute;
   top: 0;
   left: 0;
@@ -763,7 +786,7 @@ body {
   padding: 0 0 0 15px;
   height: 100%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch {
   display: flex;
   justify-content: start;
   align-items: start;
@@ -773,7 +796,7 @@ body {
   overflow: hidden;
   flex-direction: column;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchOptions {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchOptions {
   display: flex;
   justify-content: space-around;
   flex-direction: row;
@@ -784,7 +807,7 @@ body {
   overflow: hidden;
   padding: 0 0 0 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchOptions #userInterfaceChatsColumnChatsSearchOptionsOption {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchOptions #userInterfaceChatsColumnChatsSearchOptionsOption {
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -799,7 +822,7 @@ body {
      -moz-user-select: none;
           user-select: none;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv {
   position: relative;
   display: flex;
   justify-content: center;
@@ -808,7 +831,7 @@ body {
   height: 100vh;
   flex-direction: row;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults {
   position: absolute;
   top: 0;
   left: 0;
@@ -821,7 +844,7 @@ body {
   gap: 10px;
   flex-direction: column;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #userInterfaceChatsColumnChatsSearchAfterSearchResultsName {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #userInterfaceChatsColumnChatsSearchAfterSearchResultsName {
   width: -moz-fit-content;
   width: fit-content;
   padding: 10px 0;
@@ -830,7 +853,7 @@ body {
      -moz-user-select: none;
           user-select: none;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #ChatsSearchAfterSearchResultsResult {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #ChatsSearchAfterSearchResultsResult {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -840,12 +863,12 @@ body {
   height: fit-content;
   gap: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #ChatsSearchAfterSearchResultsResult img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #ChatsSearchAfterSearchResultsResult img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #ChatsSearchAfterSearchResultsResult #ChatsSearchAfterSearchResultsResultColumn {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #ChatsSearchAfterSearchResultsResult #ChatsSearchAfterSearchResultsResultColumn {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -855,7 +878,7 @@ body {
   height: fit-content;
   gap: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #ChatsSearchAfterSearchResultsResult #ChatsSearchAfterSearchResultsResultColumn #ChatsSearchAfterSearchResultsResultTop {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #ChatsSearchAfterSearchResultsResult #ChatsSearchAfterSearchResultsResultColumn #ChatsSearchAfterSearchResultsResultTop {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -864,7 +887,7 @@ body {
   height: fit-content;
   font-size: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #ChatsSearchAfterSearchResultsResult #ChatsSearchAfterSearchResultsResultColumn #ChatsSearchAfterSearchResultsResultBot {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchAfterSearch #userInterfaceChatsColumnChatsSearchAfterSearchResultsDiv .userInterfaceChatsColumnChatsSearchAfterSearchResults #ChatsSearchAfterSearchResultsResult #ChatsSearchAfterSearchResultsResultColumn #ChatsSearchAfterSearchResultsResultBot {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -874,7 +897,7 @@ body {
   color: #7b7f83;
   font-size: 11px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchOptions {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchOptions {
   display: flex;
   justify-content: start;
   flex-direction: row;
@@ -886,7 +909,7 @@ body {
   gap: 30px;
   padding: 0 0 0 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchOptions #userInterfaceChatsColumnChatsSearchOptionsOption {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchOptions #userInterfaceChatsColumnChatsSearchOptionsOption {
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -899,7 +922,7 @@ body {
   font-weight: bold;
   color: #7b7f83;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchContacts {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchContacts {
   display: flex;
   justify-content: start;
   flex-direction: row;
@@ -909,7 +932,7 @@ body {
   height: fit-content;
   overflow: hidden;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchContacts #userInterfaceChatsColumnChatsSearchContactsContact {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchContacts #userInterfaceChatsColumnChatsSearchContactsContact {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -922,27 +945,27 @@ body {
   font-size: 12px;
   border-top: rgb(223, 225, 229) 0.5px solid;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchContacts #userInterfaceChatsColumnChatsSearchContactsContact img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchContacts #userInterfaceChatsColumnChatsSearchContactsContact img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecent {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecent {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: calc(100% - 15px);
   border-top: rgb(223, 225, 229) 0.5px solid;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecent p {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecent p {
   color: #7b7f83;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecent img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecent img {
   width: 18px;
   height: 18px;
   margin-right: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecentResults {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecentResults {
   display: flex;
   justify-content: start;
   flex-direction: column;
@@ -952,7 +975,7 @@ body {
   height: fit-content;
   gap: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecentResults #userInterfaceChatsColumnChatsSearchContactsContact {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecentResults #userInterfaceChatsColumnChatsSearchContactsContact {
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -962,11 +985,11 @@ body {
   height: -moz-fit-content;
   height: fit-content;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecentResults #userInterfaceChatsColumnChatsSearchContactsContact img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChatsSearch #userInterfaceChatsColumnChatsSearchRecentResults #userInterfaceChatsColumnChatsSearchContactsContact img {
   width: 50px;
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats {
   z-index: 1;
   display: flex;
   justify-content: start;
@@ -978,7 +1001,7 @@ body {
   overflow-x: hidden;
   padding: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -987,23 +1010,23 @@ body {
   height: 58px;
   border-radius: 10px;
   padding: 10px;
-  gap: 5%;
+  gap: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatImg {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatImg {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 14%;
-  height: 60px;
+  width: 54px;
+  height: 54px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatImg img {
-  width: 100%;
-  max-height: 60px;
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatImg img {
+  width: 54px;
+  height: 54px;
   padding: auto;
   border-radius: 50%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatImg #blueOnline {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatImg #blueOnline {
   position: absolute;
   background-color: #3390ec;
   border-radius: 50%;
@@ -1013,15 +1036,15 @@ body {
   height: 10px;
   border: 2px solid white;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 81%;
+  width: calc(100% - 64px);
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgTopLine {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgTopLine {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -1029,62 +1052,73 @@ body {
   width: 100%;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgTopLine .userInterfaceChatsColumnOneChatNotImgName {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgTopLine .userInterfaceChatsColumnOneChatNotImgName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   display: flex;
   justify-content: start;
   align-items: center;
-  width: 83%;
+  width: 100%;
   height: 25px;
   gap: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgTopLine .userInterfaceChatsColumnOneChatNotImgName img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgTopLine .userInterfaceChatsColumnOneChatNotImgName img {
   width: 20px;
   height: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgTopLine .userInterfaceChatsColumnOneChatNotImgDate {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgTopLine .userInterfaceChatsColumnOneChatNotImgDate {
   display: flex;
   justify-content: end;
   align-items: center;
-  width: 17%;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  padding: 0 5px;
   height: 25px;
   font-size: 12px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: row;
   width: 100%;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgLastMsg {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  width: 90%;
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgLastMsg {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-word;
+  width: 100%;
   height: 25px;
-  overflow-x: hidden;
   color: #7b7f83;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgLastMsg img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgLastMsg img {
   width: 20px;
   height: 20px;
   margin-right: 10px;
   border-radius: 20%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgPindOrMsgCount {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgPindOrMsgCount {
   display: flex;
   justify-content: end;
   align-items: center;
-  width: 10%;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  padding: 0 5px;
   height: 30px;
   overflow-x: hidden;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgPindOrMsgCount img {
-  width: 90%;
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgPindOrMsgCount img {
+  width: 30px;
   max-height: 30px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgPindOrMsgCount #notSeenCounterChats {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats .userInterfaceChatsColumnOneChat .userInterfaceChatsColumnOneChatNotImg .userInterfaceChatsColumnOneChatNotImgBotLine .userInterfaceChatsColumnOneChatNotImgPindOrMsgCount #notSeenCounterChats {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1093,40 +1127,24 @@ body {
   border-radius: 40% 40%;
   font-weight: 600;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats::-webkit-scrollbar {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats::-webkit-scrollbar {
   width: 5px;
   background: transparent;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats::-webkit-scrollbar-track {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats::-webkit-scrollbar-track {
   width: 12px;
   background: transparent;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats::-webkit-scrollbar-thumb {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .regularColumn .userInterfaceChatsColumnChats::-webkit-scrollbar-thumb {
   width: 8px;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther::-webkit-scrollbar {
-  width: 5px;
-  background: transparent;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther::-webkit-scrollbar-track {
-  width: 12px;
-  background: transparent;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther::-webkit-scrollbar-thumb {
-  width: 8px;
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 10px;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther {
-  position: relative;
-  width: 50%;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit {
   position: absolute;
+  transition: transform 0.3s;
   top: 0;
-  left: 0;
+  left: 100%;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -1138,7 +1156,7 @@ body {
   font-size: 14px;
   font-weight: 400;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditHead {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditHead {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -1155,12 +1173,12 @@ body {
   gap: 10px;
   padding: 0 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditHead input {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditHead input {
   all: unset;
   width: 25px;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditHead img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditHead img {
   position: absolute;
   top: 19px;
   left: 15px;
@@ -1168,7 +1186,7 @@ body {
   height: 25px;
   pointer-events: none;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditImg {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditImg {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1176,13 +1194,13 @@ body {
   width: 100%;
   height: 120px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditImg #userSettingsEditImgOrigin {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditImg #userSettingsEditImgOrigin {
   position: absolute;
   border-radius: 50%;
   width: 100px;
   height: 100px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditImg #userSettingsEditImgNotOrigin {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditImg #userSettingsEditImgNotOrigin {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1194,15 +1212,15 @@ body {
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.3);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditImg #userSettingsEditImgNotOrigin img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditImg #userSettingsEditImgNotOrigin img {
   width: 35px;
   height: 35px;
   transition: all 0.2s;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditImg #userSettingsEditImgNotOrigin img:hover {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditImg #userSettingsEditImgNotOrigin img:hover {
   transform: scale(1.3);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs {
   width: calc(100% - 15px);
   padding-left: 10px;
   display: flex;
@@ -1211,22 +1229,22 @@ body {
   justify-content: center;
   gap: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs h1 {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs h1 {
   color: #3390ec;
   font-size: 12px;
   text-align: start;
   width: 100%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs p {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs p {
   white-space: initial;
   font-size: 10px;
   color: #7b7f83;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs div {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs div {
   width: 100%;
   position: relative;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs div h2 {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs div h2 {
   all: unset;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -1241,20 +1259,20 @@ body {
   padding: 0 2px;
   transition: font-size 0.2s, top 0.2s, left 0.2s;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs div input:not(:-moz-placeholder-shown) + h2 {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs div input:not(:-moz-placeholder-shown) + h2 {
   top: -24%;
   left: 7px;
   font-size: 10px;
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs div input:focus + h2,
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs div input:not(:placeholder-shown) + h2 {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs div input:focus + h2,
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs div input:not(:placeholder-shown) + h2 {
   top: -24%;
   left: 7px;
   font-size: 10px;
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs div input {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs div input {
   all: unset;
   width: calc(100% - 15px);
   height: 44px;
@@ -1266,19 +1284,20 @@ body {
   border-radius: 10px;
   padding-left: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs div input:hover {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs div input:hover {
   box-shadow: 0 0 0 1px #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs div input:hover + h2 {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs div input:hover + h2 {
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettingsEdit #userSettingsEditInputs div input:focus {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettingsEdit #userSettingsEditInputs div input:focus {
   box-shadow: 0 0 0 2px #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings {
+  transition: transform 0.3s;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 100%;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -1290,7 +1309,7 @@ body {
   font-size: 14px;
   font-weight: 400;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings #userSettingsHead {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings #userSettingsHead {
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -1305,32 +1324,32 @@ body {
   gap: 10px;
   padding: 0 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings #userSettingsHead p {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings #userSettingsHead p {
   width: 100%;
   font-size: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings #userSettingsHead img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings #userSettingsHead img {
   width: 25px;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings #userSettingsImg {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings #userSettingsImg {
   height: 120px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings #userSettingsImg input {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings #userSettingsImg input {
   display: none;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings #userSettingsImg img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings #userSettingsImg img {
   position: relative;
   height: 120px;
   width: 120px;
   cursor: pointer;
   border-radius: 50%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings #otherSettingsStuff {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings #otherSettingsStuff {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1338,7 +1357,7 @@ body {
   height: fit-content;
   padding: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings #otherSettingsStuff input {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings #otherSettingsStuff input {
   width: 384px;
   height: 54px;
   font-size: 16px;
@@ -1371,17 +1390,21 @@ body {
   width: 333px;
   padding-left: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings #otherSettingsStuff input:hover {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings #otherSettingsStuff input:hover {
   border-color: #3390ec;
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings #otherSettingsStuff input:hover::-moz-placeholder {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings #otherSettingsStuff input:hover::-moz-placeholder {
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .userSettings #otherSettingsStuff input:hover::placeholder {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .userSettings #otherSettingsStuff input:hover::placeholder {
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell {
+  transition: transform 0.3s;
+  position: absolute;
+  top: 0;
+  left: 100%;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -1392,7 +1415,7 @@ body {
   font-weight: 400;
   color: rgb(112, 117, 121);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellHead {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellHead {
   height: 56px;
   display: flex;
   flex-direction: row;
@@ -1403,7 +1426,7 @@ body {
   font-size: 20px;
   font-weight: 500;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellHead p {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellHead p {
   all: unset;
   padding-left: 40px;
   height: -moz-fit-content;
@@ -1412,34 +1435,34 @@ body {
   width: fit-content;
   color: black;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellHead #createNewChanellHeadArrow {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellHead #createNewChanellHeadArrow {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 8px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellHead #createNewChanellHeadArrow img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellHead #createNewChanellHeadArrow img {
   width: 25px;
   height: 30px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellImgDiv {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellImgDiv {
   height: 120px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellImgDiv input {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellImgDiv input {
   display: none;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellImgDiv img {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellImgDiv img {
   position: relative;
   height: 120px;
   width: 120px;
   cursor: pointer;
   border-radius: 50%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellNameInput {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellNameInput {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1447,7 +1470,7 @@ body {
   height: fit-content;
   padding: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellNameInput input {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellNameInput input {
   width: 384px;
   height: 54px;
   font-size: 16px;
@@ -1480,17 +1503,17 @@ body {
   width: 333px;
   padding-left: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellNameInput input:hover {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellNameInput input:hover {
   border-color: #3390ec;
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellNameInput input:hover::-moz-placeholder {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellNameInput input:hover::-moz-placeholder {
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellNameInput input:hover::placeholder {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellNameInput input:hover::placeholder {
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellDiscriptionsInput {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellDiscriptionsInput {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1498,7 +1521,7 @@ body {
   height: fit-content;
   padding: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellDiscriptionsInput input {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellDiscriptionsInput input {
   width: 384px;
   height: 54px;
   font-size: 16px;
@@ -1531,22 +1554,22 @@ body {
   width: 333px;
   padding-left: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellDiscriptionsInput input:hover {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellDiscriptionsInput input:hover {
   border-color: #3390ec;
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellDiscriptionsInput input:hover::-moz-placeholder {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellDiscriptionsInput input:hover::-moz-placeholder {
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell #createNewChanellDiscriptionsInput input:hover::placeholder {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell #createNewChanellDiscriptionsInput input:hover::placeholder {
   color: #3390ec;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #bigInterfaceColumn #columnForOther .createNewChanell p {
+#userInterfaceBorder #userInterfaceChatsColumn #bigInterfaceColumn .createNewChanell p {
   padding: 0;
   margin: 0;
   padding-left: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #createButton {
+#userInterfaceBorder #userInterfaceChatsColumn #createButton {
   position: fixed;
   bottom: 2%;
   left: 24.4%;
@@ -1558,11 +1581,11 @@ body {
   justify-content: center;
   align-items: center;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn #createButton img {
+#userInterfaceBorder #userInterfaceChatsColumn #createButton img {
   width: 30px;
   height: 30px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .createOptions {
+#userInterfaceBorder #userInterfaceChatsColumn .createOptions {
   position: fixed;
   flex-direction: column;
   bottom: 150px;
@@ -1578,83 +1601,87 @@ body {
   background-color: white;
   border-radius: 10%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChatsColumn .createOptions .option img {
+#userInterfaceBorder #userInterfaceChatsColumn .createOptions .option img {
   width: 18px;
   height: 18px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat {
-  position: relative;
+#userInterfaceBorder .userInterfaceChat {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s;
   display: flex;
   justify-content: start;
-  align-items: center;
+  align-items: start;
   flex-direction: row;
-  width: 75%;
+  width: 100%;
   height: 100vh;
-  overflow: hidden;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv {
-  position: absolute;
-  width: calc(100% + 420px);
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv {
+  position: relative;
+  width: 100%;
   height: 100vh;
   display: flex;
   justify-content: start;
   align-items: start;
   flex-direction: row;
-  transition: width 0.3s;
   overflow: hidden;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart {
   position: relative;
   display: flex;
   justify-content: start;
   align-items: center;
   flex-direction: column;
-  width: calc(100% - 420px);
+  width: 100%;
   height: 100vh;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead {
-  position: sticky;
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  width: 100%;
+  width: calc(100% - 30px);
   height: 50px;
   background-color: white;
+  overflow: hidden;
+  padding: 0 15px;
+  z-index: 900;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv {
   float: left;
   height: 50px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   flex-direction: row;
   cursor: pointer;
+  gap: 15px;
+  margin-left: 45px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv #userInterfaceChatHeadImg {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv #userInterfaceChatHeadImg {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
-  margin-left: 15px;
+  width: 42px;
+  height: 42px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv #userInterfaceChatHeadImg img {
-  width: 40px;
-  height: 40px;
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv #userInterfaceChatHeadImg img {
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv #userInterfaceChatHeadNameColumn {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv #userInterfaceChatHeadNameColumn {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
   flex-direction: column;
   width: 100%;
   height: 35px;
-  margin-left: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv #userInterfaceChatHeadNameColumn #userInterfaceChatHeadNameColumnName {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv #userInterfaceChatHeadNameColumn #userInterfaceChatHeadNameColumnName {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -1663,17 +1690,48 @@ body {
   font-weight: bold;
   font-size: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv #userInterfaceChatHeadNameColumn #userInterfaceChatHeadNameColumnLastSeen {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv #userInterfaceChatHeadNameColumn #userInterfaceChatHeadNameColumnLastSeen {
   display: flex;
   justify-content: start;
   align-items: center;
-  width: 100%;
   height: 25px;
   font-size: 13px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  width: -moz-fit-content;
+  width: fit-content;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadCall {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #smallScreenArrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 50px;
+  margin-left: 10px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #smallScreenArrow img {
+  width: 35px;
+  height: 35px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #headerAllButDesignationsOptions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 50px;
+  background-color: white;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #headerAllButDesignationsOptions #userInterfaceChatHeadCall {
   float: right;
   display: flex;
   justify-content: center;
@@ -1681,7 +1739,7 @@ body {
   width: 50px;
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadNotifications {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #headerAllButDesignationsOptions #userInterfaceChatHeadNotifications {
   float: right;
   display: flex;
   justify-content: center;
@@ -1689,7 +1747,7 @@ body {
   width: 50px;
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadHidePinned {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #headerAllButDesignationsOptions #userInterfaceChatHeadHidePinned {
   float: right;
   display: flex;
   justify-content: center;
@@ -1697,27 +1755,69 @@ body {
   width: 50px;
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadOnePinned {
-  float: right;
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #headerAllButDesignationsOptions #userInterfaceChatHeadAllPinnedButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #headerAllButDesignationsOptions #userInterfaceChatHeadVideoChat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #headerAllButDesignationsOptions #userInterfaceChatHeadSearch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #headerAllButDesignationsOptions #userInterfaceChatHeadSearch img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #headerAllButDesignationsOptions #userInterfaceChatHeadSettings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #headerAllButDesignationsOptions #userInterfaceChatHeadSettings img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background-color: white;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: row;
+  width: calc(100% - 20px);
+  height: 50px;
+  gap: 5px;
+  padding: 0 10px;
+  border-top: 1px solid rgb(223, 225, 229);
+  z-index: 1000;
+  cursor: pointer;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned #userInterfaceChatHeadOnePinned {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100px;
   height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned {
-  position: relative;
-  float: right;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  flex-direction: row;
-  width: 256px;
-  height: 38px;
-  gap: 5px;
-  padding: 0 2.5px;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned .userInterfaceChatHeadAllPinnedLine {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned .userInterfaceChatHeadAllPinnedLine {
   position: relative;
   display: flex;
   justify-content: end;
@@ -1728,7 +1828,7 @@ body {
   overflow: hidden;
   gap: 1px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned .userInterfaceChatHeadAllPinnedLine #moverWrap {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned .userInterfaceChatHeadAllPinnedLine #moverWrap {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -1738,14 +1838,14 @@ body {
   width: 2px;
   height: 38px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned .userInterfaceChatHeadAllPinnedLine #moverWrap .mover {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned .userInterfaceChatHeadAllPinnedLine #moverWrap .mover {
   width: 2px;
   height: 8px;
   border-radius: 2px;
   background-color: rgb(51, 144, 236);
   transition: all 0.5s ease;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned .userInterfaceChatHeadAllPinnedLine #circlesWrap {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned .userInterfaceChatHeadAllPinnedLine #circlesWrap {
   display: flex;
   justify-content: end;
   align-items: end;
@@ -1756,23 +1856,25 @@ body {
   gap: 1px;
   background-color: white;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned .userInterfaceChatHeadAllPinnedLine #circlesWrap .blueSquare {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned .userInterfaceChatHeadAllPinnedLine #circlesWrap .blueSquare {
   width: 2px;
   min-height: 8px;
   border-radius: 2px;
   background-color: rgba(51, 144, 236, 0.5);
   transition: all 0.5s ease;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
   flex-direction: column;
-  width: 238px;
+  min-width: 238px;
+  width: 100%;
   height: 32px;
   overflow: hidden;
+  z-index: 40000;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedDivText {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedDivText {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -1786,7 +1888,7 @@ body {
      -moz-user-select: none;
           user-select: none;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList {
   position: relative;
   display: flex;
   justify-content: start;
@@ -1796,7 +1898,7 @@ body {
   height: 16px;
   overflow: hidden;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList .onePinnedMsg {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList .onePinnedMsg {
   position: absolute;
   top: 0;
   left: 0;
@@ -1813,74 +1915,52 @@ body {
      -moz-user-select: none;
           user-select: none;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList .pinnedBack {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList .pinnedBack {
   transition-property: transform;
   transition-duration: 0.3s;
   transform: translateY(0);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList .pinnedBottom {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList .pinnedBottom {
   transition-property: transform;
   transition-duration: 0.3s;
   transform: translateY(110%);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList .pinnedUp {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList .pinnedUp {
   transition-property: transform;
   transition-duration: 0.3s;
   transform: translateY(-110%);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList .transparent {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned #userInterfaceChatHeadAllPinnedDiv #userInterfaceChatHeadAllPinnedList .transparent {
   opacity: 0;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadAllPinnedButton {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned #pinnedAllbutton {
+  width: 35px;
+  height: 35px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .userInterfaceChatHeadAllPinned #pinnedAllbutton img {
+  width: 35px;
+  height: 35px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .allPinnedShowOnSmall {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadVideoChat {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart .allPinnedShowOnBig {
+  display: none;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSearch {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSearch img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSettings {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSettings img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground {
+  position: relative;
   background-image: linear-gradient(to bottom right, rgba(246, 255, 0, 0.5), rgba(60, 193, 4, 0.4), rgba(60, 193, 4, 0.5), rgba(60, 193, 4, 0.4), rgba(246, 255, 0, 0.5)), url("/public/backgroundlight.png");
   display: flex;
   justify-content: end;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   width: 100%;
-  height: calc(100% - 50px);
-  padding-bottom: 1.3%;
-  gap: 7px;
+  height: calc(100% - 50px - 10px);
+  padding-bottom: 10px;
+  gap: 5px;
+  z-index: 1;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #toBottom {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #toBottom {
   z-index: 50;
   cursor: pointer;
   display: flex;
@@ -1890,16 +1970,16 @@ body {
   left: 76.62%;
   top: 84%;
   border-radius: 50%;
-  width: 3vw;
-  height: 6.2vh;
+  width: 50px;
+  height: 50px;
   background-color: white;
   filter: drop-shadow(0 0 0.2rem black);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #toBottom img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #toBottom img {
   width: 100%;
   height: 100%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #toBottom #toBottomNumber {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #toBottom #toBottomNumber {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -1915,7 +1995,8 @@ body {
   line-height: 15px;
   font-family: "tabular figures";
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn {
+  position: relative;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -1926,8 +2007,9 @@ body {
   gap: 10px;
   overflow: scroll;
   overflow-x: hidden;
+  z-index: 5;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu {
   position: absolute;
   display: flex;
   justify-content: start;
@@ -1938,7 +2020,7 @@ body {
   z-index: 100;
   gap: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuEmotions {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuEmotions {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1948,18 +2030,18 @@ body {
   padding: 5px;
   border-radius: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuEmotions img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuEmotions img {
   width: 20px;
   height: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuEmotions #msgContextMenuEmotionsWrapper {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuEmotions #msgContextMenuEmotionsWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
   gap: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuEmotions #msgContextMenuEmotionsWrapper #contextMenuTheSmile {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuEmotions #msgContextMenuEmotionsWrapper #contextMenuTheSmile {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -1968,7 +2050,7 @@ body {
   height: 30px;
   font-size: 24px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuOptions {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuOptions {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -1982,7 +2064,7 @@ body {
   border-radius: 10px;
   font-weight: 600;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuOptions div {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuOptions div {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -1990,17 +2072,17 @@ body {
   gap: 10px;
   width: 100%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuOptions div img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgContextMenu #msgContextMenuOptions div img {
   width: 20px;
   height: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn .leftmsg {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn .leftmsg {
   justify-content: start;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn .rightmsg {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn .rightmsg {
   justify-content: end;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgGlobalTime {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msgGlobalTime {
   display: flex;
   width: -moz-fit-content;
   width: fit-content;
@@ -2010,7 +2092,7 @@ body {
   color: white;
   font-weight: 600;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #noMessagesYet {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #noMessagesYet {
   width: 250px;
   height: 300px;
   margin-bottom: 25vh;
@@ -2024,18 +2106,20 @@ body {
   flex-direction: column;
   gap: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #noMessagesYet img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #noMessagesYet img {
   width: 150px;
   height: 220px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg {
   display: flex;
-  width: 100%;
-  padding-left: 45.5%;
+  width: calc(100% - 65px);
+  justify-content: start;
+  padding-left: max(15px, 7%);
+  padding-right: max(50px, 10%);
   display: flex;
   transition: background-color 0.5s;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv {
   position: relative;
   width: -moz-fit-content;
   width: fit-content;
@@ -2052,8 +2136,9 @@ body {
   justify-content: start;
   align-items: start;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv {
   width: 260px;
+  max-width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -2061,7 +2146,7 @@ body {
   padding: 5px 5px;
   gap: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #audioButton {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #audioButton {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2070,12 +2155,12 @@ body {
   background-color: #5ca853;
   border-radius: 50%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #audioButton img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #audioButton img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton {
   display: flex;
   width: 100%;
   height: 50px;
@@ -2084,7 +2169,7 @@ body {
   align-items: center;
   gap: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioProgress {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioProgress {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -2096,12 +2181,12 @@ body {
   overflow: hidden;
   gap: 2px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioProgress #oneAudioRect {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioProgress #oneAudioRect {
   background-color: #5ca853;
   width: 2px;
   border-radius: 2px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioTimeWraper {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioTimeWraper {
   display: flex;
   justify-content: space-between;
   align-items: end;
@@ -2111,7 +2196,7 @@ body {
   height: 15px;
   font-size: 13px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioTimeWraper #audioTime {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioTimeWraper #audioTime {
   display: flex;
   justify-content: start;
   align-items: end;
@@ -2121,7 +2206,7 @@ body {
   font-size: 13px;
   color: #5ca853;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioTimeWraper #time {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioTimeWraper #time {
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -2133,21 +2218,27 @@ body {
   margin-top: auto;
   margin-left: auto;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioTimeWraper #time img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #audioMsgDiv #notAudioButton #audioTimeWraper #time img {
   width: 8px;
   height: 8px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #msgImgWithCommentary {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #msgImgWithCommentary {
   position: relative;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  width: 100%;
+  overflow: hidden;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #msgImgWithCommentary img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #msgImgWithCommentary img {
+  width: 100%;
   max-width: 420px;
   max-height: 336px;
   cursor: pointer;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #msgImgWithCommentary #time {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #msgImgWithCommentary #time {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -2165,22 +2256,23 @@ body {
   margin-left: auto;
   padding: 0 2px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #msgImgWithCommentary #time img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #msgImgWithCommentary #time img {
   width: 8px;
   height: 8px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary {
   display: flex;
   flex-direction: row;
   width: 100%;
   gap: 7px;
   margin-top: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary p {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary p {
   all: unset;
   max-width: 440px;
+  word-break: break-word;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #time {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #time {
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -2192,11 +2284,11 @@ body {
   margin-top: auto;
   margin-left: auto;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #time img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #time img {
   width: 8px;
   height: 8px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #emotions {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #emotions {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -2205,7 +2297,7 @@ body {
   padding-left: 5px;
   margin-top: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #emotions #oneemo {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #emotions #oneemo {
   padding: 4px 10px;
   gap: 4px;
   display: flex;
@@ -2216,10 +2308,10 @@ body {
   color: #3390ec;
   font-weight: bold;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #emotions #oneemo p {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #emotions #oneemo p {
   all: unset;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #emotions #time {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #emotions #time {
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -2231,11 +2323,11 @@ body {
   margin-top: auto;
   margin-left: auto;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #emotions #time img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #comentary #emotions #time img {
   width: 8px;
   height: 8px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #time {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #time {
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -2247,11 +2339,11 @@ body {
   margin-top: auto;
   margin-left: auto;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #time img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #time img {
   width: 8px;
   height: 8px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #emotions {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #emotions {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -2259,7 +2351,7 @@ body {
   width: calc(100% - 5px);
   padding-left: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #emotions #oneemo {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #emotions #oneemo {
   padding: 4px 10px;
   gap: 4px;
   display: flex;
@@ -2270,10 +2362,10 @@ body {
   color: #3390ec;
   font-weight: bold;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #emotions #oneemo p {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #emotions #oneemo p {
   all: unset;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #emotions #time {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #emotions #time {
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -2285,11 +2377,11 @@ body {
   margin-top: auto;
   margin-left: auto;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #emotions #time img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg #surroundDiv #emotions #time img {
   width: 8px;
   height: 8px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -2300,7 +2392,7 @@ body {
   margin-left: 1%;
   margin-bottom: 1.5%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine {
   border: 0.5px solid rgba(112, 117, 121, 0.4);
   border-radius: 20px;
   display: flex;
@@ -2315,28 +2407,28 @@ body {
   gap: 15px;
   font-weight: 600;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine div {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine div {
   gap: 10px;
   display: flex;
   justify-content: start;
   align-items: center;
   flex-direction: row;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine div img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine div img {
   width: 20px;
   height: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine div p {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine div p {
   height: -moz-fit-content;
   height: fit-content;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine .wide {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine .wide {
   width: 100%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine .red-text {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarOnSelectReplacement #userInterfaceChatMainInputBarOnSelectReplacementLine .red-text {
   color: red;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord {
   display: flex;
   justify-content: start;
   align-items: end;
@@ -2346,7 +2438,7 @@ body {
   margin-left: 1%;
   margin-bottom: 1.5%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord {
   border: 0.5px solid rgba(112, 117, 121, 0.4);
   border-radius: 20px;
   display: flex;
@@ -2360,7 +2452,7 @@ body {
   padding-right: 10px;
   gap: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #userInterfaceChatMainInputTextRecord {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #userInterfaceChatMainInputTextRecord {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -2369,30 +2461,30 @@ body {
   padding-bottom: 2px;
   padding-left: 40px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #userInterfaceChatMainInputTextRecord input {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #userInterfaceChatMainInputTextRecord input {
   all: unset;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #userInterfaceChatMainInputTextRecord input::-moz-placeholder {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #userInterfaceChatMainInputTextRecord input::-moz-placeholder {
   color: rgba(112, 117, 121, 0.8);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #userInterfaceChatMainInputTextRecord input::placeholder {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #userInterfaceChatMainInputTextRecord input::placeholder {
   color: rgba(112, 117, 121, 0.8);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #recordTimer {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #recordTimer {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #recordTimer #flashingRed {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputLineRecord #recordTimer #flashingRed {
   width: 10px;
   height: 10px;
   animation: blinker 1s linear infinite;
   background-color: red;
   border-radius: 50%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #stopRecord {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #stopRecord {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2403,11 +2495,11 @@ body {
   background-color: white;
   cursor: pointer;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #stopRecord img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #stopRecord img {
   width: 30px;
   height: 30px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputVoiceApprove {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputVoiceApprove {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2418,47 +2510,48 @@ body {
   background-color: #3390ec;
   cursor: pointer;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputVoiceApprove img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBarRecord #userInterfaceChatMainInputVoiceApprove img {
   width: 30px;
   height: 30px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar {
   display: flex;
   justify-content: start;
   align-items: end;
   flex-direction: row;
-  width: 56%;
+  width: calc(100% - 30px);
   gap: 10px;
-  margin-left: 1%;
-  margin-bottom: 1.5%;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 46px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine {
   border: 0.5px solid rgba(112, 117, 121, 0.4);
   border-radius: 20px;
   display: flex;
   justify-content: start;
   align-items: center;
   flex-direction: row;
-  width: 93%;
-  height: 60px;
+  width: calc(100% - 66px);
+  height: 46px;
   background-color: white;
   padding-left: 10px;
   padding-right: 10px;
   gap: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25px;
-  height: 25px;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile img {
   width: 35px;
   height: 35px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile img {
+  width: 25px;
+  height: 25px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen {
   position: absolute;
   left: -48%;
   top: -1820%;
@@ -2475,7 +2568,7 @@ body {
   filter: drop-shadow(0 0 0.1rem black);
   padding: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv {
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -2483,18 +2576,18 @@ body {
   width: 100%;
   gap: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv img {
   width: 25px;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesSearchDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesSearchDiv {
   display: flex;
   flex-direction: row;
   justify-content: start;
   align-items: center;
   width: 100%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2502,7 +2595,7 @@ body {
   width: 100%;
   gap: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv {
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -2512,53 +2605,61 @@ body {
   font-size: 31.5px;
   flex-wrap: wrap;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv div {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv div {
   cursor: pointer;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText {
   display: flex;
   justify-content: start;
   align-items: center;
-  width: 100%;
+  width: calc(100% - 90px);
   height: 25px;
   padding-bottom: 2px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText input {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText input {
   all: unset;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText input::-moz-placeholder {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText input::-moz-placeholder {
   color: rgba(112, 117, 121, 0.8);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText input::placeholder {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText input::placeholder {
   color: rgba(112, 117, 121, 0.8);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputFile {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputFile {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25px;
-  height: 25px;
-}
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputFile img {
   width: 35px;
   height: 35px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputVoice {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputFile label {
+  width: 35px;
+  height: 35px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputFile img {
+  width: 35px;
+  height: 35px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputFile input {
+  width: 1px;
+  height: 1px;
+}
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputVoice {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60px;
-  height: 60px;
+  width: 46px;
+  height: 46px;
   bottom: 0;
   border-radius: 50%;
   background-color: #3390ec;
   cursor: pointer;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputVoice img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputVoice img {
   width: 30px;
   height: 30px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider {
   border: 0.5px solid rgba(112, 117, 121, 0.4);
   border-radius: 20px;
   display: flex;
@@ -2571,7 +2672,7 @@ body {
   padding-left: 10px;
   padding-right: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2583,11 +2684,11 @@ body {
   padding-right: 10px;
   gap: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference img {
   width: 25px;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference div {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference div {
   display: flex;
   justify-content: center;
   align-items: start;
@@ -2598,10 +2699,10 @@ body {
   border-radius: 10px;
   padding-left: 5px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference div p {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference div p {
   all: unset;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -2613,7 +2714,7 @@ body {
   padding-right: 10px;
   gap: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile {
   position: relative;
   display: flex;
   justify-content: center;
@@ -2621,11 +2722,11 @@ body {
   width: 25px;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile img {
   width: 35px;
   height: 35px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen {
   position: absolute;
   left: -48%;
   top: -1820%;
@@ -2642,7 +2743,7 @@ body {
   filter: drop-shadow(0 0 0.1rem black);
   padding: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv {
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -2650,18 +2751,18 @@ body {
   width: 100%;
   gap: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv img {
   width: 25px;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesSearchDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesSearchDiv {
   display: flex;
   flex-direction: row;
   justify-content: start;
   align-items: center;
   width: 100%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2669,7 +2770,7 @@ body {
   width: 100%;
   gap: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv {
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -2679,10 +2780,10 @@ body {
   font-size: 31.5px;
   flex-wrap: wrap;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv div {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv div {
   cursor: pointer;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -2690,40 +2791,40 @@ body {
   height: 25px;
   padding-bottom: 2px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit input {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit input {
   all: unset;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit input::-moz-placeholder {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit input::-moz-placeholder {
   color: rgba(112, 117, 121, 0.8);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit input::placeholder {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit input::placeholder {
   color: rgba(112, 117, 121, 0.8);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputFileEdit {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputFileEdit {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 25px;
   height: 25px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputFileEdit img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputFileEdit img {
   width: 35px;
   height: 35px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn::-webkit-scrollbar {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn::-webkit-scrollbar {
   width: 5px;
   background: transparent;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn::-webkit-scrollbar-track {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn::-webkit-scrollbar-track {
   width: 12px;
   background: transparent;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn::-webkit-scrollbar-thumb {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn::-webkit-scrollbar-thumb {
   width: 8px;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground {
   left: 0;
   top: 0;
   position: absolute;
@@ -2734,7 +2835,7 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
@@ -2755,7 +2856,7 @@ body {
   border-bottom-right-radius: 10px;
   background-color: white;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivHeader {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivHeader {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -2764,12 +2865,12 @@ body {
   font-weight: bold;
   font-size: 19px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivHeader img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivHeader img {
   width: 35px;
   height: 35px;
   border-radius: 50%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivTimer {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivTimer {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -2777,7 +2878,7 @@ body {
   gap: 30px;
   cursor: pointer;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivTimer #notificationSetDivCircle {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivTimer #notificationSetDivCircle {
   border-radius: 50%;
   border: 2px solid rgb(112, 117, 121);
   width: 20px;
@@ -2786,7 +2887,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivTimer #notificationSetDivCircle div {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivTimer #notificationSetDivCircle div {
   z-index: 10;
   width: 16px;
   height: 14px;
@@ -2794,7 +2895,7 @@ body {
   border: 3px solid white;
   background-color: transparent;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivFooter {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivFooter {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -2803,11 +2904,11 @@ body {
   gap: 40px;
   font-weight: bold;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivFooter p {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #notificationSetDiv #notificationSetDivFooter p {
   color: #3390ec;
   cursor: pointer;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -2823,7 +2924,7 @@ body {
   border-bottom-right-radius: 10px;
   background-color: white;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayTop {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayTop {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -2834,11 +2935,11 @@ body {
   font-weight: 600;
   gap: 30px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayTop p {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayTop p {
   all: unset;
   width: 100%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayTop #imgInputClose {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayTop #imgInputClose {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2847,16 +2948,16 @@ body {
   padding: 8px;
   cursor: pointer;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayTop #imgInputClose img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayTop #imgInputClose img {
   width: 20px;
   height: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayTop #imgInputSetting {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayTop #imgInputSetting {
   width: 30px;
   height: 30px;
   cursor: pointer;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgimg {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgimg {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2867,13 +2968,13 @@ body {
   border-top-right-radius: 5%;
   background-color: white;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgimg img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgimg img {
   max-width: 400px;
   max-height: 336px;
   border-top-left-radius: 5%;
   border-top-right-radius: 5%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayBottom {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayBottom {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -2884,7 +2985,7 @@ body {
   font-size: large;
   font-weight: 600;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayBottom input {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayBottom input {
   all: unset;
   width: calc(100% - 80px);
   height: 54px;
@@ -2897,13 +2998,13 @@ body {
   align-items: center;
   padding-left: 15px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayBottom input::-moz-placeholder {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayBottom input::-moz-placeholder {
   color: rgba(112, 117, 121, 0.6);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayBottom input::placeholder {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayBottom input::placeholder {
   color: rgba(112, 117, 121, 0.6);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayBottom #inputImgSend {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #inputImgShowBackground #inputImgDisplay #inputImgDisplayBottom #inputImgSend {
   color: white;
   display: flex;
   justify-content: center;
@@ -2919,7 +3020,10 @@ body {
   border-bottom-right-radius: 10px;
   cursor: pointer;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo {
+  position: absolute;
+  right: 0;
+  top: 0;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -2928,8 +3032,9 @@ body {
   height: 100vh;
   border: 1px solid rgb(223, 225, 229);
   background-color: white;
+  z-index: 2000;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader {
   height: 5vh;
   padding: 0 25px 0 25px;
   width: calc(100% - 50px);
@@ -2938,32 +3043,32 @@ body {
   align-items: center;
   flex-direction: row;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader div {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader div {
   gap: 36px;
   display: flex;
   justify-content: start;
   align-items: center;
   flex-direction: row;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader div img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader div img {
   width: 20px;
   height: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader div p {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader div p {
   height: -moz-fit-content;
   height: fit-content;
   text-transform: capitalize;
   font-weight: bold;
   font-size: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader .wide {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader .wide {
   width: 100%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoHeader img {
   width: 20px;
   height: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoPhoto {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoPhoto {
   padding: 15px 0 20px 0;
   width: 100%;
   height: -moz-fit-content;
@@ -2975,12 +3080,12 @@ body {
   gap: 5px;
   margin-bottom: 2vh;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoPhoto img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoPhoto img {
   border-radius: 50%;
   aspect-ratio: 1/1;
   width: 35%;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoPhoto h1 {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoPhoto h1 {
   all: unset;
   font-size: 20px;
   height: -moz-fit-content;
@@ -2988,12 +3093,12 @@ body {
   text-transform: capitalize;
   font-weight: bold;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoPhoto p {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoPhoto p {
   all: unset;
   font-size: 14px;
   color: rgb(112, 117, 121);
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -3001,7 +3106,7 @@ body {
   flex-direction: column;
   gap: 4px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption {
   padding: 0 25px 0 25px;
   width: calc(100% - 50px);
   height: 5vh;
@@ -3012,11 +3117,11 @@ body {
   flex-direction: row;
   gap: 38px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption img {
   width: 20px;
   height: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption div {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption div {
   width: 100%;
   height: 5vh;
   gap: 2px;
@@ -3026,19 +3131,19 @@ body {
   flex-direction: column;
   overflow: hidden;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption div h1 {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption div h1 {
   all: unset;
   height: -moz-fit-content;
   height: fit-content;
   text-transform: capitalize;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption div a {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption div a {
   height: -moz-fit-content;
   height: fit-content;
   color: black;
   text-decoration: none;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption div p {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #commonOption div p {
   all: unset;
   font-size: 14px;
   color: rgb(112, 117, 121);
@@ -3046,7 +3151,7 @@ body {
   height: fit-content;
   text-transform: capitalize;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #unCommonOption {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #unCommonOption {
   padding: 0 25px 0 25px;
   width: calc(100% - 50px);
   height: 5vh;
@@ -3055,7 +3160,7 @@ body {
   align-items: center;
   flex-direction: row;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #unCommonOption div {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #unCommonOption div {
   width: 100%;
   height: 5vh;
   gap: 35px;
@@ -3064,19 +3169,406 @@ body {
   align-items: center;
   flex-direction: row;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #unCommonOption div img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #unCommonOption div img {
   width: 20px;
   height: 20px;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #unCommonOption div h1 {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #unCommonOption div h1 {
   all: unset;
   height: -moz-fit-content;
   height: fit-content;
   text-transform: capitalize;
 }
-#userInterfaceBorder #userInterfaceMain #userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #unCommonOption img {
+#userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatInfo #userInterfaceChatInfoOptions #unCommonOption img {
   width: 20px;
   height: 20px;
+}
+@media screen and (min-width: 600px) {
+  .leftChatLeft {
+    transform: translate(-426px, 0);
+  }
+  .rightChatRight {
+    transform: translate(426px, 0);
+  }
+  #userInterfaceBorder #userInterfaceChatsColumn {
+    width: 424px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar {
+    height: -moz-fit-content;
+    height: fit-content;
+    width: calc(100% - 30px);
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine {
+    border: 0.5px solid rgba(112, 117, 121, 0.4);
+    border-radius: 20px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: row;
+    width: 93%;
+    height: 60px;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 15px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile img {
+    width: 35px;
+    height: 35px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen {
+    position: absolute;
+    left: -48%;
+    top: -1820%;
+    width: 1500%;
+    height: 1650%;
+    overflow: hidden;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+    filter: drop-shadow(0 0 0.1rem black);
+    padding: 10px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv img {
+    width: 25px;
+    height: 25px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesSearchDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
+    font-size: 31.5px;
+    flex-wrap: wrap;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv div {
+    cursor: pointer;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    height: 25px;
+    padding-bottom: 2px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText input {
+    all: unset;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText input::-moz-placeholder {
+    color: rgba(112, 117, 121, 0.8);
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputText input::placeholder {
+    color: rgba(112, 117, 121, 0.8);
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputFile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputLine #userInterfaceChatMainInputFile img {
+    width: 35px;
+    height: 35px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputVoice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    bottom: 0;
+    border-radius: 50%;
+    background-color: #3390ec;
+    cursor: pointer;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputVoice img {
+    width: 30px;
+    height: 30px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider {
+    border: 0.5px solid rgba(112, 117, 121, 0.4);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 93%;
+    height: 120px;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 93%;
+    height: 50px;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 15px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference img {
+    width: 25px;
+    height: 25px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference div {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-left: 2px solid rgb(51, 144, 236);
+    border-radius: 10px;
+    padding-left: 5px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #editReference div p {
+    all: unset;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: row;
+    width: 93%;
+    height: 60px;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 15px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile img {
+    width: 35px;
+    height: 35px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen {
+    position: absolute;
+    left: -48%;
+    top: -1820%;
+    width: 1500%;
+    height: 1650%;
+    overflow: hidden;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+    filter: drop-shadow(0 0 0.1rem black);
+    padding: 10px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesGroupsDiv img {
+    width: 25px;
+    height: 25px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesSearchDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
+    font-size: 31.5px;
+    flex-wrap: wrap;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputSmile #userInterfaceChatMainInputSmileMainScreen #smilesWholeGroupDiv #smilesGroupSmilesDiv div {
+    cursor: pointer;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    height: 25px;
+    padding-bottom: 2px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit input {
+    all: unset;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit input::-moz-placeholder {
+    color: rgba(112, 117, 121, 0.8);
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputTextEdit input::placeholder {
+    color: rgba(112, 117, 121, 0.8);
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputFileEdit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar #userInterfaceChatMainInputBarDevider #userInterfaceChatMainInputLineEdit #userInterfaceChatMainInputFileEdit img {
+    width: 35px;
+    height: 35px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground .userInterfaceChatHeadAllPinned {
+    width: -moz-fit-content;
+    width: fit-content;
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground .allPinnedShowOnSmall {
+    display: none;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground .allPinnedShowOnBig {
+    display: flex;
+  }
+}
+@media screen and (min-width: 925px) {
+  .leftChatLeft {
+    transform: translate(0, 0);
+  }
+  .rightChatRight {
+    transform: translate(0, 0);
+  }
+  #userInterfaceBorder {
+    display: grid;
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+  }
+  #userInterfaceBorder #userInterfaceChatsColumn {
+    position: relative;
+    top: unset;
+    left: unset;
+    width: unset;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+  #userInterfaceBorder .userInterfaceChat {
+    position: relative;
+    top: unset;
+    left: unset;
+    width: unset;
+    grid-column-start: 3;
+    grid-column-end: 6;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar {
+    width: calc(100% - 30px);
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #smallScreenArrow {
+    display: none;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv {
+    margin: 0;
+  }
+}
+@media screen and (min-width: 1050px) {
+  #userInterfaceBorder {
+    display: flex;
+    grid-template-rows: unset;
+    grid-template-columns: unset;
+  }
+  #userInterfaceBorder #userInterfaceChatsColumn {
+    width: 420px;
+    grid-column-start: unset;
+    grid-column-end: unset;
+  }
+  #userInterfaceBorder .userInterfaceChat {
+    width: calc(100% - 420px);
+    grid-column-start: unset;
+    grid-column-end: unset;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatHead #userInterfaceChatHeadSmallDiv {
+    margin: 0;
+  }
+}
+@media screen and (min-width: 1150px) {
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg {
+    padding-left: 10px;
+    padding-right: 0;
+    width: 708px;
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar {
+    margin: auto;
+    width: 728px;
+  }
+}
+@media screen and (min-width: 1275px) {
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainMsgesColumn #msg {
+    padding-left: 45.5%;
+    width: calc(100% - 65px);
+    padding-right: max(50px, 10%);
+  }
+  #userInterfaceBorder .userInterfaceChat #userInterfaceChatUnderDiv #userInterfaceChatMainPart #userInterfaceChatMainBackground #userInterfaceChatMainInputBar {
+    margin-left: 19.5%;
+    width: calc(100% - 400px);
+  }
 }
 #addToChatWholeDiv {
   display: flex;
