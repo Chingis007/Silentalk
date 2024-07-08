@@ -533,8 +533,11 @@ body {
   height: fit-content;
   color: white;
 }
+#loginPage #loginWindow .afterPressed #mainDiv #signWrapper #SignUpGoogle div {
+  font-size: 14px;
+}
 #loginPage #loginWindow .afterPressed #mainDiv #signWrapper #SignUpGoogle div span {
-  font-size: 12px;
+  font-size: 14px;
 }
 #loginPage #loginWindow .afterPressed #mainDiv #changeOption {
   cursor: pointer;
@@ -568,8 +571,11 @@ body {
     min-height: 50px;
     font-size: 16px;
   }
+  #loginPage #loginWindow .afterPressed #mainDiv #signWrapper #SignUpGoogle div {
+    font-size: 14px;
+  }
   #loginPage #loginWindow .afterPressed #mainDiv #signWrapper #SignUpGoogle div span {
-    font-size: 15px;
+    font-size: 14px;
   }
   #loginPage #loginWindow .afterPressed #mainDiv #changeOption {
     font-size: 16px;
