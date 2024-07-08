@@ -437,10 +437,7 @@ export function Home() {
                       ? decodeJwt(strCredential)
                       : undefined
                     if (payload) {
-                      serverGoogleAuthentification(
-                        strCredential,
-                        "no number needed"
-                      )
+                      serverGoogleAuthentification(strCredential, phoneNumber)
                     }
                   }}
                   onError={() => {
