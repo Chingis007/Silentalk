@@ -126,8 +126,8 @@ export function Home() {
       ["Content-Type", "application/json"],
       ["withCredentials", "true"],
       ["Access-Control-Allow-Origin", "*"],
-      ["myAuthProp", credential],
-      ["myPhoneNumber", phoneNumber],
+      ["myauthprop", credential],
+      ["myphonenumber", phoneNumber],
     ])
 
     // let url = new URL(`http://localhost:4000/google/temporfetch`)
@@ -165,6 +165,15 @@ export function Home() {
           alert(
             "Something went wrong on password verification. Please try again."
           )
+        }
+        if (
+          resText[0] ===
+          "User Exists but given email is not attached to given account"
+        ) {
+          alert("User Exists but given email is not attached to given account")
+        }
+        if (resText[0] === "Error on google create") {
+          alert("Error on google create")
         }
         if (resText[0] === "Created Successfully") {
           document.cookie = `auth_token=${resText[1].auth_token}; expires=Session; path=/;`
