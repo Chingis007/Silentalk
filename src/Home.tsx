@@ -544,6 +544,7 @@ export function Home() {
                   onChange={(event) => {
                     setPasswordRepeat(event.target.value)
                   }}
+                  value={passwordRepeat}
                   placeholder="Repeat Password"
                 />
                 <p>{repeatPasswordValidationText}</p>

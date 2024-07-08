@@ -5921,7 +5921,13 @@ export function UserInterface(this: any) {
             //     : { width: "calc(100% + 420px)" }
             // }
           >
-            <div id="userInterfaceChatMainPart">
+            <div
+              className={`userInterfaceChatMainPart ${
+                showDiscription
+                  ? "mainOnBackDiscription"
+                  : "mainOnRightDiscription"
+              }`}
+            >
               <div
                 id="userInterfaceChatHead"
                 style={
@@ -8604,14 +8610,14 @@ export function UserInterface(this: any) {
                 {currentChatType == "chanell" ? (
                   <>
                     <div id="commonOption">
-                      <img src="" alt="" />
+                      <img src="./icons8-at-64.png" alt="" />
                       <div>
                         <h1>{currentChatDiscription}</h1>
                         <p>Info</p>
                       </div>
                     </div>
                     <div id="commonOption">
-                      <img src="" alt="" />
+                      <img src="./icons8-link-100.png" alt="" />
                       <div>
                         <a
                           href={`${process.env.REACT_APP_MAIN_DOMAIN}/addTo/${currentChatLink}/${currentChatType}`}
@@ -8625,7 +8631,7 @@ export function UserInterface(this: any) {
                 ) : undefined}
                 <div id="unCommonOption">
                   <div>
-                    <img src="" alt="" />
+                    <img src="./icons8-silent-48.png" alt="" />
                     <h1>Notifications</h1>
                   </div>
                   <img src="" alt="" />
