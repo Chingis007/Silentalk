@@ -529,8 +529,8 @@ body {
   border: 2px solid #3390ec;
   width: -moz-fit-content;
   width: fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
+  height: calc(-moz-fit-content + 5px);
+  height: calc(fit-content + 5px);
   color: white;
 }
 #loginPage #loginWindow .afterPressed #mainDiv #signWrapper #SignUpGoogle div {

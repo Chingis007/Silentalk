@@ -467,35 +467,34 @@ export function Home() {
                   Log In
                 </div>
 
-                <div id="SignUpGoogle">
-                  <div
-                    style={{
-                      pointerEvents:
-                        phoneNumberValidationText === "✔" ? "auto" : "none",
-                    }}
-                  >
-                    <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
-                      <GoogleLogin
-                        onSuccess={(CredentialResponse: any) => {
-                          const { credential } = CredentialResponse
-                          const strCredential = String(credential)
-                          const payload = strCredential
-                            ? decodeJwt(strCredential)
-                            : undefined
-                          if (payload) {
-                            serverGoogleAuthentification(
-                              strCredential,
-                              phoneNumber
-                            )
-                          }
-                        }}
-                        onError={() => {
-                          console.log("Error Ocured on Google_Login")
-                        }}
-                        // useOneTap
-                      />
-                    </GoogleOAuthProvider>
-                  </div>
+                <div
+                  id="SignUpGoogle"
+                  style={{
+                    pointerEvents:
+                      phoneNumberValidationText === "✔" ? "auto" : "none",
+                  }}
+                >
+                  <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
+                    <GoogleLogin
+                      onSuccess={(CredentialResponse: any) => {
+                        const { credential } = CredentialResponse
+                        const strCredential = String(credential)
+                        const payload = strCredential
+                          ? decodeJwt(strCredential)
+                          : undefined
+                        if (payload) {
+                          serverGoogleAuthentification(
+                            strCredential,
+                            phoneNumber
+                          )
+                        }
+                      }}
+                      onError={() => {
+                        console.log("Error Ocured on Google_Login")
+                      }}
+                      // useOneTap
+                    />
+                  </GoogleOAuthProvider>
                 </div>
               </div>
               <div
@@ -548,35 +547,34 @@ export function Home() {
                   Sign Up
                 </div>
 
-                <div id="SignUpGoogle">
-                  <div
-                    style={{
-                      pointerEvents:
-                        phoneNumberValidationText === "✔" ? "auto" : "none",
-                    }}
-                  >
-                    <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
-                      <GoogleLogin
-                        onSuccess={(CredentialResponse: any) => {
-                          const { credential } = CredentialResponse
-                          const strCredential = String(credential)
-                          const payload = strCredential
-                            ? decodeJwt(strCredential)
-                            : undefined
-                          if (payload) {
-                            serverGoogleAuthentification(
-                              strCredential,
-                              phoneNumber
-                            )
-                          }
-                        }}
-                        onError={() => {
-                          console.log("Error Ocured on Google_Login")
-                        }}
-                        // useOneTap
-                      />
-                    </GoogleOAuthProvider>
-                  </div>
+                <div
+                  id="SignUpGoogle"
+                  style={{
+                    pointerEvents:
+                      phoneNumberValidationText === "✔" ? "auto" : "none",
+                  }}
+                >
+                  <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
+                    <GoogleLogin
+                      onSuccess={(CredentialResponse: any) => {
+                        const { credential } = CredentialResponse
+                        const strCredential = String(credential)
+                        const payload = strCredential
+                          ? decodeJwt(strCredential)
+                          : undefined
+                        if (payload) {
+                          serverGoogleAuthentification(
+                            strCredential,
+                            phoneNumber
+                          )
+                        }
+                      }}
+                      onError={() => {
+                        console.log("Error Ocured on Google_Login")
+                      }}
+                      // useOneTap
+                    />
+                  </GoogleOAuthProvider>
                 </div>
               </div>
               <div
