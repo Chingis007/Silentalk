@@ -431,6 +431,7 @@ export function Home() {
                   setTimeout(function () {
                     pn.classList.remove("phoneNumberBlink")
                   }, 1000)
+                  event.preventDefault()
                   event.stopPropagation()
                   return
                 }
