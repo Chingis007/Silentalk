@@ -422,9 +422,18 @@ export function Home() {
             Or
             <div
               id="googleChoiceDiv"
-              style={{
-                pointerEvents:
-                  phoneNumberValidationText === "✔" ? "auto" : "none",
+              onClick={(event) => {
+                if (phoneNumberValidationText === "Not possible phone number") {
+                  let pn = document.getElementById(
+                    "phoneNumber"
+                  ) as HTMLDivElement
+                  pn.classList.add("phoneNumberBlink")
+                  setTimeout(function () {
+                    pn.classList.remove("phoneNumberBlink")
+                  }, 1000)
+                  event.stopPropagation()
+                  return
+                }
               }}
             >
               <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">

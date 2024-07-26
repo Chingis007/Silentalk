@@ -440,7 +440,9 @@ export function UserInterface(this: any) {
     useState(false)
   // const [currentsomespace, setcurrentsomespace] = useState<any>([])
   const [useScroll, setUseScroll] = useState(false)
-  const [currentChatUserName, setCurrentChatUserName] = useState("")
+  const [currentChatUserName, setCurrentChatUserName] = useState<
+    string | undefined
+  >("")
   const [pressedSelect, setPressedSelect] = useState("")
   const [createNewPrivateChat, setCreateNewPrivateChat] = useState(false)
   const [letBeLastSeenSync, setLetBeLastSeenSync] = useState(0)
@@ -3823,6 +3825,9 @@ export function UserInterface(this: any) {
                     allChatsListInUser.chatsList[index].photoLink
                   )
                   setCurrentChatName(
+                    allChatsListInUser.chatsList[index].username
+                  )
+                  setCurrentChatUserName(
                     allChatsListInUser.chatsList[index].username
                   )
                   break
@@ -8589,7 +8594,7 @@ export function UserInterface(this: any) {
                 ) : undefined}
                 {currentChatType == "chat" ? (
                   <div id="commonOption">
-                    <img src="" alt="" />
+                    <img src="./icons8-at-64.png" alt="" />
                     <div>
                       <h1>{currentChatUserName}</h1>
                       <p>Username</p>
