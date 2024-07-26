@@ -402,7 +402,7 @@ body {
   color: white;
 }
 #loginPage #loginWindow #loginChoice #googleChoiceDiv {
-  border-radius: 5px;
+  border-radius: 2px;
   cursor: pointer;
   display: flex;
   justify-content: center;
