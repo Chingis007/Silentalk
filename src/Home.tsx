@@ -431,31 +431,36 @@ export function Home() {
                   setTimeout(function () {
                     pn.classList.remove("phoneNumberBlink")
                   }, 1000)
-                  event.preventDefault()
-                  event.stopPropagation()
                   return
                 }
               }}
             >
-              <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
-                <GoogleLogin
-                  onSuccess={(CredentialResponse: any) => {
-                    // console.log(CredentialResponse)
-                    const { credential } = CredentialResponse
-                    const strCredential = String(credential)
-                    const payload = strCredential
-                      ? decodeJwt(strCredential)
-                      : undefined
-                    if (payload) {
-                      serverGoogleAuthentification(strCredential, phoneNumber)
-                    }
-                  }}
-                  onError={() => {
-                    console.log("Error Ocured on Google_Login")
-                  }}
-                  // useOneTap
-                />
-              </GoogleOAuthProvider>
+              <div
+                style={{
+                  pointerEvents:
+                    phoneNumberValidationText === "✔" ? "auto" : "none",
+                }}
+              >
+                <GoogleOAuthProvider clientId="462038566904-on9gilvibjlenbcaamj6odhl7di3omkh.apps.googleusercontent.com">
+                  <GoogleLogin
+                    onSuccess={(CredentialResponse: any) => {
+                      // console.log(CredentialResponse)
+                      const { credential } = CredentialResponse
+                      const strCredential = String(credential)
+                      const payload = strCredential
+                        ? decodeJwt(strCredential)
+                        : undefined
+                      if (payload) {
+                        serverGoogleAuthentification(strCredential, phoneNumber)
+                      }
+                    }}
+                    onError={() => {
+                      console.log("Error Ocured on Google_Login")
+                    }}
+                    // useOneTap
+                  />
+                </GoogleOAuthProvider>
+              </div>
             </div>
           </div>
           <div
