@@ -413,7 +413,16 @@ body {
   height: -moz-fit-content;
   height: fit-content;
 }
-#loginPage #loginWindow #loginChoice #googleChoiceDiv div {
+#loginPage #loginWindow #loginChoice #googleChoiceDiv #underGoogle {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+#loginPage #loginWindow #loginChoice #googleChoiceDiv #underGoogle div {
   font-size: 12px;
 }
 #loginPage #loginWindow #loginChoice #choiceDivMega {

@@ -436,6 +436,7 @@ export function Home() {
               }}
             >
               <div
+                id="underGoogle"
                 style={{
                   pointerEvents:
                     phoneNumberValidationText === "✔" ? "auto" : "none",

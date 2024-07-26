@@ -295,8 +295,15 @@ body {
         border: 2px solid #3390ec;
         width: fit-content;
         height: fit-content;
-        div {
-          font-size: 12px;
+        #underGoogle {
+          width: fit-content;
+          height: fit-content;
+          padding: 0;
+          margin: 0;
+          border: none;
+          div {
+            font-size: 12px;
+          }
         }
       }
       #choiceDivMega {
