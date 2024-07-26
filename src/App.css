@@ -402,9 +402,10 @@ body {
   color: white;
 }
 #loginPage #loginWindow #loginChoice #googleChoiceDiv {
-  border-radius: 2px;
+  border-radius: 5px;
   cursor: pointer;
   display: flex;
+  padding: 2px;
   justify-content: center;
   align-items: center;
   border: 2px solid #3390ec;
